@@ -1,11 +1,8 @@
-import Mime from 'rest/interceptor/mime'
-import ErrorCode from 'rest/interceptor/errorCode'
-import Client from 'app/clients/RestClient'
-import {Injectable} from 'angular2/core'
+import Mime from 'rest/interceptor/mime';
+import ErrorCode from 'rest/interceptor/errorCode';
+import Client from '../clients/RestClient';
 
-
-export default class AccountRestClient{
-
+export class AccountRestClient{
 login(params, _success, _fail) {
     let entity = { 'email': params.email, 'password': params.password }
     let client = Client.wrap(Mime, {
@@ -86,3 +83,5 @@ forgetPassword(params, _success, _fail) {
 }
 
 }
+
+// module.export = AccountRestClient;

@@ -1,18 +1,25 @@
-import {AccountRestClient} from 'app/clients/AccountRestClient/AccountRestClient';
-import {Injector,Inject} from 'angular2/core';
+import {UserRestClient} from '../clients/UserRestClient/UserRestClient';
+import {Injector,Inject,Injectable} from 'angular2/core';
+// import AccountRestClient from 'AccountRestClient';
 
+@Injectable()
 export class UserService{
-	constructor(@Inject(AccountRestClient)account){ }
+    userRestClient;
+    // accountRestClient = new AccountRestClient.AccountRestClient();
+	constructor(userRestClient:UserRestClient){
+        this.userRestClient = userRestClient;
+     }
 	forgetPassword(param){
-		this.account.forgetPassword(param,
-			function(data){
-				console.log(data.entity);
-			},
-			function(err){
-				console.log(err.entity);
-			})
+		var result = this.userRestClient.forgetPassword(param);
+        console.log("UserService:");
+        console.log(result);
+        return result
+        // this.accountRestClient.forgetPassword(param,
+        // 	function(data){
+		// 		console.log(data.entity);
+		// 	},
+		// 	function(err){
+		// 		console.log(err.entity);
+		// 	});
 	}
 }
-
-// var injector = Injector.resolveAndCreate([AccountRestClient]);
-// var AccountRestClient = injector.get(AccountRestClient);

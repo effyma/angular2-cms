@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', 'angular2/router', './login/login.component'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', './login/login.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,15 +10,12 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', './login/l
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, router_1, login_component_1;
+    var core_1, router_1, login_component_1;
     var AppComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
-            },
-            function (http_1_1) {
-                http_1 = http_1_1;
             },
             function (router_1_1) {
                 router_1 = router_1_1;
@@ -28,17 +25,16 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', './login/l
             }],
         execute: function() {
             AppComponent = (function () {
-                function AppComponent(HTTP_PROVIDERS) {
+                function AppComponent() {
                 }
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
                         template: "\n    <login> </login>\n    ",
                         styleUrls: ['app/app.component.css'],
-                        providers: [http_1.HTTP_PROVIDERS],
                         directives: [router_1.ROUTER_DIRECTIVES, login_component_1.LoginComponent],
                     }), 
-                    __metadata('design:paramtypes', [Object])
+                    __metadata('design:paramtypes', [])
                 ], AppComponent);
                 return AppComponent;
             }());

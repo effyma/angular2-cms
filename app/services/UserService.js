@@ -1,4 +1,4 @@
-System.register(['app/clients/AccountRestClient/AccountRestClient', 'angular2/core'], function(exports_1, context_1) {
+System.register(['../clients/UserRestClient/UserRestClient', 'angular2/core'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,33 +10,39 @@ System.register(['app/clients/AccountRestClient/AccountRestClient', 'angular2/co
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var __param = (this && this.__param) || function (paramIndex, decorator) {
-        return function (target, key) { decorator(target, key, paramIndex); }
-    };
-    var AccountRestClient_1, core_1;
+    var UserRestClient_1, core_1;
     var UserService;
     return {
         setters:[
-            function (AccountRestClient_1_1) {
-                AccountRestClient_1 = AccountRestClient_1_1;
+            function (UserRestClient_1_1) {
+                UserRestClient_1 = UserRestClient_1_1;
             },
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
+            // import AccountRestClient from 'AccountRestClient';
             UserService = (function () {
-                function UserService(account) {
+                // accountRestClient = new AccountRestClient.AccountRestClient();
+                function UserService(userRestClient) {
+                    this.userRestClient = userRestClient;
                 }
                 UserService.prototype.forgetPassword = function (param) {
-                    this.account.forgetPassword(param, function (data) {
-                        console.log(data.entity);
-                    }, function (err) {
-                        console.log(err.entity);
-                    });
+                    var result = this.userRestClient.forgetPassword(param);
+                    console.log("UserService:");
+                    console.log(result);
+                    return result;
+                    // this.accountRestClient.forgetPassword(param,
+                    // 	function(data){
+                    // 		console.log(data.entity);
+                    // 	},
+                    // 	function(err){
+                    // 		console.log(err.entity);
+                    // 	});
                 };
                 UserService = __decorate([
-                    __param(0, core_1.Inject(AccountRestClient_1.AccountRestClient)), 
-                    __metadata('design:paramtypes', [Object])
+                    core_1.Injectable(), 
+                    __metadata('design:paramtypes', [UserRestClient_1.UserRestClient])
                 ], UserService);
                 return UserService;
             }());
@@ -44,6 +50,4 @@ System.register(['app/clients/AccountRestClient/AccountRestClient', 'angular2/co
         }
     }
 });
-// var injector = Injector.resolveAndCreate([AccountRestClient]);
-// var AccountRestClient = injector.get(AccountRestClient); 
 //# sourceMappingURL=UserService.js.map

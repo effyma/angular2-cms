@@ -3,7 +3,7 @@ body {
     margin: 0;
     padding: 0;
     color: #2c2e2f;
-    font-family: HelveticaNeue,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 93.75%;
     -webkit-font-smoothing: antialiased;
     -webkit-backface-visibility: hidden;
@@ -103,7 +103,7 @@ a.button, a.button:link, a.button:visited, .button {
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 1040;
+    z-index: 4;
     background-color: #000;
 }
 
@@ -115,7 +115,7 @@ a.button, a.button:link, a.button:visited, .button {
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 1050;
+    z-index: 5;
     display: none;
     -webkit-overflow-scrolling: touch;
     outline: 0;
@@ -145,13 +145,23 @@ a.button, a.button:link, a.button:visited, .button {
     font-weight: 300;
     color: #444;
     line-height: 28px;
-    margin: 0 0 4px;
+    margin: 0 0 10px;
 }
 .forget-content{
-    font-family: arial,helvetica,sans-serif;
-    font-size: 14px;
+    font-family: "HelveticaNeue-Light","Helvetica Neue Light",arial,helvetica,sans-serif;
+    color: #414042;
+    font-weight: 300;
+    font-size: 16px;
     line-height: 19px;
-    margin: 0 0 17px 0;
+    margin: 0 0 10px 0;
+}
+.forget-content-err, signup-content-err{
+    color: red;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 19px;
+    height: 15px;
+    margin: 0 0 10px 0;
 }
 
 @media (min-width: 768px){
