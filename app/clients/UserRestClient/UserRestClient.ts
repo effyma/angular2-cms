@@ -49,20 +49,18 @@ export class UserRestClient{
             //     () => console.log('Complete')
             //     );
     }
-    
-    signUp(param){
-        this.headers = new Headers();
-        console.log('param:');
-       console.log(JSON.stringify(param));
-        this.headers.append("Content-Type", 'application/json');
-        this.requestoptions = new RequestOptions({
-            method: RequestMethod.Post,
-            headers: this.headers,
-            body: JSON.stringify(param),
-            url: this.baseUrl+"accounts/"
-            
+
+    signUp(email,password){
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        console.log("param:");
+        let body = JSON.stringify(email,password);
+        console.log(body)
+        let url = this.baseUrl+"accounts";
+        let options = new RequestOptions({
+            headers: headers
         });
-        return this.http.request(new Request(this.requestoptions)).map(
+        return this.http.post(url,body,options).map(
             res => res.json()
             )
     }

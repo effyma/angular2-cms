@@ -63,18 +63,17 @@ System.register(['angular2/core', 'angular2/http'], function(exports_1, context_
                     //     () => console.log('Complete')
                     //     );
                 };
-                UserRestClient.prototype.signUp = function (param) {
-                    this.headers = new http_1.Headers();
-                    console.log('param:');
-                    console.log(JSON.stringify(param));
-                    this.headers.append("Content-Type", 'application/json');
-                    this.requestoptions = new http_1.RequestOptions({
-                        method: http_1.RequestMethod.Post,
-                        headers: this.headers,
-                        body: JSON.stringify(param),
-                        url: this.baseUrl + "accounts/"
+                UserRestClient.prototype.signUp = function (email, password) {
+                    var headers = new http_1.Headers();
+                    headers.append("Content-Type", "application/json");
+                    console.log("param:");
+                    var body = JSON.stringify(email, password);
+                    console.log(body);
+                    var url = this.baseUrl + "accounts";
+                    var options = new http_1.RequestOptions({
+                        headers: headers
                     });
-                    return this.http.request(new http_1.Request(this.requestoptions)).map(function (res) { return res.json(); });
+                    return this.http.post(url, body, options).map(function (res) { return res.json(); });
                 };
                 UserRestClient.prototype.logError = function (err) {
                     console.log(err);

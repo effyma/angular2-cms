@@ -23,8 +23,8 @@ export class UserService{
 		// 		console.log(err.entity);
 		// 	});
 	}
-    signUp(param){
-        var result = this.userRestClient.signUp(param);
+    signUp(email,password){
+        var result = this.userRestClient.signUp(email,password);
         console.log("UserService:");
         console.log(result);
         return result;

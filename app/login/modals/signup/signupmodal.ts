@@ -56,7 +56,8 @@ export class SignUpModal{
 
     send(event,email,password){
     	event.preventDefault();
-        let result = this.userService.signUp({'email':email, 'password':password});
+        // let result = this.userService.signUp({'email':email, 'password':password});
+        let result = this.userService.signUp({email,password});
         // console.log(result.subscribe)
         result.subscribe(
             next => {},

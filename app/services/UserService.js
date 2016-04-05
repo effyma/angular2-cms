@@ -40,8 +40,8 @@ System.register(['../clients/UserRestClient/UserRestClient', 'angular2/core'], f
                     // 		console.log(err.entity);
                     // 	});
                 };
-                UserService.prototype.signUp = function (param) {
-                    var result = this.userRestClient.signUp(param);
+                UserService.prototype.signUp = function (email, password) {
+                    var result = this.userRestClient.signUp(email, password);
                     console.log("UserService:");
                     console.log(result);
                     return result;

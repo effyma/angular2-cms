@@ -42,7 +42,8 @@ System.register(['angular2/core', '../../../services/UserService'], function(exp
                 SignUpModal.prototype.send = function (event, email, password) {
                     var _this = this;
                     event.preventDefault();
-                    var result = this.userService.signUp({ 'email': email, 'password': password });
+                    // let result = this.userService.signUp({'email':email, 'password':password});
+                    var result = this.userService.signUp({ email: email, password: password });
                     // console.log(result.subscribe)
                     result.subscribe(function (next) { }, function (err) {
                         console.log(err);
