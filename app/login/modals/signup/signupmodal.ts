@@ -53,9 +53,10 @@ export class SignUpModal{
     	this._ref.dispose();
         this.errMsg = '';
     }
+
     send(event,email,password){
     	event.preventDefault();
-        let result = this.userService.signUp({email:email,password:password});
+        let result = this.userService.forgetPassword(email);
         // console.log(result.subscribe)
         result.subscribe(
             next => {},
@@ -63,6 +64,8 @@ export class SignUpModal{
                  console.log(err)
                  if(!err._body){
                      this._ref.dispose();
+                 console.log("err")
+                 if(!err._body){this._ref.dispose();
                      this.errMsg = " ";
                      }else{
                          this.errMsg = JSON.parse(err._body).message;
@@ -71,4 +74,4 @@ export class SignUpModal{
              () => {console.log('Complete');}
         );
     }
-}
+

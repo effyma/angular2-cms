@@ -42,16 +42,20 @@ System.register(['angular2/core', '../../../services/UserService'], function(exp
                 SignUpModal.prototype.send = function (event, email, password) {
                     var _this = this;
                     event.preventDefault();
-                    var result = this.userService.signUp({ email: email, password: password });
+                    var result = this.userService.forgetPassword(email);
                     // console.log(result.subscribe)
                     result.subscribe(function (next) { }, function (err) {
                         console.log(err);
                         if (!err._body) {
                             _this._ref.dispose();
-                            _this.errMsg = " ";
-                        }
-                        else {
-                            _this.errMsg = JSON.parse(err._body).message;
+                            console.log("err");
+                            if (!err._body) {
+                                _this._ref.dispose();
+                                _this.errMsg = " ";
+                            }
+                            else {
+                                _this.errMsg = JSON.parse(err._body).message;
+                            }
                         }
                     }, function () { console.log('Complete'); });
                 };
