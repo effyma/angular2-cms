@@ -155,7 +155,7 @@ a.button, a.button:link, a.button:visited, .button {
     line-height: 19px;
     margin: 0 0 10px 0;
 }
-.forget-content-err, signup-content-err{
+.forget-content-err, .signup-content-err{
     color: red;
     font-weight: 300;
     font-size: 16px;

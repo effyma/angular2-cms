@@ -63,17 +63,17 @@ System.register(['angular2/core', 'angular2/http'], function(exports_1, context_
                     //     () => console.log('Complete')
                     //     );
                 };
-                UserRestClient.prototype.signup = function (param) {
-                    var _this = this;
+                UserRestClient.prototype.signUp = function (param) {
                     this.headers = new http_1.Headers();
+                    console.log(param);
                     this.headers.append("Content-Type", 'application/json');
                     this.requestoptions = new http_1.RequestOptions({
                         method: http_1.RequestMethod.Post,
                         url: this.baseUrl + "accounts/",
-                        headers: this.headers,
-                        body: param
+                        body: param,
+                        headers: this.headers
                     });
-                    this.http.request(new http_1.Request(this.requestoptions)).map(function (res) { return res.json(); }).subscribe(function (data) { return _this.logSuccess(data); }, function (err) { return _this.logError(err); }, function () { return console.log('Complete'); });
+                    return this.http.request(new http_1.Request(this.requestoptions)).map(function (res) { return res.json(); });
                 };
                 UserRestClient.prototype.logError = function (err) {
                     console.log(err);
@@ -88,6 +88,20 @@ System.register(['angular2/core', 'angular2/http'], function(exports_1, context_
                     if (jwt) {
                         localStorage.setItem('id_token', jwt);
                     }
+                };
+                UserRestClient.prototype.getUser = function (userId) {
+                };
+                UserRestClient.prototype.createUser = function (user) {
+                    //body= user
+                };
+                UserRestClient.prototype.updateUser = function (user) {
+                    //body= user
+                };
+                UserRestClient.prototype.enableUser = function (userId) {
+                };
+                UserRestClient.prototype.disableUser = function (userId) {
+                };
+                UserRestClient.prototype.deleteUser = function (userId) {
                 };
                 __decorate([
                     __param(0, core_1.Optional()), 

@@ -22,4 +22,11 @@ export class UserService{
 		// 		console.log(err.entity);
 		// 	});
 	}
+    signUp(param){
+        var result = this.userRestClient.signUp(param);
+        console.log("UserService:");
+        console.log(result);
+        return result;
+    }
+    
 }

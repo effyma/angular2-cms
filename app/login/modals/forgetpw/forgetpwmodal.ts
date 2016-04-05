@@ -46,9 +46,8 @@ export class ForgetPasswordModal{
     }
     close(event){
     	event.preventDefault();
-    	// console.log(dialog);
-    	// this.dialog.close();
     	this._ref.dispose();
+        this.errMsg = '';
     }
     send(event,email){
     	event.preventDefault();

@@ -34,9 +34,8 @@ System.register(['angular2/core', '../../../services/UserService'], function(exp
                 };
                 ForgetPasswordModal.prototype.close = function (event) {
                     event.preventDefault();
-                    // console.log(dialog);
-                    // this.dialog.close();
                     this._ref.dispose();
+                    this.errMsg = '';
                 };
                 ForgetPasswordModal.prototype.send = function (event, email) {
                     var _this = this;

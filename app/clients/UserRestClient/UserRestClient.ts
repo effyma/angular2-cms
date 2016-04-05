@@ -50,22 +50,19 @@ export class UserRestClient{
             //     );
     }
     
-    signup(param){
+    signUp(param){
         this.headers = new Headers();
+        console.log(param);
         this.headers.append("Content-Type", 'application/json');
         this.requestoptions = new RequestOptions({
             method: RequestMethod.Post,
             url: this.baseUrl+"accounts/",
-            headers: this.headers,
-            body : param
+            body: param,
+            headers: this.headers
         });
-        this.http.request(new Request(this.requestoptions)).map(
-            res => res.json()).subscribe(
-                data => this.logSuccess(data),
-                err =>  this.logError(err),
-                () => console.log('Complete')
+        return this.http.request(new Request(this.requestoptions)).map(
+            res => res.json()
             )
-        
     }
 
     logError(err){
@@ -82,4 +79,28 @@ export class UserRestClient{
             localStorage.setItem('id_token', jwt)
         }
      }
+     
+    getUser(userId){
+    }
+    
+    createUser(user){
+        //body= user
+    }
+    
+    updateUser(user){
+        //body= user
+    }
+    
+    enableUser(userId){
+        
+    }
+    
+    disableUser(userId){
+        
+    }
+    
+    deleteUser(userId){
+        
+    }
+
 }

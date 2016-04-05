@@ -1,0 +1,25 @@
+<div class="layout-container">
+    <header class="layout-header">
+    <div class="layout-menu-btn" (click)="onClickToggleMenu()">
+        <i class="icono-hamburger"></i></div>
+        <div class="layout-header-title-row">
+            <span class="layout-header-title">Dashboard</span></div>
+    </header>
+    
+    <div class="layout-menu" [ngClass]="{'is-visible': isVisible}">
+        <nav>
+            <div class="layout-menu-item" [routerLink]="['Home']" (click)="onClickToggleMenu()">
+                <span>Home</span>
+            </div>
+            <div class="layout-menu-item" [routerLink]="['Products']" (click)="onClickToggleMenu()">
+                <span>Products</span>
+            </div>
+        </nav>
+    </div>
+    
+    <div class="layout-content">
+        <router-outlet></router-outlet>
+    </div>
+    <div class="layout-backdrop" [ngClass]="{'is-visible': isVisible}" (click)="onClickToggleMenu()"></div>
+
+</div>

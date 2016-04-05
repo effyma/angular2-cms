@@ -40,6 +40,12 @@ System.register(['../clients/UserRestClient/UserRestClient', 'angular2/core'], f
                     // 		console.log(err.entity);
                     // 	});
                 };
+                UserService.prototype.signUp = function (param) {
+                    var result = this.userRestClient.signUp(param);
+                    console.log("UserService:");
+                    console.log(result);
+                    return result;
+                };
                 UserService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [UserRestClient_1.UserRestClient])
