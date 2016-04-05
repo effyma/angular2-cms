@@ -65,13 +65,14 @@ System.register(['angular2/core', 'angular2/http'], function(exports_1, context_
                 };
                 UserRestClient.prototype.signUp = function (param) {
                     this.headers = new http_1.Headers();
-                    console.log(param);
+                    console.log('param:');
+                    console.log(JSON.stringify(param));
                     this.headers.append("Content-Type", 'application/json');
                     this.requestoptions = new http_1.RequestOptions({
                         method: http_1.RequestMethod.Post,
-                        url: this.baseUrl + "accounts/",
-                        body: param,
-                        headers: this.headers
+                        headers: this.headers,
+                        body: JSON.stringify(param),
+                        url: this.baseUrl + "accounts/"
                     });
                     return this.http.request(new http_1.Request(this.requestoptions)).map(function (res) { return res.json(); });
                 };

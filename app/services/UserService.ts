@@ -1,4 +1,5 @@
 import {UserRestClient} from '../clients/UserRestClient/UserRestClient';
+import {SignUp} from '../clients/SignUp/signUp';
 import {Injector,Inject,Injectable} from 'angular2/core';
 // import AccountRestClient from 'AccountRestClient';
 

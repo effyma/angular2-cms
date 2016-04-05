@@ -6,7 +6,6 @@ import {ForgetPasswordModal} from '../login/modals/forgetpw/forgetpwmodal';
 import {SignUpModal} from '../login/modals/signup/signupmodal';
 import {UserService} from '../services/UserService';
 import {UserRestClient} from '../clients/UserRestClient/UserRestClient';
-
 @Component({
 	selector: 'login',
 	styleUrls: ['app/login/login.css'],
