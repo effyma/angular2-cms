@@ -6,7 +6,7 @@ import {DashboardComponent} from './dashboard/components/dashboard';
 @Component({
     selector: 'my-app',
     template: `
-   <login></login>
+   <router-outlet></router-outlet>
     `,
     styleUrls: ['app/app.component.css'],
 	directives: [ROUTER_DIRECTIVES, LoginComponent],

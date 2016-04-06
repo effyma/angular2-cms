@@ -33,7 +33,7 @@ System.register(['angular2/core', 'angular2/router', './login/login.component', 
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        template: "\n   <login></login>\n    ",
+                        template: "\n   <router-outlet></router-outlet>\n    ",
                         styleUrls: ['app/app.component.css'],
                         directives: [router_1.ROUTER_DIRECTIVES, login_component_1.LoginComponent],
                     }),

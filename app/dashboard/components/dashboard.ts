@@ -3,6 +3,7 @@ import {CORE_DIRECTIVES} from 'angular2/common';
 import { RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 import {HomeComponent} from './Home/home';
 import {ProductComponent} from './Products/products';
+import {TesterComponent} from './tester/tester';
 // import {DashboardService} from '../../services/dashboardService';
 @Component({
 	selector: 'dashboard-container',
@@ -14,7 +15,8 @@ import {ProductComponent} from './Products/products';
 @RouteConfig([
     { path: '/**',redirectTo:['Home'] },
 	{ path: '/home', name: 'Home', component: HomeComponent,useAsDefault:true},
-    { path: '/products', name: 'Products', component: ProductComponent }
+    { path: '/products', name: 'Products', component: ProductComponent },
+    { path: '/test', name: 'Tester', component: TesterComponent }
 ])
 
 export class DashboardComponent implements OnInit{

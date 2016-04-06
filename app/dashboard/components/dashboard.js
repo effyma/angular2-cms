@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/common', 'angular2/router', './Home/home', './Products/products'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/common', 'angular2/router', './Home/home', './Products/products', './tester/tester'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './Home/
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, common_1, router_1, home_1, products_1;
+    var core_1, common_1, router_1, home_1, products_1, tester_1;
     var DashboardComponent;
     return {
         setters:[
@@ -28,6 +28,9 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './Home/
             },
             function (products_1_1) {
                 products_1 = products_1_1;
+            },
+            function (tester_1_1) {
+                tester_1 = tester_1_1;
             }],
         execute: function() {
             // import {DashboardService} from '../../services/dashboardService';
@@ -51,7 +54,8 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './Home/
                     router_1.RouteConfig([
                         { path: '/**', redirectTo: ['Home'] },
                         { path: '/home', name: 'Home', component: home_1.HomeComponent, useAsDefault: true },
-                        { path: '/products', name: 'Products', component: products_1.ProductComponent }
+                        { path: '/products', name: 'Products', component: products_1.ProductComponent },
+                        { path: '/test', name: 'Tester', component: tester_1.TesterComponent }
                     ]), 
                     __metadata('design:paramtypes', [])
                 ], DashboardComponent);

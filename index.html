@@ -17,17 +17,20 @@
     <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
    <script src="https://code.angularjs.org/2.0.0-beta.6/http.dev.js"></script>
     <script src="node_modules/angular2/bundles/router.dev.js"></script>
-
+<script type="text/javascript" src="bower_components/crypto-js/crypto-js.js"></script>
 
     <!-- 2. Configure SystemJS -->
     <script>
       System.config({
-        packages: {        
+        packages: {  
           app: {
             format: 'register',
             defaultExtension: 'js'
           }
-        }
+        },
+        map: {
+        "crypto-js": "bower_components/crypto-js/crypto-js.js"
+    }
       });
       
       System.import('app/main')

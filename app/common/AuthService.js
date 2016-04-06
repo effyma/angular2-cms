@@ -21,18 +21,15 @@ System.register(['angular2/core', 'angular2/http'], function(exports_1, context_
                 http_1 = http_1_1;
             }],
         execute: function() {
-            // import localStorage from 'localStorage';
             AuthService = (function () {
+                // private loggedIn = false;
+                // private baseUrl = "http://demo.kooppi.com/mvno-ota-gw/api/sessions";
                 function AuthService(http) {
-                    this.loggedIn = false;
-                    this.baseUrl = "http://demo.kooppi.com/mvno-ota-gw/api/sessions";
-                    this.http = http;
+                    // this.http = http;
                     // this.loggedIn = !!localStorage.getItem('token');
                 }
-                AuthService.prototype.login = function (email, password) {
-                    var headers = new http_1.Headers();
-                    headers.append('Content-Type', 'application/json');
-                    return this.http.post(this.baseUrl, JSON.stringify({ email: email, password: password }));
+                AuthService.prototype.getHeaders = function () {
+                    this.headers.append('x-request-timestamp', new Date().toISOString());
                 };
                 AuthService = __decorate([
                     core_1.Injectable(), 

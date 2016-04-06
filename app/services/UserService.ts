@@ -1,14 +1,17 @@
 import {UserRestClient} from '../clients/UserRestClient/UserRestClient';
-import {SignUp} from '../clients/SignUp/signUp';
-import {Injector,Inject,Injectable} from 'angular2/core';
+import {Injector,Inject,Injectable,provide} from 'angular2/core';
+import {TestRestClient} from '../clients/Test/testRest';
 // import AccountRestClient from 'AccountRestClient';
 
 @Injectable()
 export class UserService{
     userRestClient;
+    testRestClient;
     // accountRestClient = new AccountRestClient.AccountRestClient();
 	constructor(userRestClient:UserRestClient){
         this.userRestClient = userRestClient;
+        let testRestClient = injector.get(TestRestClient)
+        this.testRestClient = testRestClient;
      }
 	forgetPassword(param){
 		var result = this.userRestClient.forgetPassword(param);
@@ -29,5 +32,10 @@ export class UserService{
         console.log(result);
         return result;
     }
+        getSession(){
+        this.testRestClient.getSession();
+    }
     
 }
+
+var injector = Injector.resolveAndCreate([provide(TestRestClient, {useClass: TestRestClient})]);
