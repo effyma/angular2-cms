@@ -1,5 +1,5 @@
 import {Injectable, Injector,Optional} from 'angular2/core';
-import {HTTP_PROVIDERS,Http,Headers,Request,RequestMethod,RequestOptions} from 'angular2/http';
+import {Http,Headers,Request,RequestMethod,RequestOptions} from 'angular2/http';
 
 @Injectable()
 export class UserRestClient{

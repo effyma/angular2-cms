@@ -11,7 +11,7 @@ System.register(['../clients/UserRestClient/UserRestClient', 'angular2/core', '.
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var UserRestClient_1, core_1, testRest_1;
-    var UserService, injector;
+    var UserService;
     return {
         setters:[
             function (UserRestClient_1_1) {
@@ -26,24 +26,17 @@ System.register(['../clients/UserRestClient/UserRestClient', 'angular2/core', '.
         execute: function() {
             // import AccountRestClient from 'AccountRestClient';
             UserService = (function () {
-                // accountRestClient = new AccountRestClient.AccountRestClient();
-                function UserService(userRestClient) {
-                    this.userRestClient = userRestClient;
-                    var testRestClient = injector.get(testRest_1.TestRestClient);
+                // constructor(userRestClient:UserRestClient){
+                // this.userRestClient = userRestClient;
+                function UserService(testRestClient, userRestClient) {
                     this.testRestClient = testRestClient;
+                    this.userRestClient = userRestClient;
                 }
                 UserService.prototype.forgetPassword = function (param) {
                     var result = this.userRestClient.forgetPassword(param);
                     console.log("UserService:");
                     console.log(result);
                     return result;
-                    // this.accountRestClient.forgetPassword(param,
-                    // 	function(data){
-                    // 		console.log(data.entity);
-                    // 	},
-                    // 	function(err){
-                    // 		console.log(err.entity);
-                    // 	});
                 };
                 UserService.prototype.signUp = function (email, password) {
                     var result = this.userRestClient.signUp(email, password);
@@ -56,12 +49,11 @@ System.register(['../clients/UserRestClient/UserRestClient', 'angular2/core', '.
                 };
                 UserService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [UserRestClient_1.UserRestClient])
+                    __metadata('design:paramtypes', [testRest_1.TestRestClient, UserRestClient_1.UserRestClient])
                 ], UserService);
                 return UserService;
             }());
             exports_1("UserService", UserService);
-            injector = core_1.Injector.resolveAndCreate([core_1.provide(testRest_1.TestRestClient, { useClass: testRest_1.TestRestClient })]);
         }
     }
 });

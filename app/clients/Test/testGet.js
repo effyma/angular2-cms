@@ -11,7 +11,7 @@ System.register(['angular2/http', 'angular2/core', '../../common/RestUtil/Interc
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var http_1, core_1, Interceptor_1;
-    var TestRestClient, ConfigRequest, Config;
+    var TestGetClient, ConfigRequest, Config;
     return {
         setters:[
             function (http_1_1) {
@@ -24,67 +24,90 @@ System.register(['angular2/http', 'angular2/core', '../../common/RestUtil/Interc
                 Interceptor_1 = Interceptor_1_1;
             }],
         execute: function() {
-            TestRestClient = (function () {
-                function TestRestClient(http, interceptor) {
+            TestGetClient = (function () {
+                function TestGetClient(http, interceptor) {
                     this.baseUrl = "http://localhost:8080/mvno-ota-gw/api/";
                     this.http = http;
                     this.interceptor = interceptor;
                 }
-                TestRestClient.prototype.login = function (params) {
-                    var _this = this;
-                    var url = this.baseUrl + 'sessions';
-                    var body = params;
-                    var headers = new http_1.Headers();
-                    headers.append("Content-Type", 'application/json');
-                    var requestoptions = new http_1.RequestOptions({
-                        method: http_1.RequestMethod.Post,
-                        url: url,
-                        headers: headers,
-                        body: JSON.stringify(body)
-                    });
-                    return this.http.request(new http_1.Request(requestoptions)).map(function (res) { return res.json(); }).subscribe(function (data) {
-                        localStorage.setItem('token', data.token);
-                        localStorage.setItem('signingKey', data.signingKey);
-                        console.log(data);
-                        _this.getSession();
-                    }, function (err) {
-                        console.log('err:');
-                        console.log(err);
-                    }, function () { return console.log('Complete'); });
-                };
-                TestRestClient.prototype.getSession = function () {
+                TestGetClient.prototype.getSession = function (pathParam) {
                     var request = new ConfigRequest;
                     var config = new Config;
-                    var headers = new http_1.Headers();
-                    var pathParams = 'effy.ma@kooppi.com';
-                    // let url = this.baseUrl+'accounts/'+pathParams;
-                    request.path = 'accounts/' + pathParams;
-                    // request.method = 'GET';
                     var now = this.formatLocalDate();
+                    var url = this.baseUrl + 'accounts/' + pathParam;
+                    // let url = 'http://localhost:8080/mvno-ota-gw/api/continents?localization=zh-tw';
+                    var headers = new http_1.Headers;
+                    headers.append("Content-Type", "application/json");
                     headers.append('x-auth-request-timestamp', now);
                     if (localStorage.getItem('token')) {
                         headers.append('x-auth-user-token', localStorage.getItem('token'));
                         request.headers['x-auth-user-token'] = localStorage.getItem('token');
                     }
                     request.headers['x-auth-request-timestamp'] = now;
+                    request.path = 'accounts/' + pathParam;
                     config.signedHeaders = ['x-auth-user-token', 'x-auth-request-timestamp'];
-                    // request.path = 'accounts';
                     config.key = localStorage.getItem('signingKey');
                     var filterHeader = this.interceptor.getRestFilter(request, config);
-                    console.log('filterHeader :');
-                    console.log(filterHeader);
                     headers.append('x-auth-signature', filterHeader['x-auth-signature']);
                     headers.append('x-auth-signed-headers', filterHeader['x-auth-signed-headers']);
-                    var url = this.baseUrl + request.path;
+                    console.log(request);
+                    console.log(config);
                     var requestoptions = new http_1.RequestOptions({
-                        method: http_1.RequestMethod.Get,
-                        url: url,
-                        headers: headers
+                        headers: headers,
+                        url: url
                     });
                     console.log(requestoptions);
-                    return this.http.request(new http_1.Request(requestoptions)).map(function (res) { return res.json(); });
+                    this.http.get(url, requestoptions).map(function (res) { return res.json(); }).subscribe(function (data) {
+                        console.log('data:');
+                        console.log(data);
+                    }, function (err) {
+                        console.log('err:');
+                        console.log(err);
+                    }, function () { return console.log('Complete'); });
                 };
-                TestRestClient.prototype.formatLocalDate = function () {
+                // getSession2(){
+                //     let request= new ConfigRequest;
+                //     let config= new Config;
+                //     let headers = new Headers();
+                //     let pathParams = 'effy.ma@kooppi.com';
+                //     // let url = this.baseUrl+'accounts/'+pathParams;
+                //     request.path = 'accounts/'+pathParams;
+                //     var now =  this.formatLocalDate();
+                //     headers.append('x-auth-request-timestamp', now);
+                //    if(localStorage.getItem('token')){ // public key
+                //     headers.append('x-auth-user-token',localStorage.getItem('token'));
+                //     request.headers['x-auth-user-token'] = localStorage.getItem('token');
+                //     }
+                //     request.headers['x-auth-request-timestamp'] = now;
+                //     config.signedHeaders = ['x-auth-user-token','x-auth-request-timestamp'];
+                //     // request.path = 'accounts';
+                //     config.key = localStorage.getItem('signingKey');
+                //     let filterHeader = this.interceptor.getRestFilter(request,config);
+                //     console.log('filterHeader :');
+                //     console.log(filterHeader);
+                //     headers.append('x-auth-signature',filterHeader['x-auth-signature']);
+                //     headers.append('x-auth-signed-headers',filterHeader['x-auth-signed-headers']);
+                //     let url = this.baseUrl+request.path;
+                //     let requestoptions = new RequestOptions({
+                //         method: RequestMethod.Get,
+                //         url: url,
+                //         headers: headers
+                //     });
+                //     console.log(requestoptions);
+                //      this.http.get(url,requestoptions).map(
+                //         res => res.json()
+                //         ).subscribe(
+                //             data => {
+                //                 console.log('data:');
+                //                 console.log(data);
+                //             },
+                //             err =>  {
+                //                 console.log('err:');
+                //                 console.log(err);
+                //             },
+                //             () => console.log('Complete'));       
+                // }
+                TestGetClient.prototype.formatLocalDate = function () {
                     var now = new Date(), tzo = -now.getTimezoneOffset(), dif = tzo >= 0 ? '+' : '-', pad = function (num) {
                         var norm = Math.abs(Math.floor(num));
                         return (norm < 10 ? '0' : '') + norm;
@@ -98,13 +121,13 @@ System.register(['angular2/http', 'angular2/core', '../../common/RestUtil/Interc
                         + dif + pad(tzo / 60)
                         + ':' + pad(tzo % 60);
                 };
-                TestRestClient = __decorate([
+                TestGetClient = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [http_1.Http, Interceptor_1.Interceptor])
-                ], TestRestClient);
-                return TestRestClient;
+                ], TestGetClient);
+                return TestGetClient;
             }());
-            exports_1("TestRestClient", TestRestClient);
+            exports_1("TestGetClient", TestGetClient);
             ConfigRequest = (function () {
                 function ConfigRequest() {
                     this.headers = [];
@@ -120,4 +143,4 @@ System.register(['angular2/http', 'angular2/core', '../../common/RestUtil/Interc
         }
     }
 });
-//# sourceMappingURL=testRest.js.map
+//# sourceMappingURL=testGet.js.map
