@@ -1,26 +1,28 @@
 import {Component,Injector,ElementRef,DynamicComponentLoader,provide,ComponentRef} from 'angular2/core';
-import {ModalService} from '../ui/modal/service/modalService';
+
 import {ModalDialogInstance} from '../ui/modal/models/ModalDialogInstance';
 import {ModalComponent} from '../ui/modal/components/ModalComponent';
 import {ForgetPasswordModal} from '../login/modals/forgetpw/forgetpwmodal';
 import {SignUpModal} from '../login/modals/signup/signupmodal';
 import {UserService} from '../services/UserService';
 import {UserRestClient} from '../clients/UserRestClient/UserRestClient';
+import {TestRestClient} from '../clients/test/testRest';
+import {Interceptor} from '../common/restUtil/Interceptor'
 @Component({
 	selector: 'login',
 	styleUrls: ['app/login/login.css'],
 	templateUrl: 'app/login/login.component.html',
 	inputs:['email','password'],
-	providers:[UserRestClient,UserService,ModalService,ElementRef,ModalDialogInstance],
+	providers:[UserRestClient,UserService,ElementRef,ModalDialogInstance],
 	directives: [ModalComponent]
 })
 
 export class LoginComponent {
 	elementRef: ElementRef;
 	componentLoader:DynamicComponentLoader;
-    modal;
-	constructor(userService:UserService, modal:ModalService, elementRef:ElementRef, componentLoader:DynamicComponentLoader){
-		this.modal = modal;
+
+	constructor(userService:UserService,elementRef:ElementRef, componentLoader:DynamicComponentLoader){
+
 		this.elementRef = elementRef;
 		this.componentLoader = componentLoader;
 	}
@@ -33,9 +35,7 @@ export class LoginComponent {
 }
 	toggleForgetPwModal(event){
 		event.preventDefault();
-		let dialog = new ModalDialogInstance;
-		let bindings = Injector.resolve([ provide(ModalDialogInstance, {useValue: dialog}) ]);
-		this.componentLoader.loadIntoLocation(ForgetPasswordModal,this.elementRef,'mymodal',bindings)
+		this.componentLoader.loadIntoLocation(ForgetPasswordModal,this.elementRef,'mymodal')
         .then((ref) => {ref.instance._ref = ref;});
 	}
 	toggleSignUpModal(event){

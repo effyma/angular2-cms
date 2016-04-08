@@ -1,11 +1,13 @@
 import {Component, OnInit} from 'angular2/core';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import { RouteConfig,ROUTER_DIRECTIVES,RouterLink,AsyncRoute} from 'angular2/router';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './login/components/login/login';
+// import { LoginComponent } from './login/login.component';
 import {DashboardComponent} from './dashboard/components/dashboard';
 @Component({
     selector: 'my-app',
     template: `
+    <login></login>
    <router-outlet></router-outlet>
     `,
     styleUrls: ['app/app.component.css'],

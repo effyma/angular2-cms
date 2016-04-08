@@ -112,11 +112,13 @@ System.register(['angular2/http', 'angular2/core', '../../common/RestUtil/Interc
                 }
                 return ConfigRequest;
             }());
+            exports_1("ConfigRequest", ConfigRequest);
             Config = (function () {
                 function Config() {
                 }
                 return Config;
             }());
+            exports_1("Config", Config);
         }
     }
 });

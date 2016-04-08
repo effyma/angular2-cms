@@ -8,10 +8,8 @@ import {Http,HTTP_PROVIDERS} from 'angular2/http'
 export class UserService{
     userRestClient;
     testRestClient;
-	// constructor(userRestClient:UserRestClient){
-        // this.userRestClient = userRestClient;
-   constructor(testRestClient:TestRestClient,userRestClient:UserRestClient){
-        this.testRestClient = testRestClient;
+   constructor(userRestClient:UserRestClient){
+        // this.testRestClient = testRestClient;
         this.userRestClient = userRestClient;
      }
 	forgetPassword(param){
@@ -27,9 +25,9 @@ export class UserService{
         return result;
     }
     
-    getSession(){
-        this.testRestClient.getSession();
-    }
+    // getSession(){
+    //     this.testRestClient.getSession();
+    // }
     
 }
 

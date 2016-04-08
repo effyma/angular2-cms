@@ -1,4 +1,4 @@
-System.register(['../clients/UserRestClient/UserRestClient', 'angular2/core'], function(exports_1, context_1) {
+System.register(['../../clients/userRestClient/userRestClient', 'angular2/core'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,43 +10,45 @@ System.register(['../clients/UserRestClient/UserRestClient', 'angular2/core'], f
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var UserRestClient_1, core_1;
-    var UserService;
+    var __param = (this && this.__param) || function (paramIndex, decorator) {
+        return function (target, key) { decorator(target, key, paramIndex); }
+    };
+    var userRestClient_1, core_1;
+    var LoginService;
     return {
         setters:[
-            function (UserRestClient_1_1) {
-                UserRestClient_1 = UserRestClient_1_1;
+            function (userRestClient_1_1) {
+                userRestClient_1 = userRestClient_1_1;
             },
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
-            // import AccountRestClient from 'AccountRestClient';
-            UserService = (function () {
-                function UserService(userRestClient) {
-                    // this.testRestClient = testRestClient;
+            LoginService = (function () {
+                function LoginService(userRestClient) {
                     this.userRestClient = userRestClient;
                 }
-                UserService.prototype.forgetPassword = function (param) {
+                LoginService.prototype.sendForgetPassword = function (param) {
                     var result = this.userRestClient.forgetPassword(param);
                     console.log("UserService:");
                     console.log(result);
                     return result;
                 };
-                UserService.prototype.signUp = function (email, password) {
+                LoginService.prototype.signUp = function (email, password) {
                     var result = this.userRestClient.signUp(email, password);
                     console.log("UserService:");
                     console.log(result);
                     return result;
                 };
-                UserService = __decorate([
-                    core_1.Injectable(), 
-                    __metadata('design:paramtypes', [UserRestClient_1.UserRestClient])
-                ], UserService);
-                return UserService;
+                LoginService = __decorate([
+                    core_1.Injectable(),
+                    __param(0, core_1.Inject(userRestClient_1.UserRestClient)), 
+                    __metadata('design:paramtypes', [userRestClient_1.UserRestClient])
+                ], LoginService);
+                return LoginService;
             }());
-            exports_1("UserService", UserService);
+            exports_1("LoginService", LoginService);
         }
     }
 });
-//# sourceMappingURL=UserService.js.map
+//# sourceMappingURL=LoginService.js.map

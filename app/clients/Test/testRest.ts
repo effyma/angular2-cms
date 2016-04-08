@@ -99,10 +99,9 @@ export class TestRestClient{
         + ':' + pad(now.getSeconds()) 
         + dif + pad(tzo / 60) 
         + ':' + pad(tzo % 60);
+    }
 }
-
-}
-class ConfigRequest{
+export class ConfigRequest{
     headers=[];
     signedHeaders=[];
     path;
@@ -110,7 +109,7 @@ class ConfigRequest{
     params;
     entity;
 }
-class Config{
+export class Config{
     key;
     signedHeaders;
 }

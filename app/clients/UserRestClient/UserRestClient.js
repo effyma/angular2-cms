@@ -29,39 +29,22 @@ System.register(['angular2/core', 'angular2/http'], function(exports_1, context_
                     this.baseUrl = "http://demo.kooppi.com/mvno-ota-gw/api/";
                     this.http = http;
                 }
-                // PostRequest(url,data) {
+                // forgetPassword(param){
+                //     console.log("UserRestClient param :", param)
                 //     this.headers = new Headers();
-                //     this.headers.append("Content-Type", 'application/json');
-                //     this.headers.append("Authorization", 'Bearer ' + localStorage.getItem('id_token'))
                 //     this.requestoptions = new RequestOptions({
                 //         method: RequestMethod.Post,
-                //         url: url,
-                //         headers: this.headers,
-                //         body: JSON.stringify(data)
-                //     })
-                //     return this.http.request(new Request(this.requestoptions))
-                //         .map((res: Response) => {
-                //             if (res) {
-                //                 return [{ status: res.status, json: res.json() }]
-                //             }
-                //         });
+                //         url: this.baseUrl+"accounts/"+param+"/forgetPassword",
+                //     });
+                //     return this.http.request(new Request(this.requestoptions)).map(
+                //         res => res.json()
+                //         )
                 // }
                 UserRestClient.prototype.forgetPassword = function (param) {
+                    var http = this.http;
                     console.log("UserRestClient param :", param);
-                    this.headers = new http_1.Headers();
-                    // this.headers.append("Content-Type", 'application/json');
-                    this.requestoptions = new http_1.RequestOptions({
-                        method: http_1.RequestMethod.Post,
-                        url: this.baseUrl + "accounts/" + param + "/forgetPassword",
-                    });
-                    // console.log("UserRestClient headers :", this.headers);
-                    // console.log("UserRestClient requestoptions :", this.requestoptions);
-                    return this.http.request(new http_1.Request(this.requestoptions)).map(function (res) { return res.json(); });
-                    // .subscribe(
-                    //     data => this.logSuccess(data),
-                    //     err =>  this.logError(err),
-                    //     () => console.log('Complete')
-                    //     );
+                    var url = this.baseUrl + "accounts/" + param + "/forgetPassword";
+                    return http_1.Http.prototype.post(url, '').map(function (res) { return res.json(); });
                 };
                 UserRestClient.prototype.signUp = function (email, password) {
                     var headers = new http_1.Headers();
@@ -89,20 +72,6 @@ System.register(['angular2/core', 'angular2/http'], function(exports_1, context_
                         localStorage.setItem('id_token', jwt);
                     }
                 };
-                UserRestClient.prototype.getUser = function (userId) {
-                };
-                UserRestClient.prototype.createUser = function (user) {
-                    //body= user
-                };
-                UserRestClient.prototype.updateUser = function (user) {
-                    //body= user
-                };
-                UserRestClient.prototype.enableUser = function (userId) {
-                };
-                UserRestClient.prototype.disableUser = function (userId) {
-                };
-                UserRestClient.prototype.deleteUser = function (userId) {
-                };
                 __decorate([
                     __param(0, core_1.Optional()), 
                     __metadata('design:type', Function), 
@@ -110,7 +79,8 @@ System.register(['angular2/core', 'angular2/http'], function(exports_1, context_
                     __metadata('design:returntype', void 0)
                 ], UserRestClient.prototype, "logSuccess", null);
                 UserRestClient = __decorate([
-                    core_1.Injectable(), 
+                    core_1.Injectable(),
+                    __param(0, core_1.Inject(http_1.Http)), 
                     __metadata('design:paramtypes', [http_1.Http])
                 ], UserRestClient);
                 return UserRestClient;
@@ -119,4 +89,4 @@ System.register(['angular2/core', 'angular2/http'], function(exports_1, context_
         }
     }
 });
-//# sourceMappingURL=UserRestClient.js.map
+//# sourceMappingURL=userRestClient.js.map
