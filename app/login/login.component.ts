@@ -1,7 +1,5 @@
 import {Component,Injector,ElementRef,DynamicComponentLoader,provide,ComponentRef} from 'angular2/core';
 
-import {ModalDialogInstance} from '../ui/modal/models/ModalDialogInstance';
-import {ModalComponent} from '../ui/modal/components/ModalComponent';
 import {ForgetPasswordModal} from '../login/modals/forgetpw/forgetpwmodal';
 import {SignUpModal} from '../login/modals/signup/signupmodal';
 import {UserService} from '../services/UserService';
@@ -13,16 +11,15 @@ import {Interceptor} from '../common/restUtil/Interceptor'
 	styleUrls: ['app/login/login.css'],
 	templateUrl: 'app/login/login.component.html',
 	inputs:['email','password'],
-	providers:[UserRestClient,UserService,ElementRef,ModalDialogInstance],
-	directives: [ModalComponent]
+	providers:[UserRestClient,UserService,ElementRef]
+	// directives: []
 })
 
 export class LoginComponent {
 	elementRef: ElementRef;
 	componentLoader:DynamicComponentLoader;
 
-	constructor(userService:UserService,elementRef:ElementRef, componentLoader:DynamicComponentLoader){
-
+	constructor(elementRef:ElementRef, componentLoader:DynamicComponentLoader){
 		this.elementRef = elementRef;
 		this.componentLoader = componentLoader;
 	}
@@ -31,7 +28,6 @@ export class LoginComponent {
 	// }
 	login(email,password){
 	console.log("email: "+email+" password: "+password)
-
 }
 	toggleForgetPwModal(event){
 		event.preventDefault();

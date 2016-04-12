@@ -1,5 +1,5 @@
 export var Nav = [
-    {'path': ,'name':},
-    {'path': ,'name':},
-    {'path': ,'name':},
+    {'path': 'home','name':'Home'},
+    {'path': 'products','name':'Products'},
+    {'path': 'tester','name':'Tester'}
 ]

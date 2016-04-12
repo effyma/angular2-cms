@@ -38,6 +38,9 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './Home/
                 DashboardComponent.prototype.onClickToggleMenu = function () {
                     this.isVisible = !this.isVisible;
                 };
+                DashboardComponent.prototype.onClickLogout = function (e) {
+                    e.preventDefault();
+                };
                 DashboardComponent = __decorate([
                     core_1.Component({
                         selector: 'dashboard-container',

@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../../services/MyProfile/MyProfileService', '../../../clients/Test/testRest', '../../../common/RestUtil/Interceptor'], function(exports_1, context_1) {
+System.register(['angular2/core', '../../services/MyProfile/MyProfileService', '../../../clients/ProfileRestClient/ProfileRestClient', '../../../common/RestUtil/Interceptor'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', '../../services/MyProfile/MyProfileService', '
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, MyProfileService_1, testRest_1, Interceptor_1;
+    var core_1, MyProfileService_1, ProfileRestClient_1, Interceptor_1;
     var MyProfileComponent;
     return {
         setters:[
@@ -20,8 +20,8 @@ System.register(['angular2/core', '../../services/MyProfile/MyProfileService', '
             function (MyProfileService_1_1) {
                 MyProfileService_1 = MyProfileService_1_1;
             },
-            function (testRest_1_1) {
-                testRest_1 = testRest_1_1;
+            function (ProfileRestClient_1_1) {
+                ProfileRestClient_1 = ProfileRestClient_1_1;
             },
             function (Interceptor_1_1) {
                 Interceptor_1 = Interceptor_1_1;
@@ -53,7 +53,7 @@ System.register(['angular2/core', '../../services/MyProfile/MyProfileService', '
                 MyProfileComponent = __decorate([
                     core_1.Component({
                         template: "\n    <div>MyProfile</div>\n    <div *ngIf=\"profile\">\n    <div> <label>email: </label>{{profile.email}}</div>\n    <div> <label>firstName: </label>{{profile.firstName}}</div>\n    <div> <label>lastName: </label> {{profile.lastName}}</div>\n    <div> <label>sims: </label> {{profile.sims}}</div>\n    </div>",
-                        providers: [MyProfileService_1.MyProfileService, testRest_1.TestRestClient, Interceptor_1.Interceptor]
+                        providers: [MyProfileService_1.MyProfileService, Interceptor_1.Interceptor, ProfileRestClient_1.ProfileRestClient]
                     }), 
                     __metadata('design:paramtypes', [MyProfileService_1.MyProfileService])
                 ], MyProfileComponent);

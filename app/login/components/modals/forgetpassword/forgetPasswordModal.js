@@ -44,7 +44,7 @@ System.register(['angular2/core', '../../../service/LoginService', '../../../../
                     var _this = this;
                     event.preventDefault();
                     console.log(this.loginService);
-                    var result = this.loginService.sendForgetPassword(email);
+                    var result = this.loginService.forgetPassword(email);
                     result.subscribe(function (next) { }, function (err) {
                         console.log("err");
                         if (!err._body) {

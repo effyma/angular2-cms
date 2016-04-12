@@ -2,19 +2,7 @@ System.register(['crypto-js'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var crypto_js_1;
-    // export function getSignatureKey(key, dateStamp, regionName, serviceName) {
-    // key = 'wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY'
-    // dateStamp = '20120215'
-    // regionName = 'us-east-1'
-    // serviceName = 'iam'
-    //    var kDate= Crypto.HmacSHA256(dateStamp, "AWS4" + key, { asBytes: true})
-    //    var kRegion= Crypto.HmacSHA256( regionName, kDate, { asBytes: true });
-    //    var kService=Crypto.HmacSHA256( serviceName, kRegion, { asBytes: true });
-    //    var kSigning= Crypto.HmacSHA256( "aws4_request", kService, { asBytes: true });
-    // var kkDate= Crypto.HmacSHA256(dateStamp, "AWS4" + key); 
-    //    console.log(kSigning.toString(CryptoJS.enc.Hex));
-    //    return kSigning;
-    // }
+    // declare var CryptoJS
     function uriEncode(input, encodeSlash) {
         if (typeof input !== 'string') {
             input = String(input);
@@ -37,11 +25,22 @@ System.register(['crypto-js'], function(exports_1, context_1) {
     exports_1("uriEncode", uriEncode);
     function getCanonicalRequest(method, path, params, headers, payload) {
         var result = '';
-        result += method + '\n';
+        result += method;
+        result += '\n';
         if (!path.startsWith('/')) {
             path = '/' + path;
         }
-        result += uriEncode(path, false) + '\n';
+        result += uriEncode(path, false);
+        // result +='/mvno-ota-gw/api/accounts/test@kooppi.com';
+        result += '\n';
+        var paramString = '';
+        for (var key in params) {
+            if (params.hasOwnProperty(key)) {
+                paramString += (uriEncode(key, true) + '=' + uriEncode(params[key], true) + '&');
+            }
+        }
+        result += paramString.slice(0, -1);
+        result += '\n';
         var headerString = '';
         var signedHeaderString = '';
         var headerKey = [];
@@ -57,15 +56,22 @@ System.register(['crypto-js'], function(exports_1, context_1) {
             headerString += (headerKey[i].toLowerCase() + ":" + headers[headerKey[i]].trim() + '\n');
             signedHeaderString += (headerKey[i].toLowerCase() + ';');
         }
-        result += headerString + '\n';
-        result += signedHeaderString.slice(0, -1) + '\n';
-        var md = crypto_js_1.default.SHA256(payload).toString(CryptoJS.enc.Hex);
-        result += md;
+        result += headerString;
+        result += '\n';
+        result += signedHeaderString.slice(0, -1);
+        if (payload) {
+            result += '\n';
+            var md = crypto_js_1.default.SHA256(payload).toString(CryptoJS.enc.Hex);
+            result += md;
+        }
         return result;
     }
     exports_1("getCanonicalRequest", getCanonicalRequest);
     function getSignature(key, method, path, params, headers, payload) {
         var canonicalRequest = getCanonicalRequest(method, path, params, headers, payload);
+        console.log('canonicalRequest:', '\n', canonicalRequest);
+        console.log(crypto_js_1.default.SHA256(canonicalRequest, key));
+        console.log(crypto_js_1.default.SHA256(canonicalRequest, key).toString(CryptoJS.enc.Hex));
         var hmac = crypto_js_1.default.SHA256(canonicalRequest, key).toString(CryptoJS.enc.Hex);
         return hmac;
     }

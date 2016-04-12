@@ -26,6 +26,7 @@ export class Interceptor{
 
         headers['x-auth-signature'] = authSignature
         headers['x-auth-signed-headers'] = authSignedHeaders
+        
         return request.headers;
     }
 }

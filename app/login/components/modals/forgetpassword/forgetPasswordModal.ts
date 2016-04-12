@@ -2,6 +2,7 @@ import { Component,ComponentRef } from 'angular2/core';
 import {LoginService} from '../../../service/LoginService';
 import {UserRestClient} from '../../../../clients/userRestClient/userRestClient';
 
+
 @Component({
 	template: `
 	<div class="in modal-backdrop" (click)="close($event)"></div>
@@ -52,7 +53,7 @@ export class ForgetPasswordModal{
     send(event,email){
     	event.preventDefault();
         console.log(this.loginService)
-        let result = this.loginService.sendForgetPassword(email);
+        let result = this.loginService.forgetPassword(email);
         result.subscribe(
             next => {},
              err => {

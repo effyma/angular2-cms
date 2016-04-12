@@ -1,8 +1,8 @@
 import {Component,Input,OnInit} from 'angular2/core';
 import {MyProfileService} from '../../services/MyProfile/MyProfileService';
-import {TestRestClient} from '../../../clients/Test/testRest';
+import {ProfileRestClient} from '../../../clients/ProfileRestClient/ProfileRestClient';
 import {Interceptor} from '../../../common/RestUtil/Interceptor';
-
+import {HTTP_PROVIDERS} from 'angular2/http';
 @Component({
     template:`
     <div>MyProfile</div>
@@ -12,7 +12,7 @@ import {Interceptor} from '../../../common/RestUtil/Interceptor';
     <div> <label>lastName: </label> {{profile.lastName}}</div>
     <div> <label>sims: </label> {{profile.sims}}</div>
     </div>`,
-    providers: [MyProfileService,TestRestClient,Interceptor]
+    providers: [MyProfileService,Interceptor,ProfileRestClient]
 })
 
 export class MyProfileComponent implements OnInit{

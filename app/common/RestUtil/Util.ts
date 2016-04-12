@@ -1,24 +1,6 @@
 /// <reference path="../../../bower_components/crypto-js/crypto-js.d.ts" />
+import Crypto from 'crypto-js';
 // declare var CryptoJS
-// import Crypto from '../../../bower_components/crypto-js/crypto-js';
- import Crypto from 'crypto-js';
-
-// export function getSignatureKey(key, dateStamp, regionName, serviceName) {
-// key = 'wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY'
-// dateStamp = '20120215'
-// regionName = 'us-east-1'
-// serviceName = 'iam'
-//    var kDate= Crypto.HmacSHA256(dateStamp, "AWS4" + key, { asBytes: true})
-//    var kRegion= Crypto.HmacSHA256( regionName, kDate, { asBytes: true });
-//    var kService=Crypto.HmacSHA256( serviceName, kRegion, { asBytes: true });
-//    var kSigning= Crypto.HmacSHA256( "aws4_request", kService, { asBytes: true });
-
-
-// var kkDate= Crypto.HmacSHA256(dateStamp, "AWS4" + key); 
-//    console.log(kSigning.toString(CryptoJS.enc.Hex));
-            
-//    return kSigning;
-// }
                 
 export function uriEncode (input,encodeSlash) {
     if (typeof input !== 'string') {
@@ -40,9 +22,21 @@ export function uriEncode (input,encodeSlash) {
             
 export function getCanonicalRequest(method,path,params,headers,payload){
     var result='';
-    result += method + '\n';
+    result += method;
+    result += '\n';
     if(!path.startsWith('/')){path = '/'+path}
-    result += uriEncode(path,false) + '\n';
+    result += uriEncode(path,false)
+    // result +='/mvno-ota-gw/api/accounts/test@kooppi.com';
+    result += '\n';
+    var paramString = ''
+    for (let key in params) {
+        if (params.hasOwnProperty(key)) {
+            paramString += (uriEncode(key, true) + '=' + uriEncode(params[key], true) + '&')
+        }
+    }
+    result += paramString.slice(0, -1)
+    result += '\n'
+    
     var headerString = ''
     var signedHeaderString = ''
     var headerKey = []
@@ -58,16 +52,23 @@ export function getCanonicalRequest(method,path,params,headers,payload){
         headerString += (headerKey[i].toLowerCase() + ":" + headers[headerKey[i]].trim() + '\n')
         signedHeaderString += (headerKey[i].toLowerCase() + ';')
     }
-    result += headerString + '\n'
-    result += signedHeaderString.slice(0, -1) + '\n'
+    result += headerString
+    result += '\n'
+
+    result += signedHeaderString.slice(0, -1)
+
+    if(payload){
+    result +='\n'
     var md = Crypto.SHA256(payload).toString(CryptoJS.enc.Hex);
-    result += md;
-    
+    result += md;}
     return result
 }
 
 export function getSignature(key,method,path,params,headers,payload){
     var canonicalRequest = getCanonicalRequest(method,path,params,headers,payload);
+        console.log('canonicalRequest:','\n', canonicalRequest);
+        console.log(Crypto.SHA256(canonicalRequest,key));
+        console.log(Crypto.SHA256(canonicalRequest,key).toString(CryptoJS.enc.Hex));
     var hmac = Crypto.SHA256(canonicalRequest,key).toString(CryptoJS.enc.Hex);
     return hmac;
 }

@@ -1,4 +1,4 @@
-import {Component,Injector,ElementRef,DynamicComponentLoader,provide,ComponentRef} from 'angular2/core';
+import {Component,ElementRef,DynamicComponentLoader,provide,ComponentRef} from 'angular2/core';
 import {ForgetPasswordModal} from '../modals/forgetpassword/forgetPasswordModal';
 import {SignUpModal} from '../modals/signup/signUpModal';
 import {LoginService} from '../../service/LoginService';

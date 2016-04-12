@@ -69,7 +69,8 @@ export class SignUpModal{
                          this.errMsg = JSON.parse(err._body).message;
                      }
                     },
-             () => {console.log('Complete');}
-        );
+             () => console.log('Complete')
+             );
     }
+}
 

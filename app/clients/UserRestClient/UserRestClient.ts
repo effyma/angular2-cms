@@ -4,29 +4,18 @@ import {Http,Headers,Request,RequestMethod,RequestOptions} from 'angular2/http';
 @Injectable()
 export class UserRestClient{
     http;
-    headers;
-    requestoptions;
+    // headers;
+    // requestoptions;
     baseUrl = "http://demo.kooppi.com/mvno-ota-gw/api/";
-    constructor(@Inject(Http)http:Http){
+    constructor(http:Http){
         this.http = http;
     }
 
-    // forgetPassword(param){
-    //     console.log("UserRestClient param :", param)
-    //     this.headers = new Headers();
-    //     this.requestoptions = new RequestOptions({
-    //         method: RequestMethod.Post,
-    //         url: this.baseUrl+"accounts/"+param+"/forgetPassword",
-    //     });
-    //     return this.http.request(new Request(this.requestoptions)).map(
-    //         res => res.json()
-    //         )
-    // }
     forgetPassword(param){
-        var http = this.http
+        var http = this.http;
         console.log("UserRestClient param :", param)
         let url = this.baseUrl+"accounts/"+param+"/forgetPassword"
-        return Http.prototype.post(url,'').map(
+        return this.http.post(url,'').map(
             res => res.json()
             )
     }
@@ -45,20 +34,18 @@ export class UserRestClient{
             res => res.json()
             )
     }
-
-    logError(err){
-      console.log(err);
-      }
-    logSuccess(@Optional()data){
-        console.log("success");
-        if(data){
-            console.log(data);
-        }
-      }
-    saveJwt(jwt) {
-        if(jwt) {
-            localStorage.setItem('id_token', jwt)
-        }
-     }
-
 }
+    // logError(err){
+    //   console.log(err);
+    //   }
+    // logSuccess(@Optional()data){
+    //     console.log("success");
+    //     if(data){
+    //         console.log(data);
+    //     }
+    //   }
+    // saveJwt(jwt) {
+    //     if(jwt) {
+    //         localStorage.setItem('id_token', jwt)
+    //     }
+    //  }

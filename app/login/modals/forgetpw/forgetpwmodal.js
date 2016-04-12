@@ -40,6 +40,7 @@ System.register(['angular2/core', '../../../services/UserService'], function(exp
                 ForgetPasswordModal.prototype.send = function (event, email) {
                     var _this = this;
                     event.preventDefault();
+                    console.log(this.userService);
                     var result = this.userService.forgetPassword(email);
                     // console.log(result.subscribe)
                     result.subscribe(function (next) { }, function (err) {
@@ -51,7 +52,7 @@ System.register(['angular2/core', '../../../services/UserService'], function(exp
                         else {
                             _this.errMsg = JSON.parse(err._body).message;
                         }
-                    }, function () { console.log('Complete'); });
+                    }, function () { return console.log('Complete'); });
                     // this._ref.dispose();
                     //sendEmail(email).then(this.close);
                     // this.dialog.dispose();

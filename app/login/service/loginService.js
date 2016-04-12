@@ -10,9 +10,6 @@ System.register(['../../clients/userRestClient/userRestClient', 'angular2/core']
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var __param = (this && this.__param) || function (paramIndex, decorator) {
-        return function (target, key) { decorator(target, key, paramIndex); }
-    };
     var userRestClient_1, core_1;
     var LoginService;
     return {
@@ -28,7 +25,7 @@ System.register(['../../clients/userRestClient/userRestClient', 'angular2/core']
                 function LoginService(userRestClient) {
                     this.userRestClient = userRestClient;
                 }
-                LoginService.prototype.sendForgetPassword = function (param) {
+                LoginService.prototype.forgetPassword = function (param) {
                     var result = this.userRestClient.forgetPassword(param);
                     console.log("UserService:");
                     console.log(result);
@@ -41,8 +38,7 @@ System.register(['../../clients/userRestClient/userRestClient', 'angular2/core']
                     return result;
                 };
                 LoginService = __decorate([
-                    core_1.Injectable(),
-                    __param(0, core_1.Inject(userRestClient_1.UserRestClient)), 
+                    core_1.Injectable(), 
                     __metadata('design:paramtypes', [userRestClient_1.UserRestClient])
                 ], LoginService);
                 return LoginService;

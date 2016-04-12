@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../../../services/UserService', '../../../clients/Test/testRest', '../../../clients/Test/testGet', '../../../clients/UserRestClient/UserRestClient', 'angular2/http', '../../../common/RestUtil/Interceptor'], function(exports_1, context_1) {
+System.register(['angular2/core', '../../../clients/Test/testRest', 'angular2/http', '../../../common/RestUtil/Interceptor'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,24 +10,15 @@ System.register(['angular2/core', '../../../services/UserService', '../../../cli
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, UserService_1, testRest_1, testGet_1, UserRestClient_1, http_1, Interceptor_1;
+    var core_1, testRest_1, http_1, Interceptor_1;
     var TesterComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (UserService_1_1) {
-                UserService_1 = UserService_1_1;
-            },
             function (testRest_1_1) {
                 testRest_1 = testRest_1_1;
-            },
-            function (testGet_1_1) {
-                testGet_1 = testGet_1_1;
-            },
-            function (UserRestClient_1_1) {
-                UserRestClient_1 = UserRestClient_1_1;
             },
             function (http_1_1) {
                 http_1 = http_1_1;
@@ -36,33 +27,27 @@ System.register(['angular2/core', '../../../services/UserService', '../../../cli
                 Interceptor_1 = Interceptor_1_1;
             }],
         execute: function() {
-            // import {uriEncode , getSignatureKey} from '../../../common/RestUtil/Util'
             TesterComponent = (function () {
-                function TesterComponent(userService, testRestClient, testGetClient) {
-                    this.userService = UserService_1.UserService;
+                function TesterComponent(testRestClient) {
                     this.testRestClient = testRestClient;
-                    this.testGetClient = testGetClient;
                 }
-                TesterComponent.prototype.onClickEncode = function (e) {
+                TesterComponent.prototype.onClickGetToken = function (e) {
                     e.preventDefault();
-                    // this.userService.getSession();
-                    var email = 'effy.ma@kooppi.com';
+                    var email = 'test@kooppi.com';
                     var password = '123456';
                     this.testRestClient.login({ email: email, password: password });
-                    // this.getInfo();
-                    // this.testRestClient.getSession();
-                    // var result = uriEncode('/123-._~ *`!#$%^&*()+=` ',false);
                 };
-                TesterComponent.prototype.onClickGetInfo = function () {
-                    this.testGetClient.getSession('effy.ma@kooppi.com');
+                TesterComponent.prototype.onClickGetInfo = function (e) {
+                    e.preventDefault();
+                    this.testRestClient.getSession('test@kooppi.com');
                 };
                 TesterComponent = __decorate([
                     core_1.Component({
                         selector: 'test-container',
-                        template: "<h1>Testing page</h1>\n    <button (click)=\"onClickEncode($event)\">encodeUri</button>\n    <button (click)=\"onClickGetInfo($event)\">getInfo</button>\n    ",
-                        providers: [UserService_1.UserService, testGet_1.TestGetClient, testRest_1.TestRestClient, http_1.HTTP_PROVIDERS, Interceptor_1.Interceptor, UserRestClient_1.UserRestClient]
+                        template: "<h1>Testing page</h1>\n    <button (click)=\"onClickGetToken($event)\">encodeUri</button>\n    <button (click)=\"onClickGetInfo($event)\">getInfo</button>\n    ",
+                        providers: [testRest_1.TestRestClient, http_1.HTTP_PROVIDERS, Interceptor_1.Interceptor]
                     }), 
-                    __metadata('design:paramtypes', [UserService_1.UserService, testRest_1.TestRestClient, testGet_1.TestGetClient])
+                    __metadata('design:paramtypes', [testRest_1.TestRestClient])
                 ], TesterComponent);
                 return TesterComponent;
             }());

@@ -1,3 +1,4 @@
+declare var System:any;
 import {Component, OnInit} from 'angular2/core';
 import {CORE_DIRECTIVES} from 'angular2/common';
 import { RouteConfig, ROUTER_DIRECTIVES,AsyncRoute} from 'angular2/router';
@@ -16,10 +17,10 @@ import {componentProxyFactory} from '../../common/Proxy/ComponentProxyFactory'
 
 @RouteConfig([
     { path: '/**',redirectTo:['Home'] },
-    new AsyncRoute({name:'Products',path:'/products',loader:()=>System.import('../../../app/dashboard/components/Products/products').then(p=>p.ProductComponent)}),
-    new AsyncRoute({name:'Tester',path:'/test',loader:()=>System.import('../../../app/dashboard/components/tester/tester').then(t=>t.TesterComponent)}),
-    new AsyncRoute({name:'Users',path:'/users',loader:()=>System.import('../../../app/dashboard/components/Users/users').then(u=>u.UserListComponent)}),
-    new AsyncRoute({name:'MyProfile',path:'/myprofile',loader:()=>System.import('../../../app/dashboard/components/MyProfile/MyProfile').then(u=>u.MyProfileComponent)}),
+    new AsyncRoute({name:'Products',path:'/products',loader:()=> System.import('../../../app/dashboard/components/Products/products').then(p=>p.ProductComponent)}),
+    new AsyncRoute({name:'Tester',path:'/test',loader:()=> System.import('../../../app/dashboard/components/tester/tester').then(t=>t.TesterComponent)}),
+    new AsyncRoute({name:'Users',path:'/users',loader:()=> System.import('../../../app/dashboard/components/Users/users').then(u=>u.UserListComponent)}),
+    new AsyncRoute({name:'MyProfile',path:'/myprofile',loader:()=> System.import('../../../app/dashboard/components/MyProfile/MyProfile').then(u=>u.MyProfileComponent)}),
     
     // { path: '/products', component:componentProxyFactory({path:'../../../app/dashboard/components/Products/products',provide:p => p.ProductComponent}),name:'Products'},
 	// { path: '/test', component:componentProxyFactory({path:'../../../app/dashboard/components/tester/tester',provide:t => t=>t.TesterComponent}),name:'Tester'},
@@ -40,6 +41,9 @@ export class DashboardComponent implements OnInit{
         this.isVisible = !this.isVisible;
     }
     
+    onClickLogout(e){
+        e.preventDefault();
+    }
 
 	// constructor(dashboardService:DashboardService){
     //     this.dashboardService = dashboardService;

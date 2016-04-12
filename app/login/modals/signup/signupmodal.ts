@@ -73,4 +73,5 @@ export class SignUpModal{
              () => {console.log('Complete');}
         );
     }
+}
 

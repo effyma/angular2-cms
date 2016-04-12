@@ -1,14 +1,15 @@
-import {TestRestClient} from '../../../clients/Test/testRest';
-import {Injectable} from 'angular2/core';
+import {ProfileRestClient} from '../../../clients/ProfileRestClient/ProfileRestClient';
+import {Injectable, Inject,Injector} from 'angular2/core';
 
 @Injectable()
 export class MyProfileService{
-    testRestClient;
-    constructor(testRestClient:TestRestClient){
-        this.testRestClient = testRestClient;
+    profileRestClient;
+    constructor(profileRestClient:ProfileRestClient){
+        this.profileRestClient = profileRestClient;
     }
-    getMyProfile(_data, _err){
-        let result = this.testRestClient.getSession();
+    getMyProfile(param){
+        let result = this.profileRestClient.getAccountInfo('test@kooppi.com');
+        console.log(result)
         return result
     }
 

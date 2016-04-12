@@ -10,9 +10,6 @@ System.register(['angular2/core', 'angular2/http'], function(exports_1, context_
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var __param = (this && this.__param) || function (paramIndex, decorator) {
-        return function (target, key) { decorator(target, key, paramIndex); }
-    };
     var core_1, http_1;
     var UserRestClient;
     return {
@@ -26,25 +23,16 @@ System.register(['angular2/core', 'angular2/http'], function(exports_1, context_
         execute: function() {
             UserRestClient = (function () {
                 function UserRestClient(http) {
+                    // headers;
+                    // requestoptions;
                     this.baseUrl = "http://demo.kooppi.com/mvno-ota-gw/api/";
                     this.http = http;
                 }
-                // forgetPassword(param){
-                //     console.log("UserRestClient param :", param)
-                //     this.headers = new Headers();
-                //     this.requestoptions = new RequestOptions({
-                //         method: RequestMethod.Post,
-                //         url: this.baseUrl+"accounts/"+param+"/forgetPassword",
-                //     });
-                //     return this.http.request(new Request(this.requestoptions)).map(
-                //         res => res.json()
-                //         )
-                // }
                 UserRestClient.prototype.forgetPassword = function (param) {
                     var http = this.http;
                     console.log("UserRestClient param :", param);
                     var url = this.baseUrl + "accounts/" + param + "/forgetPassword";
-                    return http_1.Http.prototype.post(url, '').map(function (res) { return res.json(); });
+                    return this.http.post(url, '').map(function (res) { return res.json(); });
                 };
                 UserRestClient.prototype.signUp = function (email, password) {
                     var headers = new http_1.Headers();
@@ -58,29 +46,8 @@ System.register(['angular2/core', 'angular2/http'], function(exports_1, context_
                     });
                     return this.http.post(url, body, options).map(function (res) { return res.json(); });
                 };
-                UserRestClient.prototype.logError = function (err) {
-                    console.log(err);
-                };
-                UserRestClient.prototype.logSuccess = function (data) {
-                    console.log("success");
-                    if (data) {
-                        console.log(data);
-                    }
-                };
-                UserRestClient.prototype.saveJwt = function (jwt) {
-                    if (jwt) {
-                        localStorage.setItem('id_token', jwt);
-                    }
-                };
-                __decorate([
-                    __param(0, core_1.Optional()), 
-                    __metadata('design:type', Function), 
-                    __metadata('design:paramtypes', [Object]), 
-                    __metadata('design:returntype', void 0)
-                ], UserRestClient.prototype, "logSuccess", null);
                 UserRestClient = __decorate([
-                    core_1.Injectable(),
-                    __param(0, core_1.Inject(http_1.Http)), 
+                    core_1.Injectable(), 
                     __metadata('design:paramtypes', [http_1.Http])
                 ], UserRestClient);
                 return UserRestClient;
@@ -89,4 +56,18 @@ System.register(['angular2/core', 'angular2/http'], function(exports_1, context_
         }
     }
 });
-//# sourceMappingURL=userRestClient.js.map
+// logError(err){
+//   console.log(err);
+//   }
+// logSuccess(@Optional()data){
+//     console.log("success");
+//     if(data){
+//         console.log(data);
+//     }
+//   }
+// saveJwt(jwt) {
+//     if(jwt) {
+//         localStorage.setItem('id_token', jwt)
+//     }
+//  } 
+//# sourceMappingURL=UserRestClient.js.map

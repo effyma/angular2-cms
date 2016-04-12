@@ -6,9 +6,9 @@ System.register([], function(exports_1, context_1) {
         setters:[],
         execute: function() {
             exports_1("Nav", Nav = [
-                { 'path': , 'name':  },
-                { 'path': , 'name':  },
-                { 'path': , 'name':  },
+                { 'path': 'home', 'name': 'Home' },
+                { 'path': 'products', 'name': 'Products' },
+                { 'path': 'tester', 'name': 'Tester' }
             ]);
         }
     }

@@ -1,4 +1,4 @@
-System.register(['../../../clients/Test/testRest', 'angular2/core'], function(exports_1, context_1) {
+System.register(['../../../clients/ProfileRestClient/ProfileRestClient', 'angular2/core'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,28 +10,29 @@ System.register(['../../../clients/Test/testRest', 'angular2/core'], function(ex
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var testRest_1, core_1;
+    var ProfileRestClient_1, core_1;
     var MyProfileService;
     return {
         setters:[
-            function (testRest_1_1) {
-                testRest_1 = testRest_1_1;
+            function (ProfileRestClient_1_1) {
+                ProfileRestClient_1 = ProfileRestClient_1_1;
             },
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
             MyProfileService = (function () {
-                function MyProfileService(testRestClient) {
-                    this.testRestClient = testRestClient;
+                function MyProfileService(profileRestClient) {
+                    this.profileRestClient = profileRestClient;
                 }
-                MyProfileService.prototype.getMyProfile = function (_data, _err) {
-                    var result = this.testRestClient.getSession();
+                MyProfileService.prototype.getMyProfile = function (param) {
+                    var result = this.profileRestClient.getAccountInfo('test@kooppi.com');
+                    console.log(result);
                     return result;
                 };
                 MyProfileService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [testRest_1.TestRestClient])
+                    __metadata('design:paramtypes', [ProfileRestClient_1.ProfileRestClient])
                 ], MyProfileService);
                 return MyProfileService;
             }());

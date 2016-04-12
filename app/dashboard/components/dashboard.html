@@ -6,23 +6,27 @@
             <span class="layout-header-title">Dashboard</span></div>
     </header>
     
-    <div class="layout-menu" [ngClass]="{'is-visible': isVisible}">
+    <div class="layout-menu" [ngClass]="{'is-visible': isVisible}" (click)="onClickToggleMenu()">
         <nav>
-            <div class="layout-menu-item" [routerLink]="['Home']" (click)="onClickToggleMenu()">
+            <div class="layout-menu-item" [routerLink]="['Home']">
                 <span>Home</span>
             </div>
-            <div class="layout-menu-item" [routerLink]="['MyProfile']" (click)="onClickToggleMenu()">
+            <div class="layout-menu-item" [routerLink]="['MyProfile']">
                 <span>MyProfile</span>
             </div>
             
-            <div class="layout-menu-item" [routerLink]="['Products']" (click)="onClickToggleMenu()">
+            <div class="layout-menu-item" [routerLink]="['Products']">
                 <span>Products</span>
             </div>
-            <div class="layout-menu-item" [routerLink]="['Users']" (click)="onClickToggleMenu()">
+            <div class="layout-menu-item" [routerLink]="['Users']">
                 <span>Users</span>
             </div>
-            <div class="layout-menu-item" [routerLink]="['Tester']" (click)="onClickToggleMenu()">
+            <div class="layout-menu-item" [routerLink]="['Tester']">
                 <span>Tester</span>
+            </div>
+            
+            <div class="layout-menu-item" (click)="onClickLogout($event)">
+                <span>Logout</span>
             </div>
             
         </nav>

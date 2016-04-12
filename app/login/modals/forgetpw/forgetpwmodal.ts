@@ -51,6 +51,7 @@ export class ForgetPasswordModal{
     }
     send(event,email){
     	event.preventDefault();
+        console.log(this.userService)
         let result = this.userService.forgetPassword(email);
         // console.log(result.subscribe)
         result.subscribe(
@@ -63,8 +64,8 @@ export class ForgetPasswordModal{
                          this.errMsg = JSON.parse(err._body).message;
                      }
                     },
-             () => {console.log('Complete');}
-        );
+             () => console.log('Complete')
+             );
         
   		// this._ref.dispose();
   		//sendEmail(email).then(this.close);

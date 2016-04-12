@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../ui/modal/models/ModalDialogInstance', '../ui/modal/components/ModalComponent', '../login/modals/forgetpw/forgetpwmodal', '../login/modals/signup/signupmodal', '../services/UserService', '../clients/UserRestClient/UserRestClient'], function(exports_1, context_1) {
+System.register(['angular2/core', '../login/modals/forgetpw/forgetpwmodal', '../login/modals/signup/signupmodal', '../services/UserService', '../clients/UserRestClient/UserRestClient'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,18 +10,12 @@ System.register(['angular2/core', '../ui/modal/models/ModalDialogInstance', '../
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, ModalDialogInstance_1, ModalComponent_1, forgetpwmodal_1, signupmodal_1, UserService_1, UserRestClient_1;
+    var core_1, forgetpwmodal_1, signupmodal_1, UserService_1, UserRestClient_1;
     var LoginComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
-            },
-            function (ModalDialogInstance_1_1) {
-                ModalDialogInstance_1 = ModalDialogInstance_1_1;
-            },
-            function (ModalComponent_1_1) {
-                ModalComponent_1 = ModalComponent_1_1;
             },
             function (forgetpwmodal_1_1) {
                 forgetpwmodal_1 = forgetpwmodal_1_1;
@@ -37,7 +31,7 @@ System.register(['angular2/core', '../ui/modal/models/ModalDialogInstance', '../
             }],
         execute: function() {
             LoginComponent = (function () {
-                function LoginComponent(userService, elementRef, componentLoader) {
+                function LoginComponent(elementRef, componentLoader) {
                     this.elementRef = elementRef;
                     this.componentLoader = componentLoader;
                 }
@@ -70,10 +64,9 @@ System.register(['angular2/core', '../ui/modal/models/ModalDialogInstance', '../
                         styleUrls: ['app/login/login.css'],
                         templateUrl: 'app/login/login.component.html',
                         inputs: ['email', 'password'],
-                        providers: [UserRestClient_1.UserRestClient, UserService_1.UserService, core_1.ElementRef, ModalDialogInstance_1.ModalDialogInstance],
-                        directives: [ModalComponent_1.ModalComponent]
+                        providers: [UserRestClient_1.UserRestClient, UserService_1.UserService, core_1.ElementRef]
                     }), 
-                    __metadata('design:paramtypes', [UserService_1.UserService, core_1.ElementRef, core_1.DynamicComponentLoader])
+                    __metadata('design:paramtypes', [core_1.ElementRef, core_1.DynamicComponentLoader])
                 ], LoginComponent);
                 return LoginComponent;
             }());

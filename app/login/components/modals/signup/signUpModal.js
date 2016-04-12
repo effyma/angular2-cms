@@ -53,7 +53,7 @@ System.register(['angular2/core', '../../../service/LoginService', '../../../../
                         else {
                             _this.errMsg = JSON.parse(err._body).message;
                         }
-                    }, function () { console.log('Complete'); });
+                    }, function () { return console.log('Complete'); });
                 };
                 SignUpModal = __decorate([
                     core_1.Component({

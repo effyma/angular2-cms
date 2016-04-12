@@ -1,14 +1,14 @@
 import {UserRestClient} from '../../clients/userRestClient/userRestClient';
-import {Injectable,Inject} from 'angular2/core';
+import {Http,HTTP_PROVIDERS} from 'angular2/http'
+import {Injectable} from 'angular2/core';
 
 @Injectable()
 export class LoginService{
     userRestClient;
-    constructor(@Inject(UserRestClient)userRestClient:UserRestClient){
+    constructor(userRestClient:UserRestClient){
         this.userRestClient = userRestClient;
     }
-    
-    public sendForgetPassword(param){
+    forgetPassword(param){
 		var result = this.userRestClient.forgetPassword(param);
         console.log("UserService:");
         console.log(result);

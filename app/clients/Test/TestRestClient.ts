@@ -6,8 +6,7 @@ import {Interceptor} from '../../common/RestUtil/Interceptor';
 export class TestRestClient{
     http;
     interceptor;
-    // baseUrl = "http://localhost:8080/mvno-ota-gw/api/";
-    baseUrl = 'http://demo.kooppi.com/mvno-ota-gw/api/';
+    baseUrl = "http://localhost:8080/mvno-ota-gw/api/";
     constructor(http:Http,interceptor:Interceptor){
         this.http = http;
         this.interceptor = interceptor; 
@@ -54,8 +53,7 @@ export class TestRestClient{
         request.headers['x-auth-user-token'] = localStorage.getItem('token');
         }
         request.headers['x-auth-request-timestamp'] = now;
-        // request.path = 'accounts/'+pathParam;
-        request.path ='/mvno-ota-gw/api/accounts/test@kooppi.com';
+        request.path = 'accounts/'+pathParam;
         
         config.signedHeaders = ['x-auth-user-token','x-auth-request-timestamp'];
         config.key = localStorage.getItem('signingKey');
@@ -64,10 +62,7 @@ export class TestRestClient{
         
         headers.append('x-auth-signature',filterHeader['x-auth-signature']);
         headers.append('x-auth-signed-headers',filterHeader['x-auth-signed-headers']);
-        
-        
         console.log(request);
-        console.log(config);
         console.log(filterHeader);
         let requestoptions = new RequestOptions({
             headers: headers,
@@ -87,43 +82,6 @@ export class TestRestClient{
                 },
                 () => console.log('Complete'));
     }
-    
-        
-        
-        
-    //     let request= new ConfigRequest;
-    //     let config= new Config;
-    //     let headers = new Headers();
-    //     let pathParams = 'effy.ma@kooppi.com';
-    //     request.path = 'accounts/'+pathParams;
-    //     var now =  this.formatLocalDate();
-    //     headers.append('x-auth-request-timestamp', now);
-
-    //    if(localStorage.getItem('token')){ // public key
-    //     headers.append('x-auth-user-token',localStorage.getItem('token'));
-    //     request.headers['x-auth-user-token'] = localStorage.getItem('token');
-    //     }
-    //     request.headers['x-auth-request-timestamp'] = now;
-    //     config.signedHeaders = ['x-auth-user-token','x-auth-request-timestamp'];
-    //     // request.path = 'accounts';
-    //     config.key = localStorage.getItem('signingKey');
-    //     let filterHeader = this.interceptor.getRestFilter(request,config);
-    //     console.log('filterHeader :');
-    //     console.log(filterHeader);
-    //     headers.append('x-auth-signature',filterHeader['x-auth-signature']);
-    //     headers.append('x-auth-signed-headers',filterHeader['x-auth-signed-headers']);
-        
-    //     let url = this.baseUrl+request.path;
-    //     let requestoptions = new RequestOptions({
-    //         method: RequestMethod.Get,
-    //         url: url,
-    //         headers: headers
-    //     });
-    //     console.log(requestoptions);
-    //     return this.http.request(new Request(requestoptions)).map(
-    //         res => res.json()
-    //         );
-    // }
     
     formatLocalDate() {
     var now = new Date(),
