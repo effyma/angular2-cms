@@ -18,6 +18,7 @@ export class LoginService{
         return result;
     }
     login(email,password){
+        this.accountRestClient.login({email:email,password:password});
         console.log(email,password);
     }
     

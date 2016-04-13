@@ -28,8 +28,7 @@ System.register([], function(exports_1, context_1) {
         if (!path.startsWith('/')) {
             path = '/' + path;
         }
-        // result += uriEncode(path,false)
-        result += path;
+        result += uriEncode(path, false);
         result += '\n';
         var paramString = '';
         for (var key in params) {
@@ -58,7 +57,7 @@ System.register([], function(exports_1, context_1) {
         result += headerString;
         result += '\n';
         result += signedHeaderString.slice(0, -1);
-        if (payload !== undefined || payload !== null) {
+        if (payload !== undefined && payload !== null) {
             result += '\n';
             var md = forge.md.sha256.create();
             md.update(payload);

@@ -6,6 +6,7 @@ import {HomeComponent} from './Home/home';
 import {TesterComponent} from './tester/tester';
 import {componentProxyFactory} from '../../common/Proxy/ComponentProxyFactory'
 import {DashboardService} from '../services/dashboardService';
+import {GlobalService} from '../../services/global/GlobalService';
 
 @Component({
 	selector: 'dashboard-container',
@@ -31,12 +32,14 @@ import {DashboardService} from '../services/dashboardService';
     // { path: '/test', name: 'Tester', component: TesterComponent }
 ])
 
-// @CanActivate(()=> false )
+// @CanActivate(()=> GlobalService.prototype.loggedIn )
 export class DashboardComponent implements OnInit{
     isVisible = false;
     dashboardService;
-    constructor(dashboardService:DashboardService){
+    globalService;
+    constructor(dashboardService:DashboardService,globalService:GlobalService){
         this.dashboardService = dashboardService
+        this.globalService = globalService;
     }
     
     ngOnInit(){
@@ -49,12 +52,7 @@ export class DashboardComponent implements OnInit{
     
     onClickLogout(e){
         e.preventDefault();
-        localStorage.removeItem('token');
-        // this.loggedIn = false;
+        this.globalService.logout();
     }
-
-	// constructor(dashboardService:DashboardService){
-    //     this.dashboardService = dashboardService;
-	// }
 
 }

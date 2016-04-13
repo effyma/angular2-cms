@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../modals/forgetpassword/forgetPasswordModal', '../modals/signup/signUpModal', '../../service/LoginService', '../../../clients/accountRestClient/AccountRestClient', '../../../common/RestUtil/Interceptor'], function(exports_1, context_1) {
+System.register(['angular2/core', '../modals/forgetpassword/forgetPasswordModal', '../modals/signup/signUpModal', '../../service/LoginService', '../../../clients/accountRestClient/AccountRestClient', '../../../common/RestUtil/Interceptor', '../../../services/global/GlobalService', 'angular2/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', '../modals/forgetpassword/forgetPasswordModal'
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, forgetPasswordModal_1, signUpModal_1, LoginService_1, AccountRestClient_1, Interceptor_1;
+    var core_1, forgetPasswordModal_1, signUpModal_1, LoginService_1, AccountRestClient_1, Interceptor_1, GlobalService_1, router_1;
     var LoginComponent;
     return {
         setters:[
@@ -31,18 +31,36 @@ System.register(['angular2/core', '../modals/forgetpassword/forgetPasswordModal'
             },
             function (Interceptor_1_1) {
                 Interceptor_1 = Interceptor_1_1;
+            },
+            function (GlobalService_1_1) {
+                GlobalService_1 = GlobalService_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
             }],
         execute: function() {
             LoginComponent = (function () {
-                function LoginComponent(elementRef, componentLoader, loginService) {
+                function LoginComponent(elementRef, router, componentLoader, loginService, globalService, location) {
                     this.elementRef = elementRef;
                     this.componentLoader = componentLoader;
                     this.loginService = loginService;
+                    this.router = router;
+                    this.globalService = globalService;
+                    this.location = location;
                 }
+                LoginComponent.prototype.ngOnInit = function () {
+                    // if(this.globalService.isLoggedIn()){
+                    // this.router.parent.navigateByUrl('/dashboard');
+                    // }
+                };
                 LoginComponent.prototype.login = function (email, password, event) {
                     event.preventDefault();
                     console.log("email: " + email + " password: " + password);
                     this.loginService.login(email, password);
+                    if (this.globalService.isLoggedIn()) {
+                        this.location.replaceState('/');
+                        this.router.navigate(['Dashboard']);
+                    }
                 };
                 LoginComponent.prototype.toggleForgetPwModal = function (event) {
                     event.preventDefault();
@@ -60,9 +78,9 @@ System.register(['angular2/core', '../modals/forgetpassword/forgetPasswordModal'
                         styleUrls: ['app/login/components/login/login.css'],
                         templateUrl: 'app/login/components/login/login.html',
                         inputs: ['email', 'password'],
-                        providers: [core_1.ElementRef, LoginService_1.LoginService, AccountRestClient_1.AccountRestClient, Interceptor_1.Interceptor]
+                        providers: [core_1.ElementRef, LoginService_1.LoginService, AccountRestClient_1.AccountRestClient, Interceptor_1.Interceptor, router_1.Router]
                     }), 
-                    __metadata('design:paramtypes', [core_1.ElementRef, core_1.DynamicComponentLoader, LoginService_1.LoginService])
+                    __metadata('design:paramtypes', [core_1.ElementRef, router_1.Router, core_1.DynamicComponentLoader, LoginService_1.LoginService, GlobalService_1.GlobalService, router_1.Location])
                 ], LoginComponent);
                 return LoginComponent;
             }());

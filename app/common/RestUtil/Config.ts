@@ -8,7 +8,7 @@ export class ConfigRequest{
 }
 export class Config{
     key;
-    signedHeaders=[];
+    signedHeaders:Array<string>=[];
 }
 export function formatLocalDate() {
     var now = new Date(),

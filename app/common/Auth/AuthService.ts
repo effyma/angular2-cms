@@ -25,6 +25,5 @@ export class AuthService implements OnInit{
                     this.auth = false;           
                 },
                 () => console.log('Complete'));
-        
     }
 }

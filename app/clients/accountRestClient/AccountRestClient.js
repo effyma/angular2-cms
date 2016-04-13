@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', '../../common/RestUtil/Interceptor', '../../common/RestUtil/Config'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/http', '../../common/RestUtil/Interceptor', '../../common/RestUtil/Config', '../../services/global/GlobalService'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/http', '../../common/RestUtil/Interc
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, Interceptor_1, Config_1;
+    var core_1, http_1, Interceptor_1, Config_1, GlobalService_1;
     var AccountRestClient;
     return {
         setters:[
@@ -25,17 +25,22 @@ System.register(['angular2/core', 'angular2/http', '../../common/RestUtil/Interc
             },
             function (Config_1_1) {
                 Config_1 = Config_1_1;
+            },
+            function (GlobalService_1_1) {
+                GlobalService_1 = GlobalService_1_1;
             }],
         execute: function() {
             AccountRestClient = (function () {
-                function AccountRestClient(http, interceptor) {
+                function AccountRestClient(http, interceptor, globalService) {
                     // headers;
                     // requestoptions;
                     this.baseUrl = 'http://demo.kooppi.com/mvno-ota-gw/api/';
                     this.http = http;
                     this.interceptor = interceptor;
+                    this.globalService = globalService;
                 }
                 AccountRestClient.prototype.login = function (params) {
+                    var _this = this;
                     var url = this.baseUrl + 'sessions';
                     var body = params;
                     var headers = new http_1.Headers();
@@ -47,9 +52,9 @@ System.register(['angular2/core', 'angular2/http', '../../common/RestUtil/Interc
                         body: JSON.stringify(body)
                     });
                     return this.http.request(new http_1.Request(requestoptions)).map(function (res) { return res.json(); }).subscribe(function (data) {
-                        localStorage.setItem('token', data.token);
-                        localStorage.setItem('signingKey', data.signingKey);
-                        console.log(data);
+                        _this.globalService.setToken(data.token);
+                        _this.globalService.setKey(data.signingKey);
+                        _this.globalService.login();
                     }, function (err) {
                         console.log('err:');
                         console.log(err);
@@ -64,17 +69,34 @@ System.register(['angular2/core', 'angular2/http', '../../common/RestUtil/Interc
                     headers.append("Content-Type", "application/json");
                     headers.append('x-auth-request-timestamp', now);
                     request.headers['x-auth-request-timestamp'] = now;
-                    config.signedHeaders.push = 'x-auth-request-timestamp';
-                    if (localStorage.getItem('token') !== undefined) {
-                        headers.append('x-auth-user-token', localStorage.getItem('token'));
-                        request.headers['x-auth-user-token'] = localStorage.getItem('token');
-                        config.signedHeaders.push = 'x-auth-user-token';
+                    config.signedHeaders.push('x-auth-request-timestamp');
+                    console.log('globalService get token', this.globalService.getToken());
+                    if (this.globalService.getToken() !== undefined && this.globalService.getToken() !== null) {
+                        headers.append('x-auth-user-token', this.globalService.getToken());
+                        request.headers['x-auth-user-token'] = this.globalService.getToken();
+                        config.signedHeaders.push('x-auth-user-token');
                     }
+                    else {
+                    }
+                    if (this.globalService.getKey() !== undefined && this.globalService.getKey() !== null) {
+                        config.key = this.globalService.getKey();
+                    }
+                    else {
+                    }
+                    // if(localStorage.getItem('token')!== undefined && localStorage.getItem('token')!== null){ // public key
+                    // headers.append('x-auth-user-token',localStorage.getItem('token'));
+                    // request.headers['x-auth-user-token'] = localStorage.getItem('token');
+                    // config.signedHeaders.push('x-auth-user-token');
+                    // }else{
+                    //     // return ("missing token")
+                    // }
                     // request.headers['x-auth-request-timestamp'] = now;
                     // request.path = 'mvno-ota-gw/api/accounts/'+pathParam;
                     // config.signedHeaders = ['x-auth-user-token','x-auth-request-timestamp'];
                     if (localStorage.getItem('signingKey') !== undefined) {
                         config.key = localStorage.getItem('signingKey');
+                    }
+                    else {
                     }
                     var filterHeader = this.interceptor.getRestFilter(request, config);
                     headers.append('x-auth-signature', filterHeader['x-auth-signature']);
@@ -106,11 +128,9 @@ System.register(['angular2/core', 'angular2/http', '../../common/RestUtil/Interc
                     });
                     return this.http.post(url, body, options).map(function (res) { return res.json(); });
                 };
-                AccountRestClient.prototype.getAuthHeader = function () {
-                };
                 AccountRestClient = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [http_1.Http, Interceptor_1.Interceptor])
+                    __metadata('design:paramtypes', [http_1.Http, Interceptor_1.Interceptor, GlobalService_1.GlobalService])
                 ], AccountRestClient);
                 return AccountRestClient;
             }());

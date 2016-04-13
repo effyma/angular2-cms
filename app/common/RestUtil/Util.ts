@@ -26,8 +26,7 @@ export function getCanonicalRequest(method,path,params,headers,payload){
     result += method;
     result += '\n';
     if(!path.startsWith('/')){path = '/'+path}
-    // result += uriEncode(path,false)
-    result += path
+    result += uriEncode(path,false)
     result += '\n';
     var paramString = ''
     for (let key in params) {
@@ -58,7 +57,7 @@ export function getCanonicalRequest(method,path,params,headers,payload){
     result += '\n'
     result += signedHeaderString.slice(0, -1)
   
-    if(payload !==undefined || payload !== null){
+    if(payload !==undefined && payload !== null){
     result +='\n'
     var md = forge.md.sha256.create()
     md.update(payload)
