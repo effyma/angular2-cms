@@ -1,5 +1,5 @@
 import {Component,provide,ElementRef,DynamicComponentLoader,Injector} from 'angular2/core';
-
+declare var System:any;
 export class ComponentProvider {
   path:string;
   provide:{(module:any):any};

@@ -2,20 +2,21 @@ import {Component,ElementRef,DynamicComponentLoader,provide,ComponentRef} from '
 import {ForgetPasswordModal} from '../modals/forgetpassword/forgetPasswordModal';
 import {SignUpModal} from '../modals/signup/signUpModal';
 import {LoginService} from '../../service/LoginService';
-import {UserRestClient} from '../../../clients/userRestClient/userRestClient'
+import {AccountRestClient} from '../../../clients/accountRestClient/AccountRestClient'
+import {Interceptor} from '../../../common/RestUtil/Interceptor';
 
 @Component({
 	selector: 'login',
 	styleUrls: ['app/login/components/login/login.css'],
 	templateUrl: 'app/login/components/login/login.html',
 	inputs:['email','password'],
-	providers:[ElementRef,LoginService,UserRestClient]
+	providers:[ElementRef,LoginService,AccountRestClient,Interceptor]
 })
 
 export class LoginComponent {
 	elementRef: ElementRef;
 	componentLoader:DynamicComponentLoader;
-    loginService;
+    loginService:LoginService;
 	constructor(elementRef:ElementRef, componentLoader:DynamicComponentLoader,loginService:LoginService){
 		this.elementRef = elementRef;
 		this.componentLoader = componentLoader;

@@ -6,8 +6,10 @@ import {Interceptor} from '../../../common/RestUtil/Interceptor';
 @Component({
 	selector: 'test-container',
     template:`<h1>Testing page</h1>
-    <button (click)="onClickGetToken($event)">encodeUri</button>
-    <button (click)="onClickGetInfo($event)">getInfo</button>
+    <button (click)="onClickGetToken($event)">getToken</button>
+    <button (click)="onClickGetInfo($event)">getAccountInfo</button>
+    <button (click)="onClickGetTokenByAC($event)">getToken</button>
+    <button (click)="onClickGetInfoByAC($event)">getAccountInfo</button>
     `,
     providers:[TestRestClient,HTTP_PROVIDERS,Interceptor]
 })
@@ -25,6 +27,17 @@ export class TesterComponent {
         this.testRestClient.login({email:email,password:password});
     }
     onClickGetInfo(e){
+        e.preventDefault();
+        this.testRestClient.getSession('test@kooppi.com');
+
+    }
+   onClickGetTokenByAC(e){
+        e.preventDefault();
+        let email = 'test@kooppi.com' ;
+        let password = '123456' ;
+        this.testRestClient.login({email:email,password:password});
+    }
+    onClickGetInfoByAC(e){
         e.preventDefault();
         this.testRestClient.getSession('test@kooppi.com');
 

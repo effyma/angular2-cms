@@ -1,6 +1,7 @@
 import { Component,ComponentRef } from 'angular2/core';
 import {LoginService} from '../../../service/LoginService';
-import {UserRestClient} from '../../../../clients/userRestClient/userRestClient';
+import {AccountRestClient} from '../../../../clients/accountRestClient/AccountRestClient';
+import {Interceptor} from '../../../../common/RestUtil/Interceptor';
 
 @Component({
 	template: `
@@ -26,7 +27,7 @@ import {UserRestClient} from '../../../../clients/userRestClient/userRestClient'
 		</div>
 	</div>
 	</div>`,
-    providers:[LoginService,UserRestClient]
+    providers:[LoginService,AccountRestClient,Interceptor]
 })
 
 export class ForgetPasswordModal{
@@ -34,7 +35,7 @@ export class ForgetPasswordModal{
     errMsg ;
     loginService;
 	constructor(loginService: LoginService){
-        this.loginService = LoginService;
+        this.loginService = loginService;
         this.errMsg=" ";
 	}
 

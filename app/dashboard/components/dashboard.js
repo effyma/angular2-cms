@@ -58,7 +58,7 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './Home/
                         { path: '/**', redirectTo: ['Home'] },
                         new router_1.AsyncRoute({ name: 'Products', path: '/products', loader: function () { return System.import('../../../app/dashboard/components/Products/products').then(function (p) { return p.ProductComponent; }); } }),
                         new router_1.AsyncRoute({ name: 'Tester', path: '/test', loader: function () { return System.import('../../../app/dashboard/components/tester/tester').then(function (t) { return t.TesterComponent; }); } }),
-                        new router_1.AsyncRoute({ name: 'Users', path: '/users', loader: function () { return System.import('../../../app/dashboard/components/Users/users').then(function (u) { return u.UserListComponent; }); } }),
+                        new router_1.AsyncRoute({ name: 'Users', path: '/users', loader: function () { return System.import('../../../app/dashboard/components/Users/userList').then(function (u) { return u.UserListComponent; }); } }),
                         new router_1.AsyncRoute({ name: 'MyProfile', path: '/myprofile', loader: function () { return System.import('../../../app/dashboard/components/MyProfile/MyProfile').then(function (u) { return u.MyProfileComponent; }); } }),
                         // { path: '/products', component:componentProxyFactory({path:'../../../app/dashboard/components/Products/products',provide:p => p.ProductComponent}),name:'Products'},
                         // { path: '/test', component:componentProxyFactory({path:'../../../app/dashboard/components/tester/tester',provide:t => t=>t.TesterComponent}),name:'Tester'},

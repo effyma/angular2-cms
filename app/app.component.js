@@ -46,9 +46,9 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', './login/c
                         providers: [http_1.HTTP_PROVIDERS]
                     }),
                     router_1.RouteConfig([
-                        { path: '/**', redirectTo: ['Dashboard'] },
+                        // { path: '/**', redirectTo: ['Dashboard'] },
                         { path: '/', redirectTo: ["Dashboard"] },
-                        { path: '/login', name: 'Login', component: login_component_1.Login },
+                        { path: '/login', name: 'Login', component: login_1.LoginComponent },
                         // new AsyncRoute({name:'Dashboard',path:'/dashboard/...',loader:()=>System.import('../../../app/dashboard/components/dashboard').then(p=>p.DashboardComponent)})   
                         { path: '/dashboard/...', name: 'Dashboard', component: dashboard_1.DashboardComponent, useAsDefault: true }
                     ]), 

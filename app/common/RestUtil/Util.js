@@ -1,7 +1,6 @@
-System.register(['crypto-js'], function(exports_1, context_1) {
+System.register([], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var crypto_js_1;
     function uriEncode(input, encodeSlash) {
         if (typeof input !== 'string') {
             input = String(input);
@@ -29,7 +28,8 @@ System.register(['crypto-js'], function(exports_1, context_1) {
         if (!path.startsWith('/')) {
             path = '/' + path;
         }
-        result += uriEncode(path, false);
+        // result += uriEncode(path,false)
+        result += path;
         result += '\n';
         var paramString = '';
         for (var key in params) {
@@ -51,16 +51,18 @@ System.register(['crypto-js'], function(exports_1, context_1) {
             return a.toLowerCase().localeCompare(b.toLowerCase());
         });
         for (var i = 0; i < headerKey.length; i++) {
+            console.log('i', i, 'headerKey', headerKey[i], ':', headers[headerKey[i]]);
             headerString += (headerKey[i].toLowerCase() + ":" + headers[headerKey[i]].trim() + '\n');
             signedHeaderString += (headerKey[i].toLowerCase() + ';');
         }
         result += headerString;
         result += '\n';
         result += signedHeaderString.slice(0, -1);
-        if (payload) {
+        if (payload !== undefined || payload !== null) {
             result += '\n';
-            var md = crypto_js_1.default.SHA256(payload).toString(CryptoJS.enc.Hex);
-            result += md;
+            var md = forge.md.sha256.create();
+            md.update(payload);
+            result += md.digest().toHex();
         }
         return result;
     }
@@ -94,11 +96,9 @@ System.register(['crypto-js'], function(exports_1, context_1) {
     }
     exports_1("bytesToHex", bytesToHex);
     return {
-        setters:[
-            function (crypto_js_1_1) {
-                crypto_js_1 = crypto_js_1_1;
-            }],
+        setters:[],
         execute: function() {
+            /// <reference path="../../../bower_components/crypto-js/crypto-js.d.ts" />
         }
     }
 });

@@ -11,25 +11,26 @@ System.register(['angular2/core'], function(exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1;
-    var DashboardService;
+    var UserListComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
-            DashboardService = (function () {
-                function DashboardService() {
-                    this.loggedIn = false;
+            UserListComponent = (function () {
+                function UserListComponent() {
                 }
-                DashboardService = __decorate([
-                    core_1.Injectable(), 
+                UserListComponent = __decorate([
+                    core_1.Component({
+                        template: "<div>Users</div>"
+                    }), 
                     __metadata('design:paramtypes', [])
-                ], DashboardService);
-                return DashboardService;
+                ], UserListComponent);
+                return UserListComponent;
             }());
-            exports_1("DashboardService", DashboardService);
+            exports_1("UserListComponent", UserListComponent);
         }
     }
 });
-//# sourceMappingURL=dashboardService.js.map
+//# sourceMappingURL=userList.js.map

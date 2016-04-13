@@ -18,9 +18,9 @@ import {DashboardComponent} from './dashboard/components/dashboard';
 })
 
 @RouteConfig([
-    { path: '/**', redirectTo: ['Dashboard'] },
+    // { path: '/**', redirectTo: ['Dashboard'] },
     { path: '/',redirectTo:["Dashboard"] },
-    { path: '/login',name:'Login',component:Login },
+    { path: '/login',name:'Login',component:LoginComponent },
     // new AsyncRoute({name:'Dashboard',path:'/dashboard/...',loader:()=>System.import('../../../app/dashboard/components/dashboard').then(p=>p.DashboardComponent)})   
 	{ path: '/dashboard/...', name: 'Dashboard', component: DashboardComponent,useAsDefault:true }
 ])

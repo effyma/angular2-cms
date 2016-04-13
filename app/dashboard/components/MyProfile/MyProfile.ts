@@ -3,6 +3,9 @@ import {MyProfileService} from '../../services/MyProfile/MyProfileService';
 import {ProfileRestClient} from '../../../clients/ProfileRestClient/ProfileRestClient';
 import {Interceptor} from '../../../common/RestUtil/Interceptor';
 import {HTTP_PROVIDERS} from 'angular2/http';
+import {AccountRestClient} from '../../../clients/accountRestClient/AccountRestClient';
+
+
 @Component({
     template:`
     <div>MyProfile</div>
@@ -12,22 +15,25 @@ import {HTTP_PROVIDERS} from 'angular2/http';
     <div> <label>lastName: </label> {{profile.lastName}}</div>
     <div> <label>sims: </label> {{profile.sims}}</div>
     </div>`,
-    providers: [MyProfileService,Interceptor,ProfileRestClient]
+    providers: [MyProfileService,Interceptor,ProfileRestClient,AccountRestClient]
 })
 
 export class MyProfileComponent implements OnInit{
     profile;
     myProfileServie;
     err;
-    constructor(myProfileServie:MyProfileService){
+    accountRestClient
+    constructor(myProfileServie:MyProfileService,accountRestClient:AccountRestClient){
         this.myProfileServie = myProfileServie;
+        this.accountRestClient = accountRestClient;
     }
     ngOnInit() {
     console.log('ngOnInit')
     this.profile = this.getProfile();
     }
     getProfile(){
-       this.myProfileServie.getMyProfile().subscribe(
+        this.accountRestClient.getAccountInfo('test@kooppi.com').subscribe(
+    //    this.myProfileServie.getMyProfile().subscribe(
                 data => {
                     console.log('data:');
                     console.log(data);
@@ -39,8 +45,5 @@ export class MyProfileComponent implements OnInit{
                     this.err = err;           
                 },
                 () => console.log('Complete'));
-    }
-    getInfo(){
-        console.log(this.profile)
     }
 }

@@ -12,5 +12,7 @@ export class MyProfileService{
         console.log(result)
         return result
     }
+    
+    //edit profile
 
 }

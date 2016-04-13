@@ -1,6 +1,6 @@
 /// <reference path="../../../bower_components/crypto-js/crypto-js.d.ts" />
-import Crypto from 'crypto-js';
-// declare var CryptoJS
+// import Crypto from 'crypto-js';
+declare var Crypto:any;
 declare var forge:any;
                 
 export function uriEncode (input,encodeSlash) {
@@ -26,7 +26,8 @@ export function getCanonicalRequest(method,path,params,headers,payload){
     result += method;
     result += '\n';
     if(!path.startsWith('/')){path = '/'+path}
-    result += uriEncode(path,false)
+    // result += uriEncode(path,false)
+    result += path
     result += '\n';
     var paramString = ''
     for (let key in params) {
@@ -49,17 +50,22 @@ export function getCanonicalRequest(method,path,params,headers,payload){
         return a.toLowerCase().localeCompare(b.toLowerCase())
     })
     for (let i = 0; i < headerKey.length; i++) {
+        console.log('i',i,'headerKey',headerKey[i],':',headers[headerKey[i]])
         headerString += (headerKey[i].toLowerCase() + ":" + headers[headerKey[i]].trim() + '\n')
         signedHeaderString += (headerKey[i].toLowerCase() + ';')
     }
     result += headerString
     result += '\n'
     result += signedHeaderString.slice(0, -1)
-
-    if(payload){
+  
+    if(payload !==undefined || payload !== null){
     result +='\n'
-    var md = Crypto.SHA256(payload).toString(CryptoJS.enc.Hex);
-    result += md;}
+    var md = forge.md.sha256.create()
+    md.update(payload)
+    result += md.digest().toHex()
+    // var md = CryptoJS.hashes.SHA256(payload).toString(CryptoJS.hashes.enc.Hex);
+    // result += md;
+    }
     return result
 }
 

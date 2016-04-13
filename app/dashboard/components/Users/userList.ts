@@ -3,4 +3,4 @@ import {Component} from 'angular2/core';
     template:`<div>Users</div>`
 })
 
-export class UsersListComponent{}
+export class UserListComponent{}

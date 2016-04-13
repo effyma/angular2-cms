@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../../services/MyProfile/MyProfileService', '../../../clients/ProfileRestClient/ProfileRestClient', '../../../common/RestUtil/Interceptor'], function(exports_1, context_1) {
+System.register(['angular2/core', '../../services/MyProfile/MyProfileService', '../../../clients/ProfileRestClient/ProfileRestClient', '../../../common/RestUtil/Interceptor', '../../../clients/accountRestClient/AccountRestClient'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', '../../services/MyProfile/MyProfileService', '
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, MyProfileService_1, ProfileRestClient_1, Interceptor_1;
+    var core_1, MyProfileService_1, ProfileRestClient_1, Interceptor_1, AccountRestClient_1;
     var MyProfileComponent;
     return {
         setters:[
@@ -25,11 +25,15 @@ System.register(['angular2/core', '../../services/MyProfile/MyProfileService', '
             },
             function (Interceptor_1_1) {
                 Interceptor_1 = Interceptor_1_1;
+            },
+            function (AccountRestClient_1_1) {
+                AccountRestClient_1 = AccountRestClient_1_1;
             }],
         execute: function() {
             MyProfileComponent = (function () {
-                function MyProfileComponent(myProfileServie) {
+                function MyProfileComponent(myProfileServie, accountRestClient) {
                     this.myProfileServie = myProfileServie;
+                    this.accountRestClient = accountRestClient;
                 }
                 MyProfileComponent.prototype.ngOnInit = function () {
                     console.log('ngOnInit');
@@ -37,7 +41,9 @@ System.register(['angular2/core', '../../services/MyProfile/MyProfileService', '
                 };
                 MyProfileComponent.prototype.getProfile = function () {
                     var _this = this;
-                    this.myProfileServie.getMyProfile().subscribe(function (data) {
+                    this.accountRestClient.getAccountInfo('test@kooppi.com').subscribe(
+                    //    this.myProfileServie.getMyProfile().subscribe(
+                    function (data) {
                         console.log('data:');
                         console.log(data);
                         _this.profile = data;
@@ -47,15 +53,12 @@ System.register(['angular2/core', '../../services/MyProfile/MyProfileService', '
                         _this.err = err;
                     }, function () { return console.log('Complete'); });
                 };
-                MyProfileComponent.prototype.getInfo = function () {
-                    console.log(this.profile);
-                };
                 MyProfileComponent = __decorate([
                     core_1.Component({
                         template: "\n    <div>MyProfile</div>\n    <div *ngIf=\"profile\">\n    <div> <label>email: </label>{{profile.email}}</div>\n    <div> <label>firstName: </label>{{profile.firstName}}</div>\n    <div> <label>lastName: </label> {{profile.lastName}}</div>\n    <div> <label>sims: </label> {{profile.sims}}</div>\n    </div>",
-                        providers: [MyProfileService_1.MyProfileService, Interceptor_1.Interceptor, ProfileRestClient_1.ProfileRestClient]
+                        providers: [MyProfileService_1.MyProfileService, Interceptor_1.Interceptor, ProfileRestClient_1.ProfileRestClient, AccountRestClient_1.AccountRestClient]
                     }), 
-                    __metadata('design:paramtypes', [MyProfileService_1.MyProfileService])
+                    __metadata('design:paramtypes', [MyProfileService_1.MyProfileService, AccountRestClient_1.AccountRestClient])
                 ], MyProfileComponent);
                 return MyProfileComponent;
             }());

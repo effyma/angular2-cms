@@ -4,8 +4,9 @@ import {ForgetPasswordModal} from '../login/modals/forgetpw/forgetpwmodal';
 import {SignUpModal} from '../login/modals/signup/signupmodal';
 import {UserService} from '../services/UserService';
 import {UserRestClient} from '../clients/UserRestClient/UserRestClient';
-import {TestRestClient} from '../clients/test/testRest';
-import {Interceptor} from '../common/restUtil/Interceptor'
+// import {TestRestClient} from '../clients/test/testRest';
+import {Interceptor} from '../../common/restUtil/Interceptor;
+
 @Component({
 	selector: 'login',
 	styleUrls: ['app/login/login.css'],

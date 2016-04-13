@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../modals/forgetpassword/forgetPasswordModal', '../modals/signup/signUpModal', '../../service/LoginService', '../../../clients/userRestClient/userRestClient'], function(exports_1, context_1) {
+System.register(['angular2/core', '../modals/forgetpassword/forgetPasswordModal', '../modals/signup/signUpModal', '../../service/LoginService', '../../../clients/accountRestClient/AccountRestClient', '../../../common/RestUtil/Interceptor'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', '../modals/forgetpassword/forgetPasswordModal'
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, forgetPasswordModal_1, signUpModal_1, LoginService_1, userRestClient_1;
+    var core_1, forgetPasswordModal_1, signUpModal_1, LoginService_1, AccountRestClient_1, Interceptor_1;
     var LoginComponent;
     return {
         setters:[
@@ -26,8 +26,11 @@ System.register(['angular2/core', '../modals/forgetpassword/forgetPasswordModal'
             function (LoginService_1_1) {
                 LoginService_1 = LoginService_1_1;
             },
-            function (userRestClient_1_1) {
-                userRestClient_1 = userRestClient_1_1;
+            function (AccountRestClient_1_1) {
+                AccountRestClient_1 = AccountRestClient_1_1;
+            },
+            function (Interceptor_1_1) {
+                Interceptor_1 = Interceptor_1_1;
             }],
         execute: function() {
             LoginComponent = (function () {
@@ -57,7 +60,7 @@ System.register(['angular2/core', '../modals/forgetpassword/forgetPasswordModal'
                         styleUrls: ['app/login/components/login/login.css'],
                         templateUrl: 'app/login/components/login/login.html',
                         inputs: ['email', 'password'],
-                        providers: [core_1.ElementRef, LoginService_1.LoginService, userRestClient_1.UserRestClient]
+                        providers: [core_1.ElementRef, LoginService_1.LoginService, AccountRestClient_1.AccountRestClient, Interceptor_1.Interceptor]
                     }), 
                     __metadata('design:paramtypes', [core_1.ElementRef, core_1.DynamicComponentLoader, LoginService_1.LoginService])
                 ], LoginComponent);

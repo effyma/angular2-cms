@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../../../service/LoginService', '../../../../clients/userRestClient/userRestClient'], function(exports_1, context_1) {
+System.register(['angular2/core', '../../../service/LoginService', '../../../../common/RestUtil/Interceptor', '../../../../clients/accountRestClient/AccountRestClient'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', '../../../service/LoginService', '../../../../
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, LoginService_1, userRestClient_1;
+    var core_1, LoginService_1, Interceptor_1, AccountRestClient_1;
     var SignUpModal;
     return {
         setters:[
@@ -20,8 +20,11 @@ System.register(['angular2/core', '../../../service/LoginService', '../../../../
             function (LoginService_1_1) {
                 LoginService_1 = LoginService_1_1;
             },
-            function (userRestClient_1_1) {
-                userRestClient_1 = userRestClient_1_1;
+            function (Interceptor_1_1) {
+                Interceptor_1 = Interceptor_1_1;
+            },
+            function (AccountRestClient_1_1) {
+                AccountRestClient_1 = AccountRestClient_1_1;
             }],
         execute: function() {
             SignUpModal = (function () {
@@ -43,6 +46,7 @@ System.register(['angular2/core', '../../../service/LoginService', '../../../../
                 SignUpModal.prototype.send = function (event, email, password) {
                     var _this = this;
                     event.preventDefault();
+                    console.log(this.loginService);
                     var result = this.loginService.signUp({ email: email, password: password });
                     result.subscribe(function (next) { }, function (err) {
                         console.log(err);
@@ -58,7 +62,7 @@ System.register(['angular2/core', '../../../service/LoginService', '../../../../
                 SignUpModal = __decorate([
                     core_1.Component({
                         template: "\n\t<div class=\"in modal-backdrop\" (click)=\"close($event)\"></div>\n\t<div class=\"modal\" style=\"display: block\" tabindex=\"0\">\n\t<div class=\"modal-dialog modal-sm\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-header-bar\">\n\t\t\t<div class=\"modal-close\">\n\t\t\t<span (click)=\"close($event)\">X</span>\n\t\t\t</div></div>\n\t\t<div class=\"modal-main\">\n\t\t<header>Sign Up New Account</header>\n        <div class=\"signup-content-err\">{{errMsg}}</div>\n\t\t\t<div class=\"textInput\">\n\t\t\t<div class=\"fieldWrapper\">\n\t\t\t<input #email type=\"email\" placeholder=\"Email\" />\n\t\t\t</div>\n\t\t\t</div>\n            <div class=\"textInput\">\n\t\t\t<div class=\"fieldWrapper\">\n\t\t\t<input #password type=\"password\" placeholder=\"Password\" />\n\t\t\t</div>\n\t\t\t</div>\n\t\t\t<button class=\"login-btn button\" (click)=\"send($event,email.value,password.value)\">Confirm</button>\n\t\t</div>\n\t\t</div>\n\t</div>\n\t</div>",
-                        providers: [LoginService_1.LoginService, userRestClient_1.UserRestClient]
+                        providers: [LoginService_1.LoginService, AccountRestClient_1.AccountRestClient, Interceptor_1.Interceptor]
                     }), 
                     __metadata('design:paramtypes', [LoginService_1.LoginService])
                 ], SignUpModal);

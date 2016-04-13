@@ -1,7 +1,8 @@
 import { Component,ComponentRef } from 'angular2/core';
 import {LoginService} from '../../../service/LoginService';
-import {UserRestClient} from '../../../../clients/userRestClient/userRestClient';
 import {Interceptor} from '../../../../common/RestUtil/Interceptor';
+import {AccountRestClient} from '../../../../clients/accountRestClient/AccountRestClient';
+
 
 @Component({
 	template: `
@@ -31,7 +32,7 @@ import {Interceptor} from '../../../../common/RestUtil/Interceptor';
 		</div>
 	</div>
 	</div>`,
-    providers:[LoginService,UserRestClient]
+    providers:[LoginService,AccountRestClient,Interceptor]
 })
 
 export class SignUpModal{
@@ -57,6 +58,7 @@ export class SignUpModal{
 
     send(event,email,password){
     	event.preventDefault();
+        console.log(this.loginService)
         let result = this.loginService.signUp({email,password});
         result.subscribe(
             next => {},

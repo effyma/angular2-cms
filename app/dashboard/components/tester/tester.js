@@ -41,10 +41,20 @@ System.register(['angular2/core', '../../../clients/Test/testRest', 'angular2/ht
                     e.preventDefault();
                     this.testRestClient.getSession('test@kooppi.com');
                 };
+                TesterComponent.prototype.onClickGetTokenByAC = function (e) {
+                    e.preventDefault();
+                    var email = 'test@kooppi.com';
+                    var password = '123456';
+                    this.testRestClient.login({ email: email, password: password });
+                };
+                TesterComponent.prototype.onClickGetInfoByAC = function (e) {
+                    e.preventDefault();
+                    this.testRestClient.getSession('test@kooppi.com');
+                };
                 TesterComponent = __decorate([
                     core_1.Component({
                         selector: 'test-container',
-                        template: "<h1>Testing page</h1>\n    <button (click)=\"onClickGetToken($event)\">encodeUri</button>\n    <button (click)=\"onClickGetInfo($event)\">getInfo</button>\n    ",
+                        template: "<h1>Testing page</h1>\n    <button (click)=\"onClickGetToken($event)\">getToken</button>\n    <button (click)=\"onClickGetInfo($event)\">getAccountInfo</button>\n    <button (click)=\"onClickGetTokenByAC($event)\">getToken</button>\n    <button (click)=\"onClickGetInfoByAC($event)\">getAccountInfo</button>\n    ",
                         providers: [testRest_1.TestRestClient, http_1.HTTP_PROVIDERS, Interceptor_1.Interceptor]
                     }), 
                     __metadata('design:paramtypes', [testRest_1.TestRestClient])
