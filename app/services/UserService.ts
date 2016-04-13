@@ -24,7 +24,9 @@ export class UserService{
         console.log(result);
         return result;
     }
-    
+    login(email,password){
+        console.log(email,password);
+    }
     // getSession(){
     //     this.testRestClient.getSession();
     // }

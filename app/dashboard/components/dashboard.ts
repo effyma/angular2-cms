@@ -1,18 +1,18 @@
 declare var System:any;
 import {Component, OnInit} from 'angular2/core';
 import {CORE_DIRECTIVES} from 'angular2/common';
-import { RouteConfig, ROUTER_DIRECTIVES,AsyncRoute} from 'angular2/router';
+import { RouteConfig, ROUTER_DIRECTIVES,AsyncRoute,CanActivate} from 'angular2/router';
 import {HomeComponent} from './Home/home';
-// import {ProductComponent} from './Products/products';
 import {TesterComponent} from './tester/tester';
 import {componentProxyFactory} from '../../common/Proxy/ComponentProxyFactory'
-// import {DashboardService} from '../../services/dashboardService';
+import {DashboardService} from '../services/dashboardService';
+
 @Component({
 	selector: 'dashboard-container',
     directives: [ROUTER_DIRECTIVES,CORE_DIRECTIVES],
 	styleUrls: ['app/dashboard/components/dashboard.css'],
-	templateUrl: 'app/dashboard/components/dashboard.html'
-    
+	templateUrl: 'app/dashboard/components/dashboard.html',
+    providers:[DashboardService]    
 })
 
 @RouteConfig([
@@ -31,8 +31,14 @@ import {componentProxyFactory} from '../../common/Proxy/ComponentProxyFactory'
     // { path: '/test', name: 'Tester', component: TesterComponent }
 ])
 
+// @CanActivate(()=> false )
 export class DashboardComponent implements OnInit{
     isVisible = false;
+    dashboardService;
+    constructor(dashboardService:DashboardService){
+        this.dashboardService = dashboardService
+    }
+    
     ngOnInit(){
     this.isVisible = false;
     }
@@ -43,6 +49,8 @@ export class DashboardComponent implements OnInit{
     
     onClickLogout(e){
         e.preventDefault();
+        localStorage.removeItem('token');
+        // this.loggedIn = false;
     }
 
 	// constructor(dashboardService:DashboardService){

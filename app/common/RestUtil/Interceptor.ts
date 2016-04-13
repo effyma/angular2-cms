@@ -14,7 +14,7 @@ export class Interceptor{
         signedHeaders.sort(function(a, b) {
             return a.toLowerCase().localeCompare(b.toLowerCase())
         })
-
+        
         var authSignedHeaders = ''
         var headerToUse = {}
         for (let i = 0; i < signedHeaders.length; i++) {
@@ -22,6 +22,7 @@ export class Interceptor{
             authSignedHeaders += (signedHeaders[i].toLowerCase() + ';')
         }
         authSignedHeaders = authSignedHeaders.slice(0, -1)
+        console.log(authSignedHeaders);
         var authSignature = getSignature(key, method, path, params, headerToUse, entity)
 
         headers['x-auth-signature'] = authSignature

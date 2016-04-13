@@ -2,7 +2,6 @@ import { Component,ComponentRef } from 'angular2/core';
 import {LoginService} from '../../../service/LoginService';
 import {UserRestClient} from '../../../../clients/userRestClient/userRestClient';
 
-
 @Component({
 	template: `
 	<div class="in modal-backdrop" (click)="close($event)"></div>

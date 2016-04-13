@@ -20,4 +20,8 @@ export class LoginService{
         console.log(result);
         return result;
     }
+    login(email,password){
+        console.log(email,password);
+    }
+    
 }

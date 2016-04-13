@@ -31,6 +31,7 @@ System.register(['./Util'], function(exports_1, context_1) {
                         authSignedHeaders += (signedHeaders[i].toLowerCase() + ';');
                     }
                     authSignedHeaders = authSignedHeaders.slice(0, -1);
+                    console.log(authSignedHeaders);
                     var authSignature = Util_1.getSignature(key, method, path, params, headerToUse, entity);
                     headers['x-auth-signature'] = authSignature;
                     headers['x-auth-signed-headers'] = authSignedHeaders;

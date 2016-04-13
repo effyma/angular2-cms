@@ -1,6 +1,7 @@
 /// <reference path="../../../bower_components/crypto-js/crypto-js.d.ts" />
 import Crypto from 'crypto-js';
 // declare var CryptoJS
+declare var forge:any;
                 
 export function uriEncode (input,encodeSlash) {
     if (typeof input !== 'string') {
@@ -26,7 +27,6 @@ export function getCanonicalRequest(method,path,params,headers,payload){
     result += '\n';
     if(!path.startsWith('/')){path = '/'+path}
     result += uriEncode(path,false)
-    // result +='/mvno-ota-gw/api/accounts/test@kooppi.com';
     result += '\n';
     var paramString = ''
     for (let key in params) {
@@ -54,7 +54,6 @@ export function getCanonicalRequest(method,path,params,headers,payload){
     }
     result += headerString
     result += '\n'
-
     result += signedHeaderString.slice(0, -1)
 
     if(payload){
@@ -66,9 +65,29 @@ export function getCanonicalRequest(method,path,params,headers,payload){
 
 export function getSignature(key,method,path,params,headers,payload){
     var canonicalRequest = getCanonicalRequest(method,path,params,headers,payload);
-        console.log('canonicalRequest:','\n', canonicalRequest);
-        console.log(Crypto.SHA256(canonicalRequest,key));
-        console.log(Crypto.SHA256(canonicalRequest,key).toString(CryptoJS.enc.Hex));
-    var hmac = Crypto.SHA256(canonicalRequest,key).toString(CryptoJS.enc.Hex);
-    return hmac;
+    console.log('canonicalRequest',canonicalRequest);
+    var hmac = forge.hmac.create()
+    hmac.start('sha256', key)
+    hmac.update(canonicalRequest)
+    // console.log(hmac.digest().toHex());
+    return hmac.digest().toHex()
+
+}
+
+export function toByteArray(key){
+var str = key;
+var bytes = [];
+for (var i = 0; i < str.length; ++i) {
+    bytes.push(str.charCodeAt(i));
+}
+return bytes
+}
+
+export function bytesToHex(bytes){
+    var hex = [];
+    for (var i = 0; i < bytes.length; i++) {
+        hex.push((bytes[i] >>> 4).toString(16));
+        hex.push((bytes[i] & 0xF).toString(16));
+    }
+    return hex.join("");
 }

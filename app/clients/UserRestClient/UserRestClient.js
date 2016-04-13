@@ -70,4 +70,4 @@ System.register(['angular2/core', 'angular2/http'], function(exports_1, context_
 //         localStorage.setItem('id_token', jwt)
 //     }
 //  } 
-//# sourceMappingURL=UserRestClient.js.map
+//# sourceMappingURL=userRestClient.js.map

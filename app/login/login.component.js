@@ -11,7 +11,7 @@ System.register(['angular2/core', '../login/modals/forgetpw/forgetpwmodal', '../
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, forgetpwmodal_1, signupmodal_1, UserService_1, UserRestClient_1;
-    var LoginComponent;
+    var Login;
     return {
         setters:[
             function (core_1_1) {
@@ -30,23 +30,26 @@ System.register(['angular2/core', '../login/modals/forgetpw/forgetpwmodal', '../
                 UserRestClient_1 = UserRestClient_1_1;
             }],
         execute: function() {
-            LoginComponent = (function () {
-                function LoginComponent(elementRef, componentLoader) {
+            Login = (function () {
+                function Login(elementRef, componentLoader, userService) {
                     this.elementRef = elementRef;
                     this.componentLoader = componentLoader;
+                    this.userService = userService;
                 }
                 // static get parameters(){
                 // 	return [[UserService]]
                 // }
-                LoginComponent.prototype.login = function (email, password) {
+                Login.prototype.login = function (email, password, event) {
+                    event.preventDefault();
                     console.log("email: " + email + " password: " + password);
+                    this.userService.login(email, password);
                 };
-                LoginComponent.prototype.toggleForgetPwModal = function (event) {
+                Login.prototype.toggleForgetPwModal = function (event) {
                     event.preventDefault();
                     this.componentLoader.loadIntoLocation(forgetpwmodal_1.ForgetPasswordModal, this.elementRef, 'mymodal')
                         .then(function (ref) { ref.instance._ref = ref; });
                 };
-                LoginComponent.prototype.toggleSignUpModal = function (event) {
+                Login.prototype.toggleSignUpModal = function (event) {
                     event.preventDefault();
                     this.componentLoader.loadIntoLocation(signupmodal_1.SignUpModal, this.elementRef, 'mymodal')
                         .then(function (ref) { ref.instance._ref = ref; });
@@ -58,7 +61,7 @@ System.register(['angular2/core', '../login/modals/forgetpw/forgetpwmodal', '../
                     // createModal()
                     // dialog=this.modal.open(component,this.elementRef,bindings,'mymodal');
                 };
-                LoginComponent = __decorate([
+                Login = __decorate([
                     core_1.Component({
                         selector: 'login',
                         styleUrls: ['app/login/login.css'],
@@ -66,11 +69,11 @@ System.register(['angular2/core', '../login/modals/forgetpw/forgetpwmodal', '../
                         inputs: ['email', 'password'],
                         providers: [UserRestClient_1.UserRestClient, UserService_1.UserService, core_1.ElementRef]
                     }), 
-                    __metadata('design:paramtypes', [core_1.ElementRef, core_1.DynamicComponentLoader])
-                ], LoginComponent);
-                return LoginComponent;
+                    __metadata('design:paramtypes', [core_1.ElementRef, core_1.DynamicComponentLoader, UserService_1.UserService])
+                ], Login);
+                return Login;
             }());
-            exports_1("LoginComponent", LoginComponent);
+            exports_1("Login", Login);
         }
     }
 });

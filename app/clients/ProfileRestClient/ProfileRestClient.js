@@ -26,7 +26,8 @@ System.register(['angular2/http', 'angular2/core', '../../common/RestUtil/Interc
         execute: function() {
             ProfileRestClient = (function () {
                 function ProfileRestClient(http, interceptor) {
-                    this.baseUrl = "http://localhost:8080/mvno-ota-gw/api/";
+                    // baseUrl = "http://localhost:8080/mvno-ota-gw/api/";
+                    this.baseUrl = 'http://demo.kooppi.com/mvno-ota-gw/api/';
                     this.http = http;
                     this.interceptor = interceptor;
                 }
@@ -35,7 +36,6 @@ System.register(['angular2/http', 'angular2/core', '../../common/RestUtil/Interc
                     var config = new Config;
                     var now = this.formatLocalDate();
                     var url = this.baseUrl + 'accounts/' + pathParam;
-                    // let url = 'http://localhost:8080/mvno-ota-gw/api/continents?localization=zh-tw';
                     var headers = new http_1.Headers;
                     headers.append("Content-Type", "application/json");
                     headers.append('x-auth-request-timestamp', now);
@@ -44,7 +44,6 @@ System.register(['angular2/http', 'angular2/core', '../../common/RestUtil/Interc
                         request.headers['x-auth-user-token'] = localStorage.getItem('token');
                     }
                     request.headers['x-auth-request-timestamp'] = now;
-                    // request.path = 'accounts/'+pathParam;
                     request.path = 'mvno-ota-gw/api/accounts/' + pathParam;
                     config.signedHeaders = ['x-auth-user-token', 'x-auth-request-timestamp'];
                     config.key = localStorage.getItem('signingKey');

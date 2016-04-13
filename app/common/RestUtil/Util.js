@@ -2,7 +2,6 @@ System.register(['crypto-js'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var crypto_js_1;
-    // declare var CryptoJS
     function uriEncode(input, encodeSlash) {
         if (typeof input !== 'string') {
             input = String(input);
@@ -31,7 +30,6 @@ System.register(['crypto-js'], function(exports_1, context_1) {
             path = '/' + path;
         }
         result += uriEncode(path, false);
-        // result +='/mvno-ota-gw/api/accounts/test@kooppi.com';
         result += '\n';
         var paramString = '';
         for (var key in params) {
@@ -69,13 +67,32 @@ System.register(['crypto-js'], function(exports_1, context_1) {
     exports_1("getCanonicalRequest", getCanonicalRequest);
     function getSignature(key, method, path, params, headers, payload) {
         var canonicalRequest = getCanonicalRequest(method, path, params, headers, payload);
-        console.log('canonicalRequest:', '\n', canonicalRequest);
-        console.log(crypto_js_1.default.SHA256(canonicalRequest, key));
-        console.log(crypto_js_1.default.SHA256(canonicalRequest, key).toString(CryptoJS.enc.Hex));
-        var hmac = crypto_js_1.default.SHA256(canonicalRequest, key).toString(CryptoJS.enc.Hex);
-        return hmac;
+        console.log('canonicalRequest', canonicalRequest);
+        var hmac = forge.hmac.create();
+        hmac.start('sha256', key);
+        hmac.update(canonicalRequest);
+        // console.log(hmac.digest().toHex());
+        return hmac.digest().toHex();
     }
     exports_1("getSignature", getSignature);
+    function toByteArray(key) {
+        var str = key;
+        var bytes = [];
+        for (var i = 0; i < str.length; ++i) {
+            bytes.push(str.charCodeAt(i));
+        }
+        return bytes;
+    }
+    exports_1("toByteArray", toByteArray);
+    function bytesToHex(bytes) {
+        var hex = [];
+        for (var i = 0; i < bytes.length; i++) {
+            hex.push((bytes[i] >>> 4).toString(16));
+            hex.push((bytes[i] & 0xF).toString(16));
+        }
+        return hex.join("");
+    }
+    exports_1("bytesToHex", bytesToHex);
     return {
         setters:[
             function (crypto_js_1_1) {

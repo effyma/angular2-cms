@@ -15,19 +15,22 @@ import {Interceptor} from '../common/restUtil/Interceptor'
 	// directives: []
 })
 
-export class LoginComponent {
+export class Login {
 	elementRef: ElementRef;
 	componentLoader:DynamicComponentLoader;
-
-	constructor(elementRef:ElementRef, componentLoader:DynamicComponentLoader){
+    userService;
+	constructor(elementRef:ElementRef, componentLoader:DynamicComponentLoader,userService:UserService){
 		this.elementRef = elementRef;
 		this.componentLoader = componentLoader;
+        this.userService = userService;
 	}
 	// static get parameters(){
 	// 	return [[UserService]]
 	// }
-	login(email,password){
+	login(email,password,event){
+        event.preventDefault();
 	console.log("email: "+email+" password: "+password)
+    this.userService.login(email,password);
 }
 	toggleForgetPwModal(event){
 		event.preventDefault();

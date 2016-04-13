@@ -9,21 +9,23 @@ import {UserRestClient} from '../../../clients/userRestClient/userRestClient'
 	styleUrls: ['app/login/components/login/login.css'],
 	templateUrl: 'app/login/components/login/login.html',
 	inputs:['email','password'],
-	// providers:[ElementRef,LoginService,UserRestClient]
-
+	providers:[ElementRef,LoginService,UserRestClient]
 })
 
 export class LoginComponent {
 	elementRef: ElementRef;
 	componentLoader:DynamicComponentLoader;
-
-	constructor(elementRef:ElementRef, componentLoader:DynamicComponentLoader){
+    loginService;
+	constructor(elementRef:ElementRef, componentLoader:DynamicComponentLoader,loginService:LoginService){
 		this.elementRef = elementRef;
 		this.componentLoader = componentLoader;
+        this.loginService = loginService;
 	}
     
-	login(email,password){
-	console.log("email: "+email+" password: "+password)
+	login(email,password,event){
+        event.preventDefault();
+	    console.log("email: "+email+" password: "+password);
+        this.loginService.login(email,password);
     }
     
 	toggleForgetPwModal(event){

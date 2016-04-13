@@ -6,7 +6,8 @@ import {Interceptor} from '../../common/RestUtil/Interceptor';
 export class ProfileRestClient{
     http;
     interceptor;
-    baseUrl = "http://localhost:8080/mvno-ota-gw/api/";
+    // baseUrl = "http://localhost:8080/mvno-ota-gw/api/";
+    baseUrl = 'http://demo.kooppi.com/mvno-ota-gw/api/';
     constructor(http:Http,interceptor:Interceptor){
         this.http = http;
         this.interceptor = interceptor; 
@@ -17,7 +18,6 @@ export class ProfileRestClient{
         let config= new Config;
         let now =  this.formatLocalDate();
         let url = this.baseUrl+'accounts/'+pathParam;
-        // let url = 'http://localhost:8080/mvno-ota-gw/api/continents?localization=zh-tw';
         let headers = new Headers;
         headers.append("Content-Type", "application/json");
         headers.append('x-auth-request-timestamp', now);
@@ -26,7 +26,6 @@ export class ProfileRestClient{
         request.headers['x-auth-user-token'] = localStorage.getItem('token');
         }
         request.headers['x-auth-request-timestamp'] = now;
-        // request.path = 'accounts/'+pathParam;
         request.path = 'mvno-ota-gw/api/accounts/'+pathParam;
         
         config.signedHeaders = ['x-auth-user-token','x-auth-request-timestamp'];

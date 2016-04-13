@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/common', 'angular2/router', './Home/home'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/common', 'angular2/router', './Home/home', '../services/dashboardService'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './Home/
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, common_1, router_1, home_1;
+    var core_1, common_1, router_1, home_1, dashboardService_1;
     var DashboardComponent;
     return {
         setters:[
@@ -25,12 +25,15 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './Home/
             },
             function (home_1_1) {
                 home_1 = home_1_1;
+            },
+            function (dashboardService_1_1) {
+                dashboardService_1 = dashboardService_1_1;
             }],
         execute: function() {
-            // import {DashboardService} from '../../services/dashboardService';
             DashboardComponent = (function () {
-                function DashboardComponent() {
+                function DashboardComponent(dashboardService) {
                     this.isVisible = false;
+                    this.dashboardService = dashboardService;
                 }
                 DashboardComponent.prototype.ngOnInit = function () {
                     this.isVisible = false;
@@ -40,13 +43,16 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './Home/
                 };
                 DashboardComponent.prototype.onClickLogout = function (e) {
                     e.preventDefault();
+                    localStorage.removeItem('token');
+                    // this.loggedIn = false;
                 };
                 DashboardComponent = __decorate([
                     core_1.Component({
                         selector: 'dashboard-container',
                         directives: [router_1.ROUTER_DIRECTIVES, common_1.CORE_DIRECTIVES],
                         styleUrls: ['app/dashboard/components/dashboard.css'],
-                        templateUrl: 'app/dashboard/components/dashboard.html'
+                        templateUrl: 'app/dashboard/components/dashboard.html',
+                        providers: [dashboardService_1.DashboardService]
                     }),
                     router_1.RouteConfig([
                         { path: '/**', redirectTo: ['Home'] },
@@ -59,7 +65,7 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './Home/
                         // { path: '/products', component:componentProxyFactory({path:'../../../app/dashboard/components/Products/products',provide:p => p.ProductComponent}),name:'Products'},
                         { path: '/home', name: 'Home', component: home_1.HomeComponent, useAsDefault: true },
                     ]), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [dashboardService_1.DashboardService])
                 ], DashboardComponent);
                 return DashboardComponent;
             }());
