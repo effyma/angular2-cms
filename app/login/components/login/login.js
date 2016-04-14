@@ -56,11 +56,8 @@ System.register(['angular2/core', '../modals/forgetpassword/forgetPasswordModal'
                 LoginComponent.prototype.login = function (email, password, event) {
                     event.preventDefault();
                     console.log('login : ', "email: " + email + " password: " + password);
-                    this.loginService.login(email, password, function (result) {
-                        var errMsg = result.message;
-                        console.log(errMsg);
-                        this.loginErr = errMsg;
-                    });
+                    this.router.navigateByUrl('/dashboard');
+                    console.log('this.router.navigateByUrl()');
                 };
                 LoginComponent.prototype.toggleForgetPwModal = function (event) {
                     event.preventDefault();

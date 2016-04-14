@@ -39,12 +39,8 @@ export class LoginComponent implements OnInit{
 	login(email,password,event){
         event.preventDefault();
 	    console.log('login : ',"email: "+email+" password: "+password);
-        this.loginService.login(email,password,
-        function(result){
-            let errMsg = result.message;
-            console.log(errMsg)
-            this.loginErr = errMsg;
-        });
+        this.router.navigateByUrl('/dashboard');
+        console.log('this.router.navigateByUrl()');
     }
     
 	toggleForgetPwModal(event){

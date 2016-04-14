@@ -33,6 +33,10 @@ System.register([], function(exports_1, context_1) {
                     this.loggedIn = true;
                     console.log('global service: login');
                 };
+                GlobalService.prototype.loginSuccess = function () {
+                };
+                GlobalService.prototype.loginFaile = function () {
+                };
                 GlobalService.prototype.logout = function () {
                     window.sessionStorage.removeItem('key');
                     window.sessionStorage.removeItem('token');

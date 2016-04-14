@@ -29,6 +29,12 @@ export class GlobalService{
         this.loggedIn = true;
         console.log('global service: login')
     }
+    loginSuccess(){
+
+    }
+    loginFaile(){
+        
+    }
     logout(){
         window.sessionStorage.removeItem('key');
         window.sessionStorage.removeItem('token');

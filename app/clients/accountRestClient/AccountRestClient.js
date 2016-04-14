@@ -39,7 +39,7 @@ System.register(['angular2/core', 'angular2/http', '../../common/RestUtil/Interc
                     this.interceptor = interceptor;
                     this.globalService = globalService;
                 }
-                AccountRestClient.prototype.login = function (params, _success, _err) {
+                AccountRestClient.prototype.login = function (params) {
                     var _this = this;
                     var url = this.baseUrl + 'sessions';
                     var body = params;
@@ -56,10 +56,9 @@ System.register(['angular2/core', 'angular2/http', '../../common/RestUtil/Interc
                         _this.globalService.setToken(data.token);
                         _this.globalService.setKey(data.signingKey);
                         _this.globalService.login();
-                        _success();
                     }, function (err) {
                         console.log('err:');
-                        _err(JSON.parse(err._body));
+                        JSON.parse(err._body);
                     }, function () { return console.log('Complete'); });
                 };
                 AccountRestClient.prototype.getAccountInfo = function (pathParam) {
