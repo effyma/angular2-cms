@@ -81,6 +81,7 @@ System.register(['angular2/http', 'angular2/core', '../../common/RestUtil/Interc
                     this.http.get(url, requestoptions).map(function (res) { return res.json(); }).subscribe(function (data) {
                         console.log('data:');
                         console.log(data);
+                        return (data);
                     }, function (err) {
                         console.log('err:');
                         console.log(err);

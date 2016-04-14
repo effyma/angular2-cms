@@ -36,7 +36,7 @@ System.register(['../../clients/accountRestClient/AccountRestClient', 'angular2/
                     return result;
                 };
                 LoginService.prototype.login = function (email, password) {
-                    this.accountRestClient.login({ email: email, password: password });
+                    return this.accountRestClient.login({ email: email, password: password });
                 };
                 LoginService = __decorate([
                     core_1.Injectable(), 

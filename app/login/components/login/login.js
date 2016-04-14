@@ -48,16 +48,23 @@ System.register(['angular2/core', '../modals/forgetpassword/forgetPasswordModal'
                     this.router = router;
                 }
                 LoginComponent.prototype.ngOnInit = function () {
-                    console.log('login component ngOnInit: isLoggedIn? ', this.globalService.isLoggedIn());
+                    console.log('login component ngOnInit: isLoggedIn? ', this.globalService.getToken());
                     if (this.globalService.isLoggedIn()) {
                         this.router.parent.navigateByUrl('/dashboard');
                     }
                 };
                 LoginComponent.prototype.login = function (email, password, event) {
+                    var _this = this;
                     event.preventDefault();
-                    console.log('login : ', "email: " + email + " password: " + password);
-                    this.router.navigateByUrl('/dashboard');
-                    console.log('this.router.navigateByUrl()');
+                    this.loginService.login(email, password).subscribe(function (data) {
+                        console.log('login success', data);
+                        _this.globalService.login(data, email);
+                        _this.router.navigateByUrl('/dashboard');
+                        console.log('this.router.navigateByUrl()');
+                    }, function (err) {
+                        _this.loginErr = JSON.parse(err._body).message;
+                        console.log('err:', _this.loginErr);
+                    }, function () { return console.log('Complete'); });
                 };
                 LoginComponent.prototype.toggleForgetPwModal = function (event) {
                     event.preventDefault();

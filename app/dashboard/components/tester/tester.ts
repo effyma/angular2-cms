@@ -32,22 +32,39 @@ export class TesterComponent {
         e.preventDefault();
         let email = 'test@kooppi.com' ;
         let password = '123456' ;
-        this.testRestClient.login({email:email,password:password});
+        let result = this.testRestClient.login({email:email,password:password});
+        console.log(result)
     }
     onClickGetInfo(e){
         e.preventDefault();
-        this.testRestClient.getSession('test@kooppi.com');
-
+        this.testRestClient.getSession('test@kooppi.com').subscribe(
+            data => {
+                    this.globalService.login(data)
+                },
+                err =>  {
+                    console.log('err:');
+                    console.log(err);
+                },
+                () => console.log('Complete'));
     }
    onClickGetTokenByAC(e){
         e.preventDefault();
         let email = 'test@kooppi.com' ;
         let password = '123456' ;
-        this.accountRestClient.login({email:email,password:password});
+        this.accountRestClient.login({email:email,password:password}).subscribe(
+            data => {
+                console.log('test get data',data)
+                    this.globalService.login(data,email)
+                },
+                err =>  {
+                    console.log('err:');
+                    console.log(err);
+                },
+                () => console.log('Complete'));
     }
     onClickGetInfoByAC(e){
         e.preventDefault();
-        this.accountRestClient.getAccountInfo('test@kooppi.com').subscribe(
+        this.accountRestClient.getAccountInfo('test@kooppi.com',this.globalService.getKey(),this.globalService.getToken()).subscribe(
             data => {
                     console.log('data:');
                     console.log(data);

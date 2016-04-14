@@ -32,7 +32,6 @@ import {GlobalService} from '../../services/global/GlobalService';
     // { path: '/test', name: 'Tester', component: TesterComponent }
 ])
 
-// @CanActivate(()=> GlobalService.prototype.loggedIn )
 export class DashboardComponent implements OnInit{
     isVisible = false;
     dashboardService;
@@ -42,13 +41,16 @@ export class DashboardComponent implements OnInit{
         this.globalService = injector.get(GlobalService);
         this.router = router;
     }
-    
     ngOnInit(){
     this.isVisible = false;
     if(!this.globalService.isLoggedIn()){
         console.log('dashboard component: isLoggedIn false')
        this.router.navigate(['Login'])
     }
+    }
+    
+    canActivate(){
+        this.globalService.isLoggedin();
     }
     
     onClickToggleMenu(){

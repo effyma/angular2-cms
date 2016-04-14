@@ -40,7 +40,6 @@ System.register(['angular2/core', 'angular2/http', '../../common/RestUtil/Interc
                     this.globalService = globalService;
                 }
                 AccountRestClient.prototype.login = function (params) {
-                    var _this = this;
                     var url = this.baseUrl + 'sessions';
                     var body = params;
                     var headers = new http_1.Headers();
@@ -51,17 +50,9 @@ System.register(['angular2/core', 'angular2/http', '../../common/RestUtil/Interc
                         headers: headers,
                         body: JSON.stringify(body)
                     });
-                    return this.http.request(new http_1.Request(requestoptions)).map(function (res) { return res.json(); }).subscribe(function (data) {
-                        console.log('accountRestClient login success');
-                        _this.globalService.setToken(data.token);
-                        _this.globalService.setKey(data.signingKey);
-                        _this.globalService.login();
-                    }, function (err) {
-                        console.log('err:');
-                        JSON.parse(err._body);
-                    }, function () { return console.log('Complete'); });
+                    return this.http.request(new http_1.Request(requestoptions)).map(function (res) { return res.json(); });
                 };
-                AccountRestClient.prototype.getAccountInfo = function (pathParam) {
+                AccountRestClient.prototype.getAccountInfo = function (pathParam, key, token) {
                     var request = new Config_1.ConfigRequest;
                     var config = new Config_1.Config;
                     var now = Config_1.formatLocalDate();
@@ -71,31 +62,16 @@ System.register(['angular2/core', 'angular2/http', '../../common/RestUtil/Interc
                     headers.append('x-auth-request-timestamp', now);
                     request.headers['x-auth-request-timestamp'] = now;
                     config.signedHeaders.push('x-auth-request-timestamp');
-                    console.log('globalService get token', this.globalService.getToken());
-                    if (this.globalService.getToken() !== undefined && this.globalService.getToken() !== null) {
-                        headers.append('x-auth-user-token', this.globalService.getToken());
-                        request.headers['x-auth-user-token'] = this.globalService.getToken();
+                    console.log('globalService get token', token);
+                    if (token !== undefined && token !== null) {
+                        headers.append('x-auth-user-token', token);
+                        request.headers['x-auth-user-token'] = token;
                         config.signedHeaders.push('x-auth-user-token');
                     }
                     else {
                     }
-                    if (this.globalService.getKey() !== undefined && this.globalService.getKey() !== null) {
-                        config.key = this.globalService.getKey();
-                    }
-                    else {
-                    }
-                    // if(localStorage.getItem('token')!== undefined && localStorage.getItem('token')!== null){ // public key
-                    // headers.append('x-auth-user-token',localStorage.getItem('token'));
-                    // request.headers['x-auth-user-token'] = localStorage.getItem('token');
-                    // config.signedHeaders.push('x-auth-user-token');
-                    // }else{
-                    //     // return ("missing token")
-                    // }
-                    // request.headers['x-auth-request-timestamp'] = now;
-                    // request.path = 'mvno-ota-gw/api/accounts/'+pathParam;
-                    // config.signedHeaders = ['x-auth-user-token','x-auth-request-timestamp'];
-                    if (localStorage.getItem('signingKey') !== undefined) {
-                        config.key = localStorage.getItem('signingKey');
+                    if (key !== undefined && key !== null) {
+                        config.key = key;
                     }
                     else {
                     }

@@ -43,21 +43,35 @@ System.register(['angular2/core', '../../../clients/Test/testRest', '../../../cl
                     e.preventDefault();
                     var email = 'test@kooppi.com';
                     var password = '123456';
-                    this.testRestClient.login({ email: email, password: password });
+                    var result = this.testRestClient.login({ email: email, password: password });
+                    console.log(result);
                 };
                 TesterComponent.prototype.onClickGetInfo = function (e) {
+                    var _this = this;
                     e.preventDefault();
-                    this.testRestClient.getSession('test@kooppi.com');
+                    this.testRestClient.getSession('test@kooppi.com').subscribe(function (data) {
+                        _this.globalService.login(data);
+                    }, function (err) {
+                        console.log('err:');
+                        console.log(err);
+                    }, function () { return console.log('Complete'); });
                 };
                 TesterComponent.prototype.onClickGetTokenByAC = function (e) {
+                    var _this = this;
                     e.preventDefault();
                     var email = 'test@kooppi.com';
                     var password = '123456';
-                    this.accountRestClient.login({ email: email, password: password });
+                    this.accountRestClient.login({ email: email, password: password }).subscribe(function (data) {
+                        console.log('test get data', data);
+                        _this.globalService.login(data, email);
+                    }, function (err) {
+                        console.log('err:');
+                        console.log(err);
+                    }, function () { return console.log('Complete'); });
                 };
                 TesterComponent.prototype.onClickGetInfoByAC = function (e) {
                     e.preventDefault();
-                    this.accountRestClient.getAccountInfo('test@kooppi.com').subscribe(function (data) {
+                    this.accountRestClient.getAccountInfo('test@kooppi.com', this.globalService.getKey(), this.globalService.getToken()).subscribe(function (data) {
                         console.log('data:');
                         console.log(data);
                     }, function (err) {

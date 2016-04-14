@@ -46,6 +46,7 @@ System.register(['angular2/http', 'angular2/core', '../../common/RestUtil/Interc
                         localStorage.setItem('token', data.token);
                         localStorage.setItem('signingKey', data.signingKey);
                         console.log(data);
+                        return (data);
                     }, function (err) {
                         console.log('err:');
                         console.log(err);

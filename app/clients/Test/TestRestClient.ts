@@ -75,6 +75,7 @@ export class TestRestClient{
                 data => {
                     console.log('data:');
                     console.log(data);
+                    return(data)
                 },
                 err =>  {
                     console.log('err:');

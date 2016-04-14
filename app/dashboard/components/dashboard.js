@@ -47,6 +47,9 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './Home/
                         this.router.navigate(['Login']);
                     }
                 };
+                DashboardComponent.prototype.canActivate = function () {
+                    this.globalService.isLoggedin();
+                };
                 DashboardComponent.prototype.onClickToggleMenu = function () {
                     this.isVisible = !this.isVisible;
                 };

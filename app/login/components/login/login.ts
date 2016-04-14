@@ -31,16 +31,25 @@ export class LoginComponent implements OnInit{
         this.router = router;
 	}
     ngOnInit(){
-        console.log('login component ngOnInit: isLoggedIn? ',this.globalService.isLoggedIn())
+        console.log('login component ngOnInit: isLoggedIn? ',this.globalService.getToken())
         if(this.globalService.isLoggedIn()){
         this.router.parent.navigateByUrl('/dashboard');
         }
     }
 	login(email,password,event){
         event.preventDefault();
-	    console.log('login : ',"email: "+email+" password: "+password);
-        this.router.navigateByUrl('/dashboard');
-        console.log('this.router.navigateByUrl()');
+        this.loginService.login(email,password).subscribe(
+            data => {
+                console.log('login success',data)
+                    this.globalService.login(data,email);
+                    this.router.navigateByUrl('/dashboard');
+                    console.log('this.router.navigateByUrl()');
+                },
+                err =>  {
+                    this.loginErr = JSON.parse(err._body).message;
+                    console.log('err:',this.loginErr);
+                },
+                () => console.log('Complete'))
     }
     
 	toggleForgetPwModal(event){

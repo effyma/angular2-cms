@@ -22,8 +22,8 @@ import {GlobalService} from './services/global/GlobalService';
     // { path: '/**', redirectTo: ['Dashboard'] },
     // { path: '/', redirectTo: ['Dashboard']},
     { path: '/',name:'Login',component:LoginComponent },
-    // new AsyncRoute({name:'Dashboard',path:'/dashboard/...',loader:()=>System.import('../../../app/dashboard/components/dashboard').then(p=>p.DashboardComponent)})   
-	{ path: '/dashboard/...', name: 'Dashboard', component: DashboardComponent }
+    new AsyncRoute({name:'Dashboard',path:'/dashboard/...',loader:()=>System.import('../../../app/dashboard/components/dashboard').then(p=>p.DashboardComponent)})   
+	// { path: '/dashboard/...', name: 'Dashboard', component: DashboardComponent }
 ])
 
 export class AppComponent implements OnInit{

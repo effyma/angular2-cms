@@ -31,6 +31,7 @@ export class TestRestClient{
                     localStorage.setItem('token',data.token);
                     localStorage.setItem('signingKey',data.signingKey)
                     console.log(data);
+                    return(data)
                 },
                 err =>  {
                     console.log('err:');

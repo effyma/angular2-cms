@@ -18,7 +18,7 @@ export class LoginService{
         return result;
     }
     login(email,password){
-        this.accountRestClient.login({email:email,password:password});
+        return this.accountRestClient.login({email:email,password:password});
     }
     
 }

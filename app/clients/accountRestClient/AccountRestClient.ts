@@ -3,6 +3,7 @@ import {Http,Headers,Request,RequestMethod,RequestOptions} from 'angular2/http';
 import {Interceptor} from '../../common/RestUtil/Interceptor';
 import {Config,ConfigRequest,formatLocalDate} from '../../common/RestUtil/Config';
 import {GlobalService} from '../../services/global/GlobalService'
+
 @Injectable()
 export class AccountRestClient{
     http;
@@ -11,6 +12,7 @@ export class AccountRestClient{
     // headers;
     // requestoptions;
     baseUrl = 'http://demo.kooppi.com/mvno-ota-gw/api/';
+    
     constructor(http:Http,interceptor:Interceptor,globalService:GlobalService){
         this.http = http;
         this.interceptor = interceptor;
@@ -30,21 +32,10 @@ export class AccountRestClient{
         });
         return this.http.request(new Request(requestoptions)).map(
             res => res.json()
-            ).subscribe(
-            data => {
-                console.log('accountRestClient login success')
-                    this.globalService.setToken(data.token);
-                    this.globalService.setKey(data.signingKey);
-                    this.globalService.login();
-                },
-                err =>  {
-                    console.log('err:');
-                    JSON.parse(err._body);
-                },
-                () => console.log('Complete'));
+            );
     }
     
-    getAccountInfo(pathParam){
+    getAccountInfo(pathParam,key,token){
         let request= new ConfigRequest;
         let config= new Config;
         let now =  formatLocalDate();
@@ -54,35 +45,17 @@ export class AccountRestClient{
         headers.append('x-auth-request-timestamp', now);
         request.headers['x-auth-request-timestamp'] = now;
         config.signedHeaders.push('x-auth-request-timestamp');
-        console.log('globalService get token',this.globalService.getToken())
+        console.log('globalService get token',token)
         
-        if(this.globalService.getToken()!==undefined && this.globalService.getToken()!==null){
-        headers.append('x-auth-user-token',this.globalService.getToken());
-        request.headers['x-auth-user-token'] = this.globalService.getToken();
+        if(token!==undefined && token!==null){
+        headers.append('x-auth-user-token',token);
+        request.headers['x-auth-user-token'] = token;
         config.signedHeaders.push('x-auth-user-token');
         }else{
             // return ("missing token")
         }
-        if(this.globalService.getKey()!== undefined && this.globalService.getKey()!==null){
-        config.key = this.globalService.getKey();
-        }else{
-            // return ("missing key")
-        }
-        
-        // if(localStorage.getItem('token')!== undefined && localStorage.getItem('token')!== null){ // public key
-        // headers.append('x-auth-user-token',localStorage.getItem('token'));
-        // request.headers['x-auth-user-token'] = localStorage.getItem('token');
-        // config.signedHeaders.push('x-auth-user-token');
-        // }else{
-        //     // return ("missing token")
-        // }
-        
-        // request.headers['x-auth-request-timestamp'] = now;
-        // request.path = 'mvno-ota-gw/api/accounts/'+pathParam;
-        
-        // config.signedHeaders = ['x-auth-user-token','x-auth-request-timestamp'];
-        if(localStorage.getItem('signingKey')!== undefined){
-        config.key = localStorage.getItem('signingKey');
+        if(key!== undefined && key!==null){
+        config.key = key;
         }else{
             // return ("missing key")
         }
