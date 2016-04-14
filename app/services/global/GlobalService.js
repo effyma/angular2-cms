@@ -7,7 +7,7 @@ System.register([], function(exports_1, context_1) {
         execute: function() {
             GlobalService = (function () {
                 function GlobalService() {
-                    this.loggedIn = true;
+                    this.loggedIn = false;
                 }
                 GlobalService.prototype.setKey = function (key) {
                     window.sessionStorage.setItem('key', key);
@@ -26,10 +26,12 @@ System.register([], function(exports_1, context_1) {
                     // return this.token;
                 };
                 GlobalService.prototype.isLoggedIn = function () {
+                    console.log('isLoggedIn? ', this.loggedIn);
                     return this.loggedIn;
                 };
                 GlobalService.prototype.login = function () {
                     this.loggedIn = true;
+                    console.log('global service: login');
                 };
                 GlobalService.prototype.logout = function () {
                     window.sessionStorage.removeItem('key');

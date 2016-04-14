@@ -17,7 +17,7 @@ export class AccountRestClient{
         this.globalService = globalService;
     }
     
-    login(params){
+    login(params,_success,_err){
         let url = this.baseUrl+'sessions';
         let body = params;
         let headers = new Headers();
@@ -32,13 +32,15 @@ export class AccountRestClient{
             res => res.json()
             ).subscribe(
             data => {
+                console.log('accountRestClient login success')
                     this.globalService.setToken(data.token);
                     this.globalService.setKey(data.signingKey);
                     this.globalService.login();
+                    _success();
                 },
                 err =>  {
                     console.log('err:');
-                    console.log(err);
+                    _err(JSON.parse(err._body));
                 },
                 () => console.log('Complete'));
     }

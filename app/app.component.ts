@@ -20,24 +20,18 @@ import {GlobalService} from './services/global/GlobalService';
 
 @RouteConfig([
     // { path: '/**', redirectTo: ['Dashboard'] },
-    { path: '/', redirectTo: ['Login']},
-    { path: '/login',name:'Login',component:LoginComponent },
-    new AsyncRoute({name:'Dashboard',path:'/dashboard/...',loader:()=>System.import('../../../app/dashboard/components/dashboard').then(p=>p.DashboardComponent)})   
-	// { path: '/dashboard/...', name: 'Dashboard', component: DashboardComponent,useAsDefault:true }
+    // { path: '/', redirectTo: ['Dashboard']},
+    { path: '/',name:'Login',component:LoginComponent },
+    // new AsyncRoute({name:'Dashboard',path:'/dashboard/...',loader:()=>System.import('../../../app/dashboard/components/dashboard').then(p=>p.DashboardComponent)})   
+	{ path: '/dashboard/...', name: 'Dashboard', component: DashboardComponent }
 ])
 
 export class AppComponent implements OnInit{
     globalService;
-    router;
-    constructor(injector:Injector,router:Router,globalService:GlobalService){
+    constructor(injector:Injector,globalService:GlobalService){
         this.globalService = injector.parent.get(GlobalService);
-        this.router = router;
     }
     ngOnInit(){
-        console.log(this.globalService.isLoggedIn())
-        console.log(this.router)
-        // if(this.globalService.isLoggedIn()){
-        //  this.router.navigateByUrl('/dashboard');
-        // }
+        console.log('app component ngOnInit :',this.globalService.isLoggedIn());
     }
 }

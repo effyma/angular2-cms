@@ -1,7 +1,7 @@
 declare var System:any;
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit,Injector} from 'angular2/core';
 import {CORE_DIRECTIVES} from 'angular2/common';
-import { RouteConfig, ROUTER_DIRECTIVES,AsyncRoute,CanActivate} from 'angular2/router';
+import { RouteConfig, ROUTER_DIRECTIVES,AsyncRoute,CanActivate,Router} from 'angular2/router';
 import {HomeComponent} from './Home/home';
 import {TesterComponent} from './tester/tester';
 import {componentProxyFactory} from '../../common/Proxy/ComponentProxyFactory'
@@ -36,14 +36,19 @@ import {GlobalService} from '../../services/global/GlobalService';
 export class DashboardComponent implements OnInit{
     isVisible = false;
     dashboardService;
-    globalService;
-    constructor(dashboardService:DashboardService,globalService:GlobalService){
+    globalService;router;
+    constructor(dashboardService:DashboardService,globalService:GlobalService,injector:Injector,router:Router){
         this.dashboardService = dashboardService
-        this.globalService = globalService;
+        this.globalService = injector.get(GlobalService);
+        this.router = router;
     }
     
     ngOnInit(){
     this.isVisible = false;
+    if(!this.globalService.isLoggedIn()){
+        console.log('dashboard component: isLoggedIn false')
+       this.router.navigate(['Login'])
+    }
     }
     
     onClickToggleMenu(){

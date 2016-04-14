@@ -5,7 +5,7 @@ import {SignUpModal} from '../login/modals/signup/signupmodal';
 import {UserService} from '../services/UserService';
 import {UserRestClient} from '../clients/UserRestClient/UserRestClient';
 // import {TestRestClient} from '../clients/test/testRest';
-import {Interceptor} from '../../common/restUtil/Interceptor;
+
 
 @Component({
 	selector: 'login',
@@ -52,23 +52,3 @@ export class Login {
 	}
 
 }
-
-
-// var injector = Injector.resolveAndCreate([DynamicComponentLoader]);
-// var componentLoader = injector.get(DynamicComponentLoader);
-
-// var injector = Injector.resolveAndCreate([UserService]);
-// var userService = injector.get(UserService);
-
-// export class ForgotPasswordModal{
-// 	isOpen = false;
-// 	toggleOpen(){
-// 		isOpen=!isOpen;
-// 	}
-// }
-// export class SignUpModal{
-// 	isOpen = false;
-// 	toggleOpen(){
-// 		isOpen=!isOpen;
-// 	}
-// }

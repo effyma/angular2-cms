@@ -17,9 +17,14 @@ export class LoginService{
         console.log(result);
         return result;
     }
-    login(email,password){
-        this.accountRestClient.login({email:email,password:password});
-        console.log(email,password);
+    login(email,password,callback){
+        this.accountRestClient.login({email:email,password:password},
+        function(){
+            callback('success');
+        },function(_err){
+            console.log(_err);
+            callback(_err);
+        });
     }
     
 }

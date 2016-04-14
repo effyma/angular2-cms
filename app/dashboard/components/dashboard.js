@@ -34,13 +34,18 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './Home/
             }],
         execute: function() {
             DashboardComponent = (function () {
-                function DashboardComponent(dashboardService, globalService) {
+                function DashboardComponent(dashboardService, globalService, injector, router) {
                     this.isVisible = false;
                     this.dashboardService = dashboardService;
-                    this.globalService = globalService;
+                    this.globalService = injector.get(GlobalService_1.GlobalService);
+                    this.router = router;
                 }
                 DashboardComponent.prototype.ngOnInit = function () {
                     this.isVisible = false;
+                    if (!this.globalService.isLoggedIn()) {
+                        console.log('dashboard component: isLoggedIn false');
+                        this.router.navigate(['Login']);
+                    }
                 };
                 DashboardComponent.prototype.onClickToggleMenu = function () {
                     this.isVisible = !this.isVisible;
@@ -68,7 +73,7 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './Home/
                         // { path: '/products', component:componentProxyFactory({path:'../../../app/dashboard/components/Products/products',provide:p => p.ProductComponent}),name:'Products'},
                         { path: '/home', name: 'Home', component: home_1.HomeComponent, useAsDefault: true },
                     ]), 
-                    __metadata('design:paramtypes', [dashboardService_1.DashboardService, GlobalService_1.GlobalService])
+                    __metadata('design:paramtypes', [dashboardService_1.DashboardService, GlobalService_1.GlobalService, core_1.Injector, router_1.Router])
                 ], DashboardComponent);
                 return DashboardComponent;
             }());

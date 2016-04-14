@@ -1,7 +1,7 @@
 export class GlobalService{
     key;
     token;
-    loggedIn = true;
+    loggedIn = false;
     constructor(){
 
     }
@@ -22,10 +22,12 @@ export class GlobalService{
         // return this.token;
     }
     isLoggedIn(){
+        console.log('isLoggedIn? ', this.loggedIn)
         return this.loggedIn;
     }
     login(){
         this.loggedIn = true;
+        console.log('global service: login')
     }
     logout(){
         window.sessionStorage.removeItem('key');
