@@ -32,19 +32,21 @@ import {GlobalService} from '../../services/global/GlobalService';
     // { path: '/test', name: 'Tester', component: TesterComponent }
 ])
 
+
 export class DashboardComponent implements OnInit{
     isVisible = false;
     dashboardService;
     globalService;router;
     constructor(dashboardService:DashboardService,globalService:GlobalService,injector:Injector,router:Router){
         this.dashboardService = dashboardService
-        this.globalService = injector.get(GlobalService);
+        console.log(injector)
+        this.globalService = globalService;
+        // this.globalService = injector.get(GlobalService);
         this.router = router;
     }
     ngOnInit(){
     this.isVisible = false;
     if(!this.globalService.isLoggedIn()){
-        console.log('dashboard component: isLoggedIn false')
        this.router.navigate(['Login'])
     }
     }
@@ -60,6 +62,7 @@ export class DashboardComponent implements OnInit{
     onClickLogout(e){
         e.preventDefault();
         this.globalService.logout();
+        this.router.navigate(['Login']);
     }
 
 }

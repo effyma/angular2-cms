@@ -33,6 +33,7 @@ System.register(['angular2/core', 'angular2/router', './login/components/login/l
             // import {LoggedInRouterOutlet} from './services/routeService/RouterOutlet';
             AppComponent = (function () {
                 function AppComponent(injector, globalService) {
+                    // injector = Injector.resolveAndCreate([UserRestClient]);
                     this.globalService = injector.parent.get(GlobalService_1.GlobalService);
                 }
                 AppComponent.prototype.ngOnInit = function () {

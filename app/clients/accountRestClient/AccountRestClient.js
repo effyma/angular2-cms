@@ -34,7 +34,8 @@ System.register(['angular2/core', 'angular2/http', '../../common/RestUtil/Interc
                 function AccountRestClient(http, interceptor, globalService) {
                     // headers;
                     // requestoptions;
-                    this.baseUrl = 'http://demo.kooppi.com/mvno-ota-gw/api/';
+                    // baseUrl = 'http://demo.kooppi.com/mvno-ota-gw/api/';
+                    this.baseUrl = 'http://localhost:8080/mvno-ota-gw/api/';
                     this.http = http;
                     this.interceptor = interceptor;
                     this.globalService = globalService;

@@ -40,15 +40,15 @@ System.register(['angular2/core', '../modals/forgetpassword/forgetPasswordModal'
             }],
         execute: function() {
             LoginComponent = (function () {
-                function LoginComponent(elementRef, router, componentLoader, loginService, globalService) {
+                function LoginComponent(elementRef, injector, router, componentLoader, loginService, globalService) {
                     this.elementRef = elementRef;
                     this.componentLoader = componentLoader;
                     this.loginService = loginService;
-                    this.globalService = globalService;
+                    this.globalService = injector.parent.get(GlobalService_1.GlobalService);
+                    // this.globalService = globalService;
                     this.router = router;
                 }
                 LoginComponent.prototype.ngOnInit = function () {
-                    console.log('login component ngOnInit: isLoggedIn? ', this.globalService.getToken());
                     if (this.globalService.isLoggedIn()) {
                         this.router.parent.navigateByUrl('/dashboard');
                     }
@@ -84,7 +84,7 @@ System.register(['angular2/core', '../modals/forgetpassword/forgetPasswordModal'
                         inputs: ['email', 'password'],
                         providers: [core_1.ElementRef, LoginService_1.LoginService, AccountRestClient_1.AccountRestClient, Interceptor_1.Interceptor]
                     }), 
-                    __metadata('design:paramtypes', [core_1.ElementRef, router_1.Router, core_1.DynamicComponentLoader, LoginService_1.LoginService, GlobalService_1.GlobalService])
+                    __metadata('design:paramtypes', [core_1.ElementRef, core_1.Injector, router_1.Router, core_1.DynamicComponentLoader, LoginService_1.LoginService, GlobalService_1.GlobalService])
                 ], LoginComponent);
                 return LoginComponent;
             }());

@@ -1,4 +1,4 @@
-import {Component,OnInit,ElementRef,DynamicComponentLoader,ComponentRef} from 'angular2/core';
+import {Component,OnInit,ElementRef,DynamicComponentLoader,ComponentRef,Injector} from 'angular2/core';
 import {ForgetPasswordModal} from '../modals/forgetpassword/forgetPasswordModal';
 import {SignUpModal} from '../modals/signup/signUpModal';
 import {LoginService} from '../../service/LoginService';
@@ -23,15 +23,15 @@ export class LoginComponent implements OnInit{
     globalService;
     router;
     loginErr;
-	constructor(elementRef:ElementRef,router:Router,componentLoader:DynamicComponentLoader,loginService:LoginService,globalService:GlobalService){
+	constructor(elementRef:ElementRef,injector:Injector,router:Router,componentLoader:DynamicComponentLoader,loginService:LoginService,globalService:GlobalService){
 		this.elementRef = elementRef;
 		this.componentLoader = componentLoader;
         this.loginService = loginService;
-        this.globalService = globalService;
+        this.globalService = injector.parent.get(GlobalService);
+        // this.globalService = globalService;
         this.router = router;
 	}
     ngOnInit(){
-        console.log('login component ngOnInit: isLoggedIn? ',this.globalService.getToken())
         if(this.globalService.isLoggedIn()){
         this.router.parent.navigateByUrl('/dashboard');
         }

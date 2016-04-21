@@ -1,5 +1,5 @@
 import {UserRestClient} from '../../clients/userRestClient/UserRestClient'
-import {Injectable} from 'angular2/core'
+import {Injectable,Injector,Inject} from 'angular2/core'
 
 @Injectable()
 export class GlobalService{
@@ -8,6 +8,7 @@ export class GlobalService{
     userRestClient;
     userProfile={loginId:''};
     loggedIn = false;
+    
     constructor(userRestClient:UserRestClient){
         this.userRestClient = userRestClient;
     }
@@ -29,36 +30,43 @@ export class GlobalService{
         return this.key;
     }
     getToken(){
-        return window.sessionStorage.getItem('token');
-        // return this.token;
+        // return window.sessionStorage.getItem('token');
+        return this.token;
     }
     setUserId(id){
         this.userProfile.loginId = id;
         window.sessionStorage.setItem('user', this.userProfile.loginId);
-        console.log(this.userProfile)
     }
     getUserId(){
         return this.userProfile.loginId;
     }
     validateLogin(){
-        if(!this.isLoggedIn() && window.sessionStorage.getItem('user')!==null && window.sessionStorage.getItem('key')!==null && window.sessionStorage.getItem('token')!==null){
+        console.log('validateLogin');
+        // if((!this.isLoggedIn())&&window.sessionStorage.getItem('user')&& window.sessionStorage.getItem('key')&& window.sessionStorage.getItem('token')){
+        if((!this.isLoggedIn())&&(window.sessionStorage.getItem('user')!==(null||'undefined'))&& (window.sessionStorage.getItem('key')!==(null||'undefined'))&& (window.sessionStorage.getItem('token')!==(null||'undefined'))){
+            console.log('sessionStorage has Items');
+        // if( (this.isLoggedIn()) && window.sessionStorage.getItem('user')!== null && window.sessionStorage.getItem('key')!== null && window.sessionStorage.getItem('token')!== null
+        // && window.sessionStorage.getItem('user')!== undefined && window.sessionStorage.getItem('key')!== undefined && window.sessionStorage.getItem('token')!== undefined){
             var loginId = window.sessionStorage.getItem('user');
-            this.account.getAccountInfo(loginId).subscribe(
+            var key = window.sessionStorage.getItem('key');
+            var token = window.sessionStorage.getItem('token');
+            this.userRestClient.validateIsLoggedin(loginId,key,token).subscribe(
             data => {
                 console.log('login success',data)
                 this.login(data,loginId);
                 },
                 err =>  {
+                    console.log('invalid session items')
                     this.logout();
                 },
                 () => console.log('Complete'));
         }else{
+            console.log('not enough info to get session')
             this.logout();
         }
     }
     
     isLoggedIn(){
-        console.log('isLoggedIn? ', this.loggedIn)
         return this.loggedIn;
     }
     login(data,email){
@@ -75,9 +83,12 @@ export class GlobalService{
         
     }
     logout(){
-        window.sessionStorage.removeItem('key');
-        window.sessionStorage.removeItem('token');
-        window.sessionStorage.removeItem('user');
+        this.setToken();
+        this.setKey();
+        this.setUserId();
+        // window.sessionStorage.removeItem('key');
+        // window.sessionStorage.removeItem('token');
+        // window.sessionStorage.removeItem('user');
         this.loggedIn = false;
     }
 }

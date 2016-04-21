@@ -6,6 +6,7 @@ import { LoginComponent } from './login/components/login/login';
 import { Login } from './login/login.component';
 import {DashboardComponent} from './dashboard/components/dashboard';
 import {GlobalService} from './services/global/GlobalService';
+import {UserRestClient} from './clients/userRestClient/UserRestClient';
 // import {LoggedInRouterOutlet} from './services/routeService/RouterOutlet';
 
 @Component({
@@ -14,8 +15,8 @@ import {GlobalService} from './services/global/GlobalService';
    <router-outlet></router-outlet>
     `,
     styleUrls: ['app/app.component.css'],
-	directives: [ LoginComponent,Login,ROUTER_DIRECTIVES],
-	// providers: [ Router]
+	directives: [LoginComponent,Login,ROUTER_DIRECTIVES],
+	// providers: [UserRestClient]
 })
 
 @RouteConfig([
@@ -29,6 +30,7 @@ import {GlobalService} from './services/global/GlobalService';
 export class AppComponent implements OnInit{
     globalService;
     constructor(injector:Injector,globalService:GlobalService){
+        // injector = Injector.resolveAndCreate([UserRestClient]);
         this.globalService = injector.parent.get(GlobalService);
     }
     ngOnInit(){

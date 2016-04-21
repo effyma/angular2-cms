@@ -44,34 +44,41 @@ System.register(['../../clients/userRestClient/UserRestClient', 'angular2/core']
                     return this.key;
                 };
                 GlobalService.prototype.getToken = function () {
-                    return window.sessionStorage.getItem('token');
-                    // return this.token;
+                    // return window.sessionStorage.getItem('token');
+                    return this.token;
                 };
                 GlobalService.prototype.setUserId = function (id) {
                     this.userProfile.loginId = id;
                     window.sessionStorage.setItem('user', this.userProfile.loginId);
-                    console.log(this.userProfile);
                 };
                 GlobalService.prototype.getUserId = function () {
                     return this.userProfile.loginId;
                 };
                 GlobalService.prototype.validateLogin = function () {
                     var _this = this;
-                    if (!this.isLoggedIn() && window.sessionStorage.getItem('user') !== null && window.sessionStorage.getItem('key') !== null && window.sessionStorage.getItem('token') !== null) {
+                    console.log('validateLogin');
+                    // if((!this.isLoggedIn())&&window.sessionStorage.getItem('user')&& window.sessionStorage.getItem('key')&& window.sessionStorage.getItem('token')){
+                    if ((!this.isLoggedIn()) && (window.sessionStorage.getItem('user') !== (null || 'undefined')) && (window.sessionStorage.getItem('key') !== (null || 'undefined')) && (window.sessionStorage.getItem('token') !== (null || 'undefined'))) {
+                        console.log('sessionStorage has Items');
+                        // if( (this.isLoggedIn()) && window.sessionStorage.getItem('user')!== null && window.sessionStorage.getItem('key')!== null && window.sessionStorage.getItem('token')!== null
+                        // && window.sessionStorage.getItem('user')!== undefined && window.sessionStorage.getItem('key')!== undefined && window.sessionStorage.getItem('token')!== undefined){
                         var loginId = window.sessionStorage.getItem('user');
-                        this.account.getAccountInfo(loginId).subscribe(function (data) {
+                        var key = window.sessionStorage.getItem('key');
+                        var token = window.sessionStorage.getItem('token');
+                        this.userRestClient.validateIsLoggedin(loginId, key, token).subscribe(function (data) {
                             console.log('login success', data);
                             _this.login(data, loginId);
                         }, function (err) {
+                            console.log('invalid session items');
                             _this.logout();
                         }, function () { return console.log('Complete'); });
                     }
                     else {
+                        console.log('not enough info to get session');
                         this.logout();
                     }
                 };
                 GlobalService.prototype.isLoggedIn = function () {
-                    console.log('isLoggedIn? ', this.loggedIn);
                     return this.loggedIn;
                 };
                 GlobalService.prototype.login = function (data, email) {
@@ -86,9 +93,12 @@ System.register(['../../clients/userRestClient/UserRestClient', 'angular2/core']
                 GlobalService.prototype.loginFaile = function () {
                 };
                 GlobalService.prototype.logout = function () {
-                    window.sessionStorage.removeItem('key');
-                    window.sessionStorage.removeItem('token');
-                    window.sessionStorage.removeItem('user');
+                    this.setToken();
+                    this.setKey();
+                    this.setUserId();
+                    // window.sessionStorage.removeItem('key');
+                    // window.sessionStorage.removeItem('token');
+                    // window.sessionStorage.removeItem('user');
                     this.loggedIn = false;
                 };
                 GlobalService = __decorate([

@@ -37,13 +37,14 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './Home/
                 function DashboardComponent(dashboardService, globalService, injector, router) {
                     this.isVisible = false;
                     this.dashboardService = dashboardService;
-                    this.globalService = injector.get(GlobalService_1.GlobalService);
+                    console.log(injector);
+                    this.globalService = globalService;
+                    // this.globalService = injector.get(GlobalService);
                     this.router = router;
                 }
                 DashboardComponent.prototype.ngOnInit = function () {
                     this.isVisible = false;
                     if (!this.globalService.isLoggedIn()) {
-                        console.log('dashboard component: isLoggedIn false');
                         this.router.navigate(['Login']);
                     }
                 };
@@ -56,6 +57,7 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './Home/
                 DashboardComponent.prototype.onClickLogout = function (e) {
                     e.preventDefault();
                     this.globalService.logout();
+                    this.router.navigate(['Login']);
                 };
                 DashboardComponent = __decorate([
                     core_1.Component({
