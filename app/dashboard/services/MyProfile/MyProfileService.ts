@@ -7,8 +7,8 @@ export class MyProfileService{
     constructor(profileRestClient:ProfileRestClient){
         this.profileRestClient = profileRestClient;
     }
-    getMyProfile(param){
-        let result = this.profileRestClient.getAccountInfo('test@kooppi.com');
+    getMyProfile(param,key,token){
+        let result = this.profileRestClient.getAccountInfo('test@kooppi.com',key,token);
         console.log(result)
         return result
     }

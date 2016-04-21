@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit{
 		this.componentLoader = componentLoader;
         this.loginService = loginService;
         this.globalService = injector.parent.get(GlobalService);
+        console.log(this.globalService)
         // this.globalService = globalService;
         this.router = router;
 	}

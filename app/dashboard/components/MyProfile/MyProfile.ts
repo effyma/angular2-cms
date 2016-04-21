@@ -4,7 +4,7 @@ import {ProfileRestClient} from '../../../clients/ProfileRestClient/ProfileRestC
 import {Interceptor} from '../../../common/RestUtil/Interceptor';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {AccountRestClient} from '../../../clients/accountRestClient/AccountRestClient';
-
+import {GlobalService} from '../../../services/global/GlobalService';
 
 @Component({
     template:`
@@ -22,17 +22,21 @@ export class MyProfileComponent implements OnInit{
     profile;
     myProfileServie;
     err;
-    accountRestClient
-    constructor(myProfileServie:MyProfileService,accountRestClient:AccountRestClient){
+    accountRestClient;
+    globalService;
+    constructor(myProfileServie:MyProfileService,accountRestClient:AccountRestClient,globalService:GlobalService){
         this.myProfileServie = myProfileServie;
         this.accountRestClient = accountRestClient;
+        this.globalService = globalService;
     }
     ngOnInit() {
     console.log('ngOnInit')
     this.profile = this.getProfile();
     }
     getProfile(){
-        this.accountRestClient.getAccountInfo('test@kooppi.com').subscribe(
+        var token = this.globalService.getToken();
+        var key = this.globalService.getKey();
+        this.accountRestClient.getAccountInfo('test@kooppi.com',key,token).subscribe(
     //    this.myProfileServie.getMyProfile().subscribe(
                 data => {
                     console.log('data:');

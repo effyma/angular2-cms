@@ -31,11 +31,11 @@ System.register(['angular2/core', 'angular2/http', '../../common/RestUtil/Interc
             }],
         execute: function() {
             AccountRestClient = (function () {
+                // baseUrl = 'http://localhost:8080/mvno-ota-gw/api/';
                 function AccountRestClient(http, interceptor, globalService) {
                     // headers;
                     // requestoptions;
-                    // baseUrl = 'http://demo.kooppi.com/mvno-ota-gw/api/';
-                    this.baseUrl = 'http://localhost:8080/mvno-ota-gw/api/';
+                    this.baseUrl = 'http://demo.kooppi.com/mvno-ota-gw/api/';
                     this.http = http;
                     this.interceptor = interceptor;
                     this.globalService = globalService;
@@ -54,6 +54,7 @@ System.register(['angular2/core', 'angular2/http', '../../common/RestUtil/Interc
                     return this.http.request(new http_1.Request(requestoptions)).map(function (res) { return res.json(); });
                 };
                 AccountRestClient.prototype.getAccountInfo = function (pathParam, key, token) {
+                    console.log('get account info : ', pathParam, key, token);
                     var request = new Config_1.ConfigRequest;
                     var config = new Config_1.Config;
                     var now = Config_1.formatLocalDate();

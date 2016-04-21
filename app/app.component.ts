@@ -6,7 +6,7 @@ import { LoginComponent } from './login/components/login/login';
 import { Login } from './login/login.component';
 import {DashboardComponent} from './dashboard/components/dashboard';
 import {GlobalService} from './services/global/GlobalService';
-import {UserRestClient} from './clients/userRestClient/UserRestClient';
+// import {UserRestClient} from './clients/userRestClient/UserRestClient';
 // import {LoggedInRouterOutlet} from './services/routeService/RouterOutlet';
 
 @Component({
@@ -32,8 +32,10 @@ export class AppComponent implements OnInit{
     constructor(injector:Injector,globalService:GlobalService){
         // injector = Injector.resolveAndCreate([UserRestClient]);
         this.globalService = injector.parent.get(GlobalService);
+        this.globalService.init();
     }
     ngOnInit(){
+        console.log(this.globalService)
         console.log('app component ngOnInit :',this.globalService.isLoggedIn());
     }
 }

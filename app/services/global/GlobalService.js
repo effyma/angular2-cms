@@ -40,12 +40,12 @@ System.register(['../../clients/userRestClient/UserRestClient', 'angular2/core']
                     this.token = token;
                 };
                 GlobalService.prototype.getKey = function () {
-                    // return window.sessionStorage.getItem('key');
-                    return this.key;
+                    return window.sessionStorage.getItem('key');
+                    // return this.key;
                 };
                 GlobalService.prototype.getToken = function () {
-                    // return window.sessionStorage.getItem('token');
-                    return this.token;
+                    return window.sessionStorage.getItem('token');
+                    // return this.token;
                 };
                 GlobalService.prototype.setUserId = function (id) {
                     this.userProfile.loginId = id;
@@ -57,25 +57,25 @@ System.register(['../../clients/userRestClient/UserRestClient', 'angular2/core']
                 GlobalService.prototype.validateLogin = function () {
                     var _this = this;
                     console.log('validateLogin');
-                    // if((!this.isLoggedIn())&&window.sessionStorage.getItem('user')&& window.sessionStorage.getItem('key')&& window.sessionStorage.getItem('token')){
-                    if ((!this.isLoggedIn()) && (window.sessionStorage.getItem('user') !== (null || 'undefined')) && (window.sessionStorage.getItem('key') !== (null || 'undefined')) && (window.sessionStorage.getItem('token') !== (null || 'undefined'))) {
+                    console.log(this.userProfile.isLoggedIn);
+                    console.log(this.loginId !== null && this.loginId !== undefined);
+                    if (!this.isLoggedIn() && window.sessionStorage.getItem('user') !== null && window.sessionStorage.getItem('user') !== 'undefined' && window.sessionStorage.getItem('key') !== null && window.sessionStorage.getItem('key') !== 'undefined' && window.sessionStorage.getItem('token') !== null && window.sessionStorage.getItem('token') !== 'undefined') {
+                        // if(!this.isLoggedIn() && this.loginId!==null && this.loginId!=='undefined'&& this.loginId!==undefined && this.key!==null && this.key!=='undefined' && this.key!==undefined && this.token!==null && this.token!=='undefined'&& this.token!==undefined){ 
                         console.log('sessionStorage has Items');
-                        // if( (this.isLoggedIn()) && window.sessionStorage.getItem('user')!== null && window.sessionStorage.getItem('key')!== null && window.sessionStorage.getItem('token')!== null
-                        // && window.sessionStorage.getItem('user')!== undefined && window.sessionStorage.getItem('key')!== undefined && window.sessionStorage.getItem('token')!== undefined){
                         var loginId = window.sessionStorage.getItem('user');
                         var key = window.sessionStorage.getItem('key');
                         var token = window.sessionStorage.getItem('token');
-                        this.userRestClient.validateIsLoggedin(loginId, key, token).subscribe(function (data) {
+                        this.userRestClient.validateIsLoggedin(this.loginId, this.key, this.token).subscribe(function (data) {
                             console.log('login success', data);
                             _this.login(data, loginId);
                         }, function (err) {
                             console.log('invalid session items');
-                            _this.logout();
+                            console.log(err);
+                            // this.logout();
                         }, function () { return console.log('Complete'); });
                     }
                     else {
                         console.log('not enough info to get session');
-                        this.logout();
                     }
                 };
                 GlobalService.prototype.isLoggedIn = function () {
@@ -111,13 +111,12 @@ System.register(['../../clients/userRestClient/UserRestClient', 'angular2/core']
         }
     }
 });
-// class UserProfile{
+// var UserProfile{
 //     isLoggedIn;
 //     loginId;
 //     key;
 //     token;
-//     UserProfile(isLoggedIn, loginId, key, token){
-//         this.isLoggedIn = isLoggedIn;
+//     UserProfile(loginId, key, token){
 //         this.loginId = loginId;
 //         this.key = key;
 //         this.token = token;

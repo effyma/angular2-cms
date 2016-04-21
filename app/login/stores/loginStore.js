@@ -1,4 +1,4 @@
-System.register(['../../../clients/ProfileRestClient/ProfileRestClient', 'angular2/core'], function(exports_1, context_1) {
+System.register(['angular2/core', 'rxjs'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,34 +10,31 @@ System.register(['../../../clients/ProfileRestClient/ProfileRestClient', 'angula
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var ProfileRestClient_1, core_1;
-    var MyProfileService;
+    var core_1, Rx;
+    var LoginStore;
     return {
         setters:[
-            function (ProfileRestClient_1_1) {
-                ProfileRestClient_1 = ProfileRestClient_1_1;
-            },
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (Rx_1) {
+                Rx = Rx_1;
             }],
         execute: function() {
-            MyProfileService = (function () {
-                function MyProfileService(profileRestClient) {
-                    this.profileRestClient = profileRestClient;
+            LoginStore = (function () {
+                function LoginStore() {
+                    this.login = new Rx.Subject;
+                    this.logout = new Rx.Subject;
+                    this.validateLogin = new Rx.Subject;
                 }
-                MyProfileService.prototype.getMyProfile = function (param, key, token) {
-                    var result = this.profileRestClient.getAccountInfo('test@kooppi.com', key, token);
-                    console.log(result);
-                    return result;
-                };
-                MyProfileService = __decorate([
+                LoginStore = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [ProfileRestClient_1.ProfileRestClient])
-                ], MyProfileService);
-                return MyProfileService;
+                    __metadata('design:paramtypes', [])
+                ], LoginStore);
+                return LoginStore;
             }());
-            exports_1("MyProfileService", MyProfileService);
+            exports_1("LoginStore", LoginStore);
         }
     }
 });
-//# sourceMappingURL=MyProfileService.js.map
+//# sourceMappingURL=loginStore.js.map

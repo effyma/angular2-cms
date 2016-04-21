@@ -45,6 +45,7 @@ System.register(['angular2/core', '../modals/forgetpassword/forgetPasswordModal'
                     this.componentLoader = componentLoader;
                     this.loginService = loginService;
                     this.globalService = injector.parent.get(GlobalService_1.GlobalService);
+                    console.log(this.globalService);
                     // this.globalService = globalService;
                     this.router = router;
                 }

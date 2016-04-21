@@ -10,7 +10,7 @@ export class UserRestClient{
     baseUrl = "http://demo.kooppi.com/mvno-ota-gw/api/";
     constructor(http:Http,interceptor:Interceptor){
         this.http = http;
-        this.interceptor = interceptor
+        this.interceptor = interceptor;
     }
     
     validateIsLoggedin(pathParam,key,token){

@@ -40,9 +40,10 @@ export class DashboardComponent implements OnInit{
     constructor(dashboardService:DashboardService,globalService:GlobalService,injector:Injector,router:Router){
         this.dashboardService = dashboardService
         console.log(injector)
-        this.globalService = globalService;
-        // this.globalService = injector.get(GlobalService);
+        // this.globalService = globalService;
+        this.globalService = injector.parent.get(GlobalService);
         this.router = router;
+        console.log(this.globalService)
     }
     ngOnInit(){
     this.isVisible = false;

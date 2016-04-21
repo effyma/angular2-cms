@@ -30,13 +30,16 @@ System.register(['angular2/core', 'angular2/router', './login/components/login/l
                 GlobalService_1 = GlobalService_1_1;
             }],
         execute: function() {
+            // import {UserRestClient} from './clients/userRestClient/UserRestClient';
             // import {LoggedInRouterOutlet} from './services/routeService/RouterOutlet';
             AppComponent = (function () {
                 function AppComponent(injector, globalService) {
                     // injector = Injector.resolveAndCreate([UserRestClient]);
                     this.globalService = injector.parent.get(GlobalService_1.GlobalService);
+                    this.globalService.init();
                 }
                 AppComponent.prototype.ngOnInit = function () {
+                    console.log(this.globalService);
                     console.log('app component ngOnInit :', this.globalService.isLoggedIn());
                 };
                 AppComponent = __decorate([

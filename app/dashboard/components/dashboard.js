@@ -38,9 +38,10 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './Home/
                     this.isVisible = false;
                     this.dashboardService = dashboardService;
                     console.log(injector);
-                    this.globalService = globalService;
-                    // this.globalService = injector.get(GlobalService);
+                    // this.globalService = globalService;
+                    this.globalService = injector.parent.get(GlobalService_1.GlobalService);
                     this.router = router;
+                    console.log(this.globalService);
                 }
                 DashboardComponent.prototype.ngOnInit = function () {
                     this.isVisible = false;

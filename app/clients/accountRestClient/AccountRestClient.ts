@@ -11,8 +11,8 @@ export class AccountRestClient{
     globalService;
     // headers;
     // requestoptions;
-    // baseUrl = 'http://demo.kooppi.com/mvno-ota-gw/api/';
-    baseUrl = 'http://localhost:8080/mvno-ota-gw/api/';
+    baseUrl = 'http://demo.kooppi.com/mvno-ota-gw/api/';
+    // baseUrl = 'http://localhost:8080/mvno-ota-gw/api/';
     
     constructor(http:Http,interceptor:Interceptor,globalService:GlobalService){
         this.http = http;
@@ -37,6 +37,7 @@ export class AccountRestClient{
     }
     
     getAccountInfo(pathParam,key,token){
+        console.log('get account info : ',pathParam,key,token)
         let request= new ConfigRequest;
         let config= new Config;
         let now =  formatLocalDate();

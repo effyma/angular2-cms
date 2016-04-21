@@ -6,7 +6,7 @@ export class GlobalService{
     key;
     token;
     userRestClient;
-    userProfile={loginId:''};
+    userProfile = {loginId:''};
     loggedIn = false;
     
     constructor(userRestClient:UserRestClient){
@@ -26,12 +26,12 @@ export class GlobalService{
         this.token = token;
     }
     getKey(){
-        // return window.sessionStorage.getItem('key');
-        return this.key;
+        return window.sessionStorage.getItem('key');
+        // return this.key;
     }
     getToken(){
-        // return window.sessionStorage.getItem('token');
-        return this.token;
+        return window.sessionStorage.getItem('token');
+        // return this.token;
     }
     setUserId(id){
         this.userProfile.loginId = id;
@@ -42,27 +42,29 @@ export class GlobalService{
     }
     validateLogin(){
         console.log('validateLogin');
-        // if((!this.isLoggedIn())&&window.sessionStorage.getItem('user')&& window.sessionStorage.getItem('key')&& window.sessionStorage.getItem('token')){
-        if((!this.isLoggedIn())&&(window.sessionStorage.getItem('user')!==(null||'undefined'))&& (window.sessionStorage.getItem('key')!==(null||'undefined'))&& (window.sessionStorage.getItem('token')!==(null||'undefined'))){
-            console.log('sessionStorage has Items');
-        // if( (this.isLoggedIn()) && window.sessionStorage.getItem('user')!== null && window.sessionStorage.getItem('key')!== null && window.sessionStorage.getItem('token')!== null
-        // && window.sessionStorage.getItem('user')!== undefined && window.sessionStorage.getItem('key')!== undefined && window.sessionStorage.getItem('token')!== undefined){
-            var loginId = window.sessionStorage.getItem('user');
-            var key = window.sessionStorage.getItem('key');
-            var token = window.sessionStorage.getItem('token');
-            this.userRestClient.validateIsLoggedin(loginId,key,token).subscribe(
+        console.log(this.userProfile.isLoggedIn)
+        console.log(this.loginId!==null && this.loginId!==undefined)
+        if(!this.isLoggedIn() && window.sessionStorage.getItem('user')!==null &&window.sessionStorage.getItem('user')!=='undefined' && window.sessionStorage.getItem('key')!==null&&window.sessionStorage.getItem('key')!=='undefined'&& window.sessionStorage.getItem('token')!==null&&window.sessionStorage.getItem('token')!=='undefined'){
+        // if(!this.isLoggedIn() && this.loginId!==null && this.loginId!=='undefined'&& this.loginId!==undefined && this.key!==null && this.key!=='undefined' && this.key!==undefined && this.token!==null && this.token!=='undefined'&& this.token!==undefined){ 
+ 
+        console.log('sessionStorage has Items');
+        var loginId = window.sessionStorage.getItem('user');
+        var key = window.sessionStorage.getItem('key');
+        var token = window.sessionStorage.getItem('token');
+        this.userRestClient.validateIsLoggedin(this.loginId,this.key,this.token).subscribe(
             data => {
                 console.log('login success',data)
                 this.login(data,loginId);
                 },
                 err =>  {
                     console.log('invalid session items')
-                    this.logout();
+                    console.log(err)
+                    // this.logout();
                 },
                 () => console.log('Complete'));
         }else{
             console.log('not enough info to get session')
-            this.logout();
+            // this.logout();
         }
     }
     
@@ -93,13 +95,12 @@ export class GlobalService{
     }
 }
 
-// class UserProfile{
+// var UserProfile{
 //     isLoggedIn;
 //     loginId;
 //     key;
 //     token;
-//     UserProfile(isLoggedIn, loginId, key, token){
-//         this.isLoggedIn = isLoggedIn;
+//     UserProfile(loginId, key, token){
 //         this.loginId = loginId;
 //         this.key = key;
 //         this.token = token;
