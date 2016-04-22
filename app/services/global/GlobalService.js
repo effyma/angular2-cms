@@ -23,21 +23,28 @@ System.register(['../../clients/userRestClient/UserRestClient', 'angular2/core']
         execute: function() {
             GlobalService = (function () {
                 function GlobalService(userRestClient) {
-                    this.userProfile = { loginId: '' };
+                    this.userProfile = {
+                        'isLoggedIn': false,
+                        'loginId': '',
+                        'token': '',
+                        'key': '' };
                     this.loggedIn = false;
                     this.userRestClient = userRestClient;
                 }
                 GlobalService.prototype.init = function () {
                     console.log('GlobalService init...');
+                    this.loadData();
                     this.validateLogin();
                 };
                 GlobalService.prototype.setKey = function (key) {
                     window.sessionStorage.setItem('key', key);
                     this.key = key;
+                    this.userProfile.key = key;
                 };
                 GlobalService.prototype.setToken = function (token) {
                     window.sessionStorage.setItem('token', token);
                     this.token = token;
+                    this.userProfile.token = token;
                 };
                 GlobalService.prototype.getKey = function () {
                     return window.sessionStorage.getItem('key');
@@ -49,25 +56,41 @@ System.register(['../../clients/userRestClient/UserRestClient', 'angular2/core']
                 };
                 GlobalService.prototype.setUserId = function (id) {
                     this.userProfile.loginId = id;
-                    window.sessionStorage.setItem('user', this.userProfile.loginId);
+                    window.sessionStorage.setItem('id', this.userProfile.loginId);
                 };
                 GlobalService.prototype.getUserId = function () {
                     return this.userProfile.loginId;
                 };
+                GlobalService.prototype.loadData = function () {
+                    var token = window.sessionStorage.getItem('token');
+                    var key = window.sessionStorage.getItem('key');
+                    var id = window.sessionStorage.getItem('id');
+                    if (!(token === null || token === undefined || token === 'null' || token === 'undefined' ||
+                        key === null || key === undefined || key === 'null' || key === 'undefined' ||
+                        id === null || id === undefined || id === 'null' || id === 'undefined')) {
+                        this.setKey(window.sessionStorage.getItem('key'));
+                        this.setToken(window.sessionStorage.getItem('token'));
+                        this.setUserId(window.sessionStorage.getItem('id'));
+                    }
+                };
                 GlobalService.prototype.validateLogin = function () {
                     var _this = this;
-                    console.log('validateLogin');
-                    console.log(this.userProfile.isLoggedIn);
-                    console.log(this.loginId !== null && this.loginId !== undefined);
-                    if (!this.isLoggedIn() && window.sessionStorage.getItem('user') !== null && window.sessionStorage.getItem('user') !== 'undefined' && window.sessionStorage.getItem('key') !== null && window.sessionStorage.getItem('key') !== 'undefined' && window.sessionStorage.getItem('token') !== null && window.sessionStorage.getItem('token') !== 'undefined') {
+                    var token = window.sessionStorage.getItem('token');
+                    var key = window.sessionStorage.getItem('key');
+                    var id = window.sessionStorage.getItem('id');
+                    if (!(token === null || token === undefined || token === 'null' || token === 'undefined' ||
+                        key === null || key === undefined || key === 'null' || key === 'undefined' ||
+                        id === null || id === undefined || id === 'null' || id === 'undefined')) {
+                        // if(!this.isLoggedIn() && window.sessionStorage.getItem('user')!==null &&window.sessionStorage.getItem('user')!=='undefined' && window.sessionStorage.getItem('key')!==null&&window.sessionStorage.getItem('key')!=='undefined'&& window.sessionStorage.getItem('token')!==null&&window.sessionStorage.getItem('token')!=='undefined'){
                         // if(!this.isLoggedIn() && this.loginId!==null && this.loginId!=='undefined'&& this.loginId!==undefined && this.key!==null && this.key!=='undefined' && this.key!==undefined && this.token!==null && this.token!=='undefined'&& this.token!==undefined){ 
                         console.log('sessionStorage has Items');
-                        var loginId = window.sessionStorage.getItem('user');
-                        var key = window.sessionStorage.getItem('key');
-                        var token = window.sessionStorage.getItem('token');
-                        this.userRestClient.validateIsLoggedin(this.loginId, this.key, this.token).subscribe(function (data) {
-                            console.log('login success', data);
-                            _this.login(data, loginId);
+                        this.userRestClient.validateIsLoggedin(id, key, token).subscribe(function (data) {
+                            console.log('validate login true', data);
+                            _this.loggedIn = true;
+                            _this.userProfile['isLoggedIn'] = true;
+                            _this.setUserId(data.email);
+                            _this.setKey(key);
+                            _this.setToken(token);
                         }, function (err) {
                             console.log('invalid session items');
                             console.log(err);
@@ -96,9 +119,6 @@ System.register(['../../clients/userRestClient/UserRestClient', 'angular2/core']
                     this.setToken();
                     this.setKey();
                     this.setUserId();
-                    // window.sessionStorage.removeItem('key');
-                    // window.sessionStorage.removeItem('token');
-                    // window.sessionStorage.removeItem('user');
                     this.loggedIn = false;
                 };
                 GlobalService = __decorate([
@@ -111,31 +131,36 @@ System.register(['../../clients/userRestClient/UserRestClient', 'angular2/core']
         }
     }
 });
-// var UserProfile{
-//     isLoggedIn;
-//     loginId;
-//     key;
-//     token;
-//     UserProfile(loginId, key, token){
-//         this.loginId = loginId;
-//         this.key = key;
-//         this.token = token;
+// var UserProfile={
+//     'isLoggedIn':false;
+//     'loginId':'';
+//     'key':'';
+//     'token':'';
+// };
+// var UserProfileFunc={
+//     'loadParam':function(){
+//         var param = window.localStorage.getItem('id');
+//         if(!(param===undefined||param===null||param=="undefined"||param=="null") && param.length){
+//             return JSON.parse(param);
+//         }
+//     },
+//     'saveParam':function(){
+//         window.localStorage.setItem('id',JSON.stringify(UserProfile.loginId));
+//     },
+//     'getAccount':function(){
+//         return UserProfile.loginId;
+//     },
+//     'getKey':function(){
+//         return {
+//             'token':UserProfile.token,
+//             'key':UserProfile.key
+//         }
 //     }
-//     setKey(key){
-//         window.sessionStorage.setItem('key',key);
-//         this.key = key;
-//     }
-//     setToken(token){
-//         window.sessionStorage.setItem('token',token);
-//         this.token = token;
-//     }
-//     getKey(){
-//         return this.key;
-//     }
-//     getToken(){
-//         return this.token;
-//     }
-// }
+// };
+// UserProfile.loadParam = UserProfileFunc.loadParam;
+// UserProfile.saveParam = UserProfileFunc.saveParam;
+// UserProfile.getAccount = UserProfileFunc.getAccount;
+// UserProfile.getKey = UserProfileFunc.getkey;
 // export class AppState{
 //     loggedIn;message;
 //     login(initState,actions){

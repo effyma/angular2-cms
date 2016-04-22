@@ -33,14 +33,18 @@ System.register(['angular2/core', 'angular2/router', './login/components/login/l
             // import {UserRestClient} from './clients/userRestClient/UserRestClient';
             // import {LoggedInRouterOutlet} from './services/routeService/RouterOutlet';
             AppComponent = (function () {
-                function AppComponent(injector, globalService) {
-                    // injector = Injector.resolveAndCreate([UserRestClient]);
+                function AppComponent(injector, globalService, router) {
                     this.globalService = injector.parent.get(GlobalService_1.GlobalService);
-                    this.globalService.init();
+                    this.router = router;
                 }
                 AppComponent.prototype.ngOnInit = function () {
-                    console.log(this.globalService);
                     console.log('app component ngOnInit :', this.globalService.isLoggedIn());
+                    this.globalService.init();
+                    console.log('app:', this.globalService);
+                    if (this.globalService.isLoggedIn()) {
+                        console.log('redirect to dashboard');
+                        this.router.navigateByUrl('/dashboard');
+                    }
                 };
                 AppComponent = __decorate([
                     core_1.Component({
@@ -55,7 +59,7 @@ System.register(['angular2/core', 'angular2/router', './login/components/login/l
                         { path: '/', name: 'Login', component: login_1.LoginComponent },
                         new router_1.AsyncRoute({ name: 'Dashboard', path: '/dashboard/...', loader: function () { return System.import('../../../app/dashboard/components/dashboard').then(function (p) { return p.DashboardComponent; }); } })
                     ]), 
-                    __metadata('design:paramtypes', [core_1.Injector, GlobalService_1.GlobalService])
+                    __metadata('design:paramtypes', [core_1.Injector, GlobalService_1.GlobalService, router_1.Router])
                 ], AppComponent);
                 return AppComponent;
             }());

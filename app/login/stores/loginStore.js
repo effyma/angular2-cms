@@ -11,7 +11,7 @@ System.register(['angular2/core', 'rxjs'], function(exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, Rx;
-    var LoginStore;
+    var LoginStore, LoginProfile;
     return {
         setters:[
             function (core_1_1) {
@@ -22,11 +22,18 @@ System.register(['angular2/core', 'rxjs'], function(exports_1, context_1) {
             }],
         execute: function() {
             LoginStore = (function () {
+                // account = new Rx.Subject;
+                // logout = new Rx.Subject;
+                // validateLogin = new Rx.Subject;
                 function LoginStore() {
-                    this.login = new Rx.Subject;
-                    this.logout = new Rx.Subject;
-                    this.validateLogin = new Rx.Subject;
+                    this.loginAc = new Rx.Subject;
                 }
+                LoginStore.prototype.login = function (email, password) {
+                    this.loginAc.map(function (email, password) {
+                        return function (state) {
+                        };
+                    });
+                };
                 LoginStore = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [])
@@ -34,6 +41,7 @@ System.register(['angular2/core', 'rxjs'], function(exports_1, context_1) {
                 return LoginStore;
             }());
             exports_1("LoginStore", LoginStore);
+            LoginProfile = {};
         }
     }
 });

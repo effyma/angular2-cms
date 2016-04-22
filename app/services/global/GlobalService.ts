@@ -6,7 +6,11 @@ export class GlobalService{
     key;
     token;
     userRestClient;
-    userProfile = {loginId:''};
+    userProfile = {
+        'isLoggedIn':false;
+        'loginId':'';
+        'token':'';
+        'key':''}
     loggedIn = false;
     
     constructor(userRestClient:UserRestClient){
@@ -15,15 +19,18 @@ export class GlobalService{
 
     init(){
         console.log('GlobalService init...');
+        this.loadData();
         this.validateLogin();
     }
     setKey(key){
         window.sessionStorage.setItem('key',key);
         this.key = key;
+        this.userProfile.key = key;
     }
     setToken(token){
         window.sessionStorage.setItem('token',token);
         this.token = token;
+        this.userProfile.token = token;
     }
     getKey(){
         return window.sessionStorage.getItem('key');
@@ -35,26 +42,49 @@ export class GlobalService{
     }
     setUserId(id){
         this.userProfile.loginId = id;
-        window.sessionStorage.setItem('user', this.userProfile.loginId);
+        window.sessionStorage.setItem('id', this.userProfile.loginId);
     }
     getUserId(){
         return this.userProfile.loginId;
     }
-    validateLogin(){
-        console.log('validateLogin');
-        console.log(this.userProfile.isLoggedIn)
-        console.log(this.loginId!==null && this.loginId!==undefined)
-        if(!this.isLoggedIn() && window.sessionStorage.getItem('user')!==null &&window.sessionStorage.getItem('user')!=='undefined' && window.sessionStorage.getItem('key')!==null&&window.sessionStorage.getItem('key')!=='undefined'&& window.sessionStorage.getItem('token')!==null&&window.sessionStorage.getItem('token')!=='undefined'){
-        // if(!this.isLoggedIn() && this.loginId!==null && this.loginId!=='undefined'&& this.loginId!==undefined && this.key!==null && this.key!=='undefined' && this.key!==undefined && this.token!==null && this.token!=='undefined'&& this.token!==undefined){ 
- 
-        console.log('sessionStorage has Items');
-        var loginId = window.sessionStorage.getItem('user');
-        var key = window.sessionStorage.getItem('key');
+    loadData(){
         var token = window.sessionStorage.getItem('token');
-        this.userRestClient.validateIsLoggedin(this.loginId,this.key,this.token).subscribe(
+        var key = window.sessionStorage.getItem('key');
+        var id = window.sessionStorage.getItem('id');
+
+
+       if(!(
+           token===null||token===undefined||token==='null'||token==='undefined' ||
+           key===null||key===undefined || key==='null'||key==='undefined'||
+           id===null||id===undefined || id==='null'||id==='undefined')
+         ){
+            this.setKey(window.sessionStorage.getItem('key'));
+            this.setToken(window.sessionStorage.getItem('token'));
+            this.setUserId(window.sessionStorage.getItem('id'));
+        }
+        
+    }
+    validateLogin(){
+        var token = window.sessionStorage.getItem('token');
+        var key = window.sessionStorage.getItem('key');
+        var id = window.sessionStorage.getItem('id');
+        if( !(
+           token===null||token===undefined||token==='null'||token==='undefined'||
+           key===null||key===undefined || key==='null'||key==='undefined'||
+           id===null||id===undefined || id==='null'||id==='undefined')
+         ){
+        // if(!this.isLoggedIn() && window.sessionStorage.getItem('user')!==null &&window.sessionStorage.getItem('user')!=='undefined' && window.sessionStorage.getItem('key')!==null&&window.sessionStorage.getItem('key')!=='undefined'&& window.sessionStorage.getItem('token')!==null&&window.sessionStorage.getItem('token')!=='undefined'){
+       
+        // if(!this.isLoggedIn() && this.loginId!==null && this.loginId!=='undefined'&& this.loginId!==undefined && this.key!==null && this.key!=='undefined' && this.key!==undefined && this.token!==null && this.token!=='undefined'&& this.token!==undefined){ 
+        console.log('sessionStorage has Items');
+        this.userRestClient.validateIsLoggedin(id,key,token).subscribe(
             data => {
-                console.log('login success',data)
-                this.login(data,loginId);
+                console.log('validate login true',data);
+                this.loggedIn = true;
+                this.userProfile['isLoggedIn']=true;
+                this.setUserId(data.email);
+                this.setKey(key);
+                this.setToken(token);        
                 },
                 err =>  {
                     console.log('invalid session items')
@@ -88,39 +118,44 @@ export class GlobalService{
         this.setToken();
         this.setKey();
         this.setUserId();
-        // window.sessionStorage.removeItem('key');
-        // window.sessionStorage.removeItem('token');
-        // window.sessionStorage.removeItem('user');
         this.loggedIn = false;
     }
+
 }
 
-// var UserProfile{
-//     isLoggedIn;
-//     loginId;
-//     key;
-//     token;
-//     UserProfile(loginId, key, token){
-//         this.loginId = loginId;
-//         this.key = key;
-//         this.token = token;
-//     }
-//     setKey(key){
-//         window.sessionStorage.setItem('key',key);
-//         this.key = key;
-//     }
-//     setToken(token){
-//         window.sessionStorage.setItem('token',token);
-//         this.token = token;
-//     }
-//     getKey(){
-//         return this.key;
-//     }
-//     getToken(){
-//         return this.token;
-//     }
-// }
 
+// var UserProfile={
+//     'isLoggedIn':false;
+//     'loginId':'';
+//     'key':'';
+//     'token':'';
+// };
+
+// var UserProfileFunc={
+//     'loadParam':function(){
+//         var param = window.localStorage.getItem('id');
+//         if(!(param===undefined||param===null||param=="undefined"||param=="null") && param.length){
+//             return JSON.parse(param);
+//         }
+//     },
+//     'saveParam':function(){
+//         window.localStorage.setItem('id',JSON.stringify(UserProfile.loginId));
+//     },
+//     'getAccount':function(){
+//         return UserProfile.loginId;
+//     },
+//     'getKey':function(){
+//         return {
+//             'token':UserProfile.token,
+//             'key':UserProfile.key
+//         }
+//     }
+// };
+
+// UserProfile.loadParam = UserProfileFunc.loadParam;
+// UserProfile.saveParam = UserProfileFunc.saveParam;
+// UserProfile.getAccount = UserProfileFunc.getAccount;
+// UserProfile.getKey = UserProfileFunc.getkey;
 
 // export class AppState{
 //     loggedIn;message;

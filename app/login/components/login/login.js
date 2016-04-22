@@ -50,6 +50,7 @@ System.register(['angular2/core', '../modals/forgetpassword/forgetPasswordModal'
                     this.router = router;
                 }
                 LoginComponent.prototype.ngOnInit = function () {
+                    console.log('login page', this.globalService);
                     if (this.globalService.isLoggedIn()) {
                         this.router.parent.navigateByUrl('/dashboard');
                     }

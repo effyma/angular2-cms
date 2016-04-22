@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit{
         this.router = router;
 	}
     ngOnInit(){
+        console.log('login page', this.globalService)
         if(this.globalService.isLoggedIn()){
         this.router.parent.navigateByUrl('/dashboard');
         }

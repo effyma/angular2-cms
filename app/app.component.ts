@@ -6,6 +6,7 @@ import { LoginComponent } from './login/components/login/login';
 import { Login } from './login/login.component';
 import {DashboardComponent} from './dashboard/components/dashboard';
 import {GlobalService} from './services/global/GlobalService';
+import UserProfile from './services/global/GlobalService';
 // import {UserRestClient} from './clients/userRestClient/UserRestClient';
 // import {LoggedInRouterOutlet} from './services/routeService/RouterOutlet';
 
@@ -29,13 +30,18 @@ import {GlobalService} from './services/global/GlobalService';
 
 export class AppComponent implements OnInit{
     globalService;
-    constructor(injector:Injector,globalService:GlobalService){
-        // injector = Injector.resolveAndCreate([UserRestClient]);
+    router;
+    constructor(injector:Injector,globalService:GlobalService,router:Router){
         this.globalService = injector.parent.get(GlobalService);
-        this.globalService.init();
+        this.router = router;
     }
     ngOnInit(){
-        console.log(this.globalService)
         console.log('app component ngOnInit :',this.globalService.isLoggedIn());
+        this.globalService.init();
+        console.log('app:',this.globalService)
+        if(this.globalService.isLoggedIn()){
+            console.log('redirect to dashboard')
+            this.router.navigateByUrl('/dashboard');
+        }
     }
 }
