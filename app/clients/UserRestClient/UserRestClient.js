@@ -29,8 +29,6 @@ System.register(['angular2/core', 'angular2/http', '../../common/RestUtil/Config
         execute: function() {
             UserRestClient = (function () {
                 function UserRestClient(http, interceptor) {
-                    // headers;
-                    // requestoptions;
                     this.baseUrl = "http://demo.kooppi.com/mvno-ota-gw/api/";
                     this.http = http;
                     this.interceptor = interceptor;
@@ -69,24 +67,6 @@ System.register(['angular2/core', 'angular2/http', '../../common/RestUtil/Config
                     });
                     console.log(requestoptions);
                     return this.http.get(url, requestoptions).map(function (res) { return res.json(); });
-                };
-                UserRestClient.prototype.forgetPassword = function (param) {
-                    var http = this.http;
-                    console.log("UserRestClient param :", param);
-                    var url = this.baseUrl + "accounts/" + param + "/forgetPassword";
-                    return this.http.post(url, '').map(function (res) { return res.json(); });
-                };
-                UserRestClient.prototype.signUp = function (email, password) {
-                    var headers = new http_1.Headers();
-                    headers.append("Content-Type", "application/json");
-                    console.log("param:");
-                    var body = JSON.stringify(email, password);
-                    console.log(body);
-                    var url = this.baseUrl + "accounts";
-                    var options = new http_1.RequestOptions({
-                        headers: headers
-                    });
-                    return this.http.post(url, body, options).map(function (res) { return res.json(); });
                 };
                 UserRestClient = __decorate([
                     core_1.Injectable(), 

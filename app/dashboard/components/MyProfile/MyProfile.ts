@@ -1,6 +1,6 @@
 import {Component,Input,OnInit} from 'angular2/core';
 import {MyProfileService} from '../../services/MyProfile/MyProfileService';
-import {ProfileRestClient} from '../../../clients/ProfileRestClient/ProfileRestClient';
+// import {ProfileRestClient} from '../../../clients/ProfileRestClient/ProfileRestClient';
 import {Interceptor} from '../../../common/RestUtil/Interceptor';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {AccountRestClient} from '../../../clients/accountRestClient/AccountRestClient';
@@ -15,17 +15,17 @@ import {GlobalService} from '../../../services/global/GlobalService';
     <div> <label>lastName: </label> {{profile.lastName}}</div>
     <div> <label>sims: </label> {{profile.sims}}</div>
     </div>`,
-    providers: [MyProfileService,Interceptor,ProfileRestClient,AccountRestClient]
+    providers: [MyProfileService,Interceptor,AccountRestClient]
 })
 
 export class MyProfileComponent implements OnInit{
     profile;
-    myProfileServie;
+    myProfileService;
     err;
     accountRestClient;
     globalService;
-    constructor(myProfileServie:MyProfileService,accountRestClient:AccountRestClient,globalService:GlobalService){
-        this.myProfileServie = myProfileServie;
+    constructor(myProfileService:MyProfileService,accountRestClient:AccountRestClient,globalService:GlobalService){
+        this.myProfileService = myProfileService;
         this.accountRestClient = accountRestClient;
         this.globalService = globalService;
     }
@@ -36,8 +36,9 @@ export class MyProfileComponent implements OnInit{
     getProfile(){
         var token = this.globalService.getToken();
         var key = this.globalService.getKey();
-        this.accountRestClient.getAccountInfo('test@kooppi.com',key,token).subscribe(
-    //    this.myProfileServie.getMyProfile().subscribe(
+        console.log(key,token)
+        // this.accountRestClient.getAccountInfo('test@kooppi.com',key,token).subscribe(
+       this.myProfileService.getMyProfile('test@kooppi.com',key,token).subscribe(
                 data => {
                     console.log('data:');
                     console.log(data);

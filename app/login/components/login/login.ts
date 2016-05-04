@@ -4,8 +4,8 @@ import {SignUpModal} from '../modals/signup/signUpModal';
 import {LoginService} from '../../service/LoginService';
 import {AccountRestClient} from '../../../clients/accountRestClient/AccountRestClient'
 import {Interceptor} from '../../../common/RestUtil/Interceptor';
-import {GlobalService} from '../../../services/global/GlobalService';
-import {Router,Location} from 'angular2/router';
+import {GlobalService,isLoggedIn} from '../../../services/global/GlobalService';
+import {Router,ComponentInstruction} from 'angular2/router';
 
 
 @Component({
@@ -28,14 +28,12 @@ export class LoginComponent implements OnInit{
 		this.componentLoader = componentLoader;
         this.loginService = loginService;
         this.globalService = injector.parent.get(GlobalService);
-        console.log(this.globalService)
-        // this.globalService = globalService;
         this.router = router;
+        
 	}
     ngOnInit(){
-        console.log('login page', this.globalService)
-        if(this.globalService.isLoggedIn()){
-        this.router.parent.navigateByUrl('/dashboard');
+        if(isLoggedIn){
+        this.router.navigateByUrl('/dashboard');
         }
     }
 	login(email,password,event){

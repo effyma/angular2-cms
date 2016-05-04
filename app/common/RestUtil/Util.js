@@ -94,6 +94,28 @@ System.register([], function(exports_1, context_1) {
         return hex.join("");
     }
     exports_1("bytesToHex", bytesToHex);
+    function filter(filter) {
+        var target = filter;
+        var params = new URLSearchParams();
+        for (var k in target) {
+            if (target.hasOwnProperty(k)) {
+                params.set(k, target[k]);
+            }
+        }
+        return params;
+    }
+    exports_1("filter", filter);
+    function filterOr(filter) {
+        var target = filter;
+        var params = new URLSearchParams();
+        for (var k in target) {
+            if (target.hasOwnProperty(k)) {
+                params.set(k + 'Or', target[k]);
+            }
+        }
+        return params;
+    }
+    exports_1("filterOr", filterOr);
     return {
         setters:[],
         execute: function() {

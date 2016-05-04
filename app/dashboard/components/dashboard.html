@@ -8,7 +8,7 @@
     
     <div class="layout-menu" [ngClass]="{'is-visible': isVisible}" (click)="onClickToggleMenu()">
         <nav>
-            <div class="layout-menu-item" [routerLink]="['Home']">
+            <!--<div class="layout-menu-item" [routerLink]="['Home']">
                 <span>Home</span>
             </div>
             <div class="layout-menu-item" [routerLink]="['MyProfile']">
@@ -25,10 +25,17 @@
                 <span>Tester</span>
             </div>
             
+            <div class="layout-menu-item" [routerLink]="['Services']">
+                <span>Services</span>
+            </div>
+            
+            <div class="layout-menu-item" (click)="onClickLogout($event)">
+                <span>Logout</span>
+            </div>-->
+            <nav-items></nav-items>
             <div class="layout-menu-item" (click)="onClickLogout($event)">
                 <span>Logout</span>
             </div>
-            
         </nav>
     </div>
     

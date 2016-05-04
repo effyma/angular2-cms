@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../../services/MyProfile/MyProfileService', '../../../clients/ProfileRestClient/ProfileRestClient', '../../../common/RestUtil/Interceptor', '../../../clients/accountRestClient/AccountRestClient', '../../../services/global/GlobalService'], function(exports_1, context_1) {
+System.register(['angular2/core', '../../services/MyProfile/MyProfileService', '../../../common/RestUtil/Interceptor', '../../../clients/accountRestClient/AccountRestClient', '../../../services/global/GlobalService'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', '../../services/MyProfile/MyProfileService', '
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, MyProfileService_1, ProfileRestClient_1, Interceptor_1, AccountRestClient_1, GlobalService_1;
+    var core_1, MyProfileService_1, Interceptor_1, AccountRestClient_1, GlobalService_1;
     var MyProfileComponent;
     return {
         setters:[
@@ -19,9 +19,6 @@ System.register(['angular2/core', '../../services/MyProfile/MyProfileService', '
             },
             function (MyProfileService_1_1) {
                 MyProfileService_1 = MyProfileService_1_1;
-            },
-            function (ProfileRestClient_1_1) {
-                ProfileRestClient_1 = ProfileRestClient_1_1;
             },
             function (Interceptor_1_1) {
                 Interceptor_1 = Interceptor_1_1;
@@ -34,8 +31,8 @@ System.register(['angular2/core', '../../services/MyProfile/MyProfileService', '
             }],
         execute: function() {
             MyProfileComponent = (function () {
-                function MyProfileComponent(myProfileServie, accountRestClient, globalService) {
-                    this.myProfileServie = myProfileServie;
+                function MyProfileComponent(myProfileService, accountRestClient, globalService) {
+                    this.myProfileService = myProfileService;
                     this.accountRestClient = accountRestClient;
                     this.globalService = globalService;
                 }
@@ -47,9 +44,9 @@ System.register(['angular2/core', '../../services/MyProfile/MyProfileService', '
                     var _this = this;
                     var token = this.globalService.getToken();
                     var key = this.globalService.getKey();
-                    this.accountRestClient.getAccountInfo('test@kooppi.com', key, token).subscribe(
-                    //    this.myProfileServie.getMyProfile().subscribe(
-                    function (data) {
+                    console.log(key, token);
+                    // this.accountRestClient.getAccountInfo('test@kooppi.com',key,token).subscribe(
+                    this.myProfileService.getMyProfile('test@kooppi.com', key, token).subscribe(function (data) {
                         console.log('data:');
                         console.log(data);
                         _this.profile = data;
@@ -62,7 +59,7 @@ System.register(['angular2/core', '../../services/MyProfile/MyProfileService', '
                 MyProfileComponent = __decorate([
                     core_1.Component({
                         template: "\n    <div>MyProfile</div>\n    <div *ngIf=\"profile\">\n    <div> <label>email: </label>{{profile.email}}</div>\n    <div> <label>firstName: </label>{{profile.firstName}}</div>\n    <div> <label>lastName: </label> {{profile.lastName}}</div>\n    <div> <label>sims: </label> {{profile.sims}}</div>\n    </div>",
-                        providers: [MyProfileService_1.MyProfileService, Interceptor_1.Interceptor, ProfileRestClient_1.ProfileRestClient, AccountRestClient_1.AccountRestClient]
+                        providers: [MyProfileService_1.MyProfileService, Interceptor_1.Interceptor, AccountRestClient_1.AccountRestClient]
                     }), 
                     __metadata('design:paramtypes', [MyProfileService_1.MyProfileService, AccountRestClient_1.AccountRestClient, GlobalService_1.GlobalService])
                 ], MyProfileComponent);

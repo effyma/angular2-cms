@@ -4,7 +4,7 @@ import {ForgetPasswordModal} from '../login/modals/forgetpw/forgetpwmodal';
 import {SignUpModal} from '../login/modals/signup/signupmodal';
 import {UserService} from '../services/UserService';
 import {UserRestClient} from '../clients/UserRestClient/UserRestClient';
-// import {TestRestClient} from '../clients/test/testRest';
+
 
 
 @Component({

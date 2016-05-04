@@ -1,25 +1,30 @@
-import {UserRestClient} from '../../clients/userRestClient/UserRestClient'
-import {Injectable,Injector,Inject} from 'angular2/core'
+import {AccountRestClient} from '../../clients/accountRestClient/AccountRestClient';
+import {Injectable, Injector,Inject} from 'angular2/core';
+import {ComponentInstruction, Router} from 'angular2/router';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class GlobalService{
     key;
     token;
-    userRestClient;
+    accountRestClient;
+
     userProfile = {
-        'isLoggedIn':false;
-        'loginId':'';
-        'token':'';
+        'isLoggedIn':false,
+        'userType':'admin',
+        'loginId':'',
+        'token':'',
         'key':''}
-    loggedIn = false;
     
-    constructor(userRestClient:UserRestClient){
-        this.userRestClient = userRestClient;
+    constructor(accountRestClient:AccountRestClient){
+        this.loggedIn = false;
+        this.accountRestClient = accountRestClient;
+        this.init();
     }
 
     init(){
         console.log('GlobalService init...');
-        this.loadData();
+        // this.loadData();
         this.validateLogin();
     }
     setKey(key){
@@ -47,59 +52,46 @@ export class GlobalService{
     getUserId(){
         return this.userProfile.loginId;
     }
-    loadData(){
-        var token = window.sessionStorage.getItem('token');
-        var key = window.sessionStorage.getItem('key');
-        var id = window.sessionStorage.getItem('id');
 
-
-       if(!(
-           token===null||token===undefined||token==='null'||token==='undefined' ||
-           key===null||key===undefined || key==='null'||key==='undefined'||
-           id===null||id===undefined || id==='null'||id==='undefined')
-         ){
-            this.setKey(window.sessionStorage.getItem('key'));
-            this.setToken(window.sessionStorage.getItem('token'));
-            this.setUserId(window.sessionStorage.getItem('id'));
-        }
-        
-    }
     validateLogin(){
         var token = window.sessionStorage.getItem('token');
         var key = window.sessionStorage.getItem('key');
         var id = window.sessionStorage.getItem('id');
+
         if( !(
-           token===null||token===undefined||token==='null'||token==='undefined'||
-           key===null||key===undefined || key==='null'||key==='undefined'||
-           id===null||id===undefined || id==='null'||id==='undefined')
+           token===''||token===null||token===undefined||token==='null'||token==='undefined'||
+           key===''||key===null||key===undefined || key==='null'||key==='undefined'||
+           id===''||id===null||id===undefined || id==='null'||id==='undefined')
          ){
-        // if(!this.isLoggedIn() && window.sessionStorage.getItem('user')!==null &&window.sessionStorage.getItem('user')!=='undefined' && window.sessionStorage.getItem('key')!==null&&window.sessionStorage.getItem('key')!=='undefined'&& window.sessionStorage.getItem('token')!==null&&window.sessionStorage.getItem('token')!=='undefined'){
-       
-        // if(!this.isLoggedIn() && this.loginId!==null && this.loginId!=='undefined'&& this.loginId!==undefined && this.key!==null && this.key!=='undefined' && this.key!==undefined && this.token!==null && this.token!=='undefined'&& this.token!==undefined){ 
         console.log('sessionStorage has Items');
-        this.userRestClient.validateIsLoggedin(id,key,token).subscribe(
+        return this.accountRestClient.getAccountInfo(id,key,token).subscribe(
+        // this.userRestClient.validateIsLoggedin(id,key,token).subscribe(
             data => {
                 console.log('validate login true',data);
                 this.loggedIn = true;
                 this.userProfile['isLoggedIn']=true;
+                // this.userProfile['userType']=data.userType;
                 this.setUserId(data.email);
                 this.setKey(key);
-                this.setToken(token);        
+                this.setToken(token);
+                return true
                 },
                 err =>  {
                     console.log('invalid session items')
                     console.log(err)
+                return false
                     // this.logout();
                 },
                 () => console.log('Complete'));
         }else{
             console.log('not enough info to get session')
+            return false
             // this.logout();
         }
     }
     
     isLoggedIn(){
-        return this.loggedIn;
+        return this.loggedIn
     }
     login(data,email){
         this.loggedIn = true;
@@ -108,87 +100,56 @@ export class GlobalService{
         this.setUserId(email);
         console.log('global service: login')
     }
-    loginSuccess(){
 
-    }
-    loginFaile(){
-        
-    }
     logout(){
-        this.setToken();
-        this.setKey();
-        this.setUserId();
+        return new Promise((resolve)=>{
+        this.setToken('');
+        this.setKey('');
+        this.setUserId('');
         this.loggedIn = false;
+        resolve(true);
+        })
+    }
+    
+    check(){
+        if(this.isLoggedIn){
+            return Observable.of(this.isLoggedIn)
+        }else{
+            return Observable.of(this.validateLogin()) 
+        }
+    }
+    
+    getUserType(){
+        return this.userProfile.userType
     }
 
 }
 
+let appInjectorRef: Injector;
+export const appInjector = (injector?: Injector):Injector => {
+	if (injector) {
+	  appInjectorRef = injector;
+	}
+	return appInjectorRef;
+};
 
-// var UserProfile={
-//     'isLoggedIn':false;
-//     'loginId':'';
-//     'key':'';
-//     'token':'';
-// };
-
-// var UserProfileFunc={
-//     'loadParam':function(){
-//         var param = window.localStorage.getItem('id');
-//         if(!(param===undefined||param===null||param=="undefined"||param=="null") && param.length){
-//             return JSON.parse(param);
-//         }
-//     },
-//     'saveParam':function(){
-//         window.localStorage.setItem('id',JSON.stringify(UserProfile.loginId));
-//     },
-//     'getAccount':function(){
-//         return UserProfile.loginId;
-//     },
-//     'getKey':function(){
-//         return {
-//             'token':UserProfile.token,
-//             'key':UserProfile.key
-//         }
-//     }
-// };
-
-// UserProfile.loadParam = UserProfileFunc.loadParam;
-// UserProfile.saveParam = UserProfileFunc.saveParam;
-// UserProfile.getAccount = UserProfileFunc.getAccount;
-// UserProfile.getKey = UserProfileFunc.getkey;
-
-// export class AppState{
-//     loggedIn;message;
-//     login(initState,actions){
-//         return actions.scan((state)=>{
-//             state = true;
-//             return state;},initState);
-//     }
-//     updateMessage(actions){
-//         return actions.scan((action)=>{
-//              if(action instanceof SayHello){
-//                 var message = 'Hello';
-//                 console.log(message);
-//                 return message
-//             }else if(action instanceof SayBye){
-//                 var message = 'Bye';
-//                 console.log(message);
-//                 return message
-//             }
-//         }) 
-//     }
-//     logout(initState,actions){
-//         return actions.scan((state)=>{
-//             state = false;
-//             return state;
-//             },initState);
-//     }
-// }
-// class Login{constructor(loggedIn){}}
-// class Logout{constructor(loggedIn){}}
-// class SayHello{constructor(message){}}
-// class SayBye{constructor(message){}}
-// type AppAction = Login|Logout|SayHello|SayBye;
-// function stateFn(initState: AppState,actions: Observable<AppAction>):Observable<AppState> {
-//     return new Observable
-// }
+export const isLoggedIn = (next: ComponentInstruction, previous: ComponentInstruction) => {
+	let injector: Injector = appInjector();
+    let auth = injector.get(GlobalService);
+	let router: Router = injector.get(Router);
+    console.log('is loggedIn?')
+	return new Promise((resolve) => {
+	  auth.check()
+	      .subscribe((result) => {
+					if (result) {
+                        console.log('true')
+                        router.navigate(['Dashboard']);
+						resolve(true);
+					} else {
+                        console.log('false')
+						router.navigate(['Login']);
+						resolve(false);
+					}
+				});
+  });
+};

@@ -30,7 +30,6 @@ System.register(['angular2/core', '../login/modals/forgetpw/forgetpwmodal', '../
                 UserRestClient_1 = UserRestClient_1_1;
             }],
         execute: function() {
-            // import {TestRestClient} from '../clients/test/testRest';
             Login = (function () {
                 function Login(elementRef, componentLoader, userService) {
                     this.elementRef = elementRef;

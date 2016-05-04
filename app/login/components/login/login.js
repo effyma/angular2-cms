@@ -45,14 +45,11 @@ System.register(['angular2/core', '../modals/forgetpassword/forgetPasswordModal'
                     this.componentLoader = componentLoader;
                     this.loginService = loginService;
                     this.globalService = injector.parent.get(GlobalService_1.GlobalService);
-                    console.log(this.globalService);
-                    // this.globalService = globalService;
                     this.router = router;
                 }
                 LoginComponent.prototype.ngOnInit = function () {
-                    console.log('login page', this.globalService);
-                    if (this.globalService.isLoggedIn()) {
-                        this.router.parent.navigateByUrl('/dashboard');
+                    if (GlobalService_1.isLoggedIn) {
+                        this.router.navigateByUrl('/dashboard');
                     }
                 };
                 LoginComponent.prototype.login = function (email, password, event) {

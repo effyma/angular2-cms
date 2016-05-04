@@ -21,27 +21,10 @@ System.register(['../clients/UserRestClient/UserRestClient', 'angular2/core'], f
                 core_1 = core_1_1;
             }],
         execute: function() {
-            // import AccountRestClient from 'AccountRestClient';
             UserService = (function () {
                 function UserService(userRestClient) {
-                    // this.testRestClient = testRestClient;
                     this.userRestClient = userRestClient;
                 }
-                UserService.prototype.forgetPassword = function (param) {
-                    var result = this.userRestClient.forgetPassword(param);
-                    console.log("UserService:");
-                    console.log(result);
-                    return result;
-                };
-                UserService.prototype.signUp = function (email, password) {
-                    var result = this.userRestClient.signUp(email, password);
-                    console.log("UserService:");
-                    console.log(result);
-                    return result;
-                };
-                UserService.prototype.login = function (email, password) {
-                    console.log(email, password);
-                };
                 UserService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [UserRestClient_1.UserRestClient])

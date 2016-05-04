@@ -11,25 +11,35 @@ System.register(['angular2/core'], function(exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1;
-    var DashboardService;
+    var Column;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
-            DashboardService = (function () {
-                function DashboardService() {
-                    this.loggedIn = false;
+            Column = (function () {
+                function Column() {
                 }
-                DashboardService = __decorate([
-                    core_1.Injectable(), 
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Object)
+                ], Column.prototype, "field", void 0);
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Object)
+                ], Column.prototype, "header", void 0);
+                Column = __decorate([
+                    core_1.Component({
+                        selector: 'column',
+                        template: ""
+                    }), 
                     __metadata('design:paramtypes', [])
-                ], DashboardService);
-                return DashboardService;
+                ], Column);
+                return Column;
             }());
-            exports_1("DashboardService", DashboardService);
+            exports_1("Column", Column);
         }
     }
 });
-//# sourceMappingURL=dashboardService.js.map
+//# sourceMappingURL=column.js.map

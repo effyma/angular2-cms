@@ -1,4 +1,4 @@
-System.register(['../../../clients/ProfileRestClient/ProfileRestClient', 'angular2/core'], function(exports_1, context_1) {
+System.register(['../../../clients/accountRestClient/AccountRestClient', 'angular2/core'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,29 +10,29 @@ System.register(['../../../clients/ProfileRestClient/ProfileRestClient', 'angula
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var ProfileRestClient_1, core_1;
+    var AccountRestClient_1, core_1;
     var MyProfileService;
     return {
         setters:[
-            function (ProfileRestClient_1_1) {
-                ProfileRestClient_1 = ProfileRestClient_1_1;
+            function (AccountRestClient_1_1) {
+                AccountRestClient_1 = AccountRestClient_1_1;
             },
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
             MyProfileService = (function () {
-                function MyProfileService(profileRestClient) {
-                    this.profileRestClient = profileRestClient;
+                function MyProfileService(accountRestClient) {
+                    this.accountRestClient = accountRestClient;
                 }
                 MyProfileService.prototype.getMyProfile = function (param, key, token) {
-                    var result = this.profileRestClient.getAccountInfo('test@kooppi.com', key, token);
+                    var result = this.accountRestClient.getAccountInfo(param, key, token);
                     console.log(result);
                     return result;
                 };
                 MyProfileService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [ProfileRestClient_1.ProfileRestClient])
+                    __metadata('design:paramtypes', [AccountRestClient_1.AccountRestClient])
                 ], MyProfileService);
                 return MyProfileService;
             }());

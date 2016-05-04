@@ -1,5 +1,4 @@
 import {Component,Inject} from 'angular2/core';
-import {TestRestClient} from '../../../clients/Test/testRest';
 import {AccountRestClient} from '../../../clients/accountRestClient/AccountRestClient';
 import {HTTP_PROVIDERS,Http} from 'angular2/http';
 import {Interceptor} from '../../../common/RestUtil/Interceptor';
@@ -7,46 +6,23 @@ import {GlobalService} from '../../../services/global/GlobalService'
 @Component({
 	selector: 'test-container',
     template:`<h1>Testing page</h1>
-    <button (click)="onClickGetToken($event)">getToken</button>
-    <button (click)="onClickGetInfo($event)">getAccountInfo</button>
     <button (click)="onClickGetTokenByAC($event)">getToken</button>
     <button (click)="onClickGetInfoByAC($event)">getAccountInfo</button>
     <button (click)="onClickGetByAC($event)">getAccountInfo</button>
     `,
-    providers:[TestRestClient,HTTP_PROVIDERS,Interceptor,AccountRestClient]
+    providers:[HTTP_PROVIDERS,Interceptor,AccountRestClient]
 })
 
 export class TesterComponent {
-    testRestClient;
     accountRestClient;
     // token;
     // key;
     globalService;
-	constructor(testRestClient:TestRestClient,accountRestClient:AccountRestClient,globalService:GlobalService){
-        this.testRestClient = testRestClient;
+	constructor(accountRestClient:AccountRestClient,globalService:GlobalService){
         this.accountRestClient = accountRestClient;
         this.globalService = globalService;
 	}
-    
-    onClickGetToken(e){
-        e.preventDefault();
-        let email = 'test@kooppi.com' ;
-        let password = '123456' ;
-        let result = this.testRestClient.login({email:email,password:password});
-        console.log(result)
-    }
-    onClickGetInfo(e){
-        e.preventDefault();
-        this.testRestClient.getSession('test@kooppi.com').subscribe(
-            data => {
-                    this.globalService.login(data)
-                },
-                err =>  {
-                    console.log('err:');
-                    console.log(err);
-                },
-                () => console.log('Complete'));
-    }
+
    onClickGetTokenByAC(e){
         e.preventDefault();
         let email = 'test@kooppi.com' ;

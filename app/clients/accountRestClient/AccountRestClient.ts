@@ -4,20 +4,20 @@ import {Interceptor} from '../../common/RestUtil/Interceptor';
 import {Config,ConfigRequest,formatLocalDate} from '../../common/RestUtil/Config';
 import {GlobalService} from '../../services/global/GlobalService'
 
+
 @Injectable()
 export class AccountRestClient{
     http;
     interceptor;
-    globalService;
     // headers;
     // requestoptions;
     baseUrl = 'http://demo.kooppi.com/mvno-ota-gw/api/';
     // baseUrl = 'http://localhost:8080/mvno-ota-gw/api/';
     
-    constructor(http:Http,interceptor:Interceptor,globalService:GlobalService){
+    constructor(http:Http,interceptor:Interceptor){
         this.http = http;
         this.interceptor = interceptor;
-        this.globalService = globalService;
+        // this.globalService = globalService;
     }
     
     login(params){
@@ -47,7 +47,6 @@ export class AccountRestClient{
         headers.append('x-auth-request-timestamp', now);
         request.headers['x-auth-request-timestamp'] = now;
         config.signedHeaders.push('x-auth-request-timestamp');
-        console.log('globalService get token',token)
         
         if(token!==undefined && token!==null){
         headers.append('x-auth-user-token',token);

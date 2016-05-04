@@ -96,3 +96,24 @@ export function bytesToHex(bytes){
     }
     return hex.join("");
 }
+
+export function filter(filter){
+    var target = filter;
+    var params = new URLSearchParams()
+    for (var k in target){
+    if (target.hasOwnProperty(k)) {
+    params.set(k,target[k]);
+    }
+    }
+    return params
+}
+export function filterOr(filter){
+    var target = filter;
+    var params = new URLSearchParams()
+    for (var k in target){
+    if (target.hasOwnProperty(k)) {
+    params.set(k+'Or',target[k]);
+    }
+    }
+    return params
+}

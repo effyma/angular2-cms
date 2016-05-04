@@ -1,4 +1,4 @@
-System.register(['../../clients/userRestClient/UserRestClient', 'angular2/core'], function(exports_1, context_1) {
+System.register(['../../clients/accountRestClient/AccountRestClient', 'angular2/core', 'angular2/router', 'rxjs/Observable'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,30 +10,38 @@ System.register(['../../clients/userRestClient/UserRestClient', 'angular2/core']
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var UserRestClient_1, core_1;
-    var GlobalService;
+    var AccountRestClient_1, core_1, router_1, Observable_1;
+    var GlobalService, appInjectorRef, appInjector, isLoggedIn;
     return {
         setters:[
-            function (UserRestClient_1_1) {
-                UserRestClient_1 = UserRestClient_1_1;
+            function (AccountRestClient_1_1) {
+                AccountRestClient_1 = AccountRestClient_1_1;
             },
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
+            },
+            function (Observable_1_1) {
+                Observable_1 = Observable_1_1;
             }],
         execute: function() {
             GlobalService = (function () {
-                function GlobalService(userRestClient) {
+                function GlobalService(accountRestClient) {
                     this.userProfile = {
                         'isLoggedIn': false,
+                        'userType': 'admin',
                         'loginId': '',
                         'token': '',
                         'key': '' };
                     this.loggedIn = false;
-                    this.userRestClient = userRestClient;
+                    this.accountRestClient = accountRestClient;
+                    this.init();
                 }
                 GlobalService.prototype.init = function () {
                     console.log('GlobalService init...');
-                    this.loadData();
+                    // this.loadData();
                     this.validateLogin();
                 };
                 GlobalService.prototype.setKey = function (key) {
@@ -61,44 +69,36 @@ System.register(['../../clients/userRestClient/UserRestClient', 'angular2/core']
                 GlobalService.prototype.getUserId = function () {
                     return this.userProfile.loginId;
                 };
-                GlobalService.prototype.loadData = function () {
-                    var token = window.sessionStorage.getItem('token');
-                    var key = window.sessionStorage.getItem('key');
-                    var id = window.sessionStorage.getItem('id');
-                    if (!(token === null || token === undefined || token === 'null' || token === 'undefined' ||
-                        key === null || key === undefined || key === 'null' || key === 'undefined' ||
-                        id === null || id === undefined || id === 'null' || id === 'undefined')) {
-                        this.setKey(window.sessionStorage.getItem('key'));
-                        this.setToken(window.sessionStorage.getItem('token'));
-                        this.setUserId(window.sessionStorage.getItem('id'));
-                    }
-                };
                 GlobalService.prototype.validateLogin = function () {
                     var _this = this;
                     var token = window.sessionStorage.getItem('token');
                     var key = window.sessionStorage.getItem('key');
                     var id = window.sessionStorage.getItem('id');
-                    if (!(token === null || token === undefined || token === 'null' || token === 'undefined' ||
-                        key === null || key === undefined || key === 'null' || key === 'undefined' ||
-                        id === null || id === undefined || id === 'null' || id === 'undefined')) {
-                        // if(!this.isLoggedIn() && window.sessionStorage.getItem('user')!==null &&window.sessionStorage.getItem('user')!=='undefined' && window.sessionStorage.getItem('key')!==null&&window.sessionStorage.getItem('key')!=='undefined'&& window.sessionStorage.getItem('token')!==null&&window.sessionStorage.getItem('token')!=='undefined'){
-                        // if(!this.isLoggedIn() && this.loginId!==null && this.loginId!=='undefined'&& this.loginId!==undefined && this.key!==null && this.key!=='undefined' && this.key!==undefined && this.token!==null && this.token!=='undefined'&& this.token!==undefined){ 
+                    if (!(token === '' || token === null || token === undefined || token === 'null' || token === 'undefined' ||
+                        key === '' || key === null || key === undefined || key === 'null' || key === 'undefined' ||
+                        id === '' || id === null || id === undefined || id === 'null' || id === 'undefined')) {
                         console.log('sessionStorage has Items');
-                        this.userRestClient.validateIsLoggedin(id, key, token).subscribe(function (data) {
+                        return this.accountRestClient.getAccountInfo(id, key, token).subscribe(
+                        // this.userRestClient.validateIsLoggedin(id,key,token).subscribe(
+                        function (data) {
                             console.log('validate login true', data);
                             _this.loggedIn = true;
                             _this.userProfile['isLoggedIn'] = true;
+                            // this.userProfile['userType']=data.userType;
                             _this.setUserId(data.email);
                             _this.setKey(key);
                             _this.setToken(token);
+                            return true;
                         }, function (err) {
                             console.log('invalid session items');
                             console.log(err);
+                            return false;
                             // this.logout();
                         }, function () { return console.log('Complete'); });
                     }
                     else {
                         console.log('not enough info to get session');
+                        return false;
                     }
                 };
                 GlobalService.prototype.isLoggedIn = function () {
@@ -111,89 +111,62 @@ System.register(['../../clients/userRestClient/UserRestClient', 'angular2/core']
                     this.setUserId(email);
                     console.log('global service: login');
                 };
-                GlobalService.prototype.loginSuccess = function () {
-                };
-                GlobalService.prototype.loginFaile = function () {
-                };
                 GlobalService.prototype.logout = function () {
-                    this.setToken();
-                    this.setKey();
-                    this.setUserId();
-                    this.loggedIn = false;
+                    var _this = this;
+                    return new Promise(function (resolve) {
+                        _this.setToken('');
+                        _this.setKey('');
+                        _this.setUserId('');
+                        _this.loggedIn = false;
+                        resolve(true);
+                    });
+                };
+                GlobalService.prototype.check = function () {
+                    if (this.isLoggedIn) {
+                        return Observable_1.Observable.of(this.isLoggedIn);
+                    }
+                    else {
+                        return Observable_1.Observable.of(this.validateLogin());
+                    }
+                };
+                GlobalService.prototype.getUserType = function () {
+                    return this.userProfile.userType;
                 };
                 GlobalService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [UserRestClient_1.UserRestClient])
+                    __metadata('design:paramtypes', [AccountRestClient_1.AccountRestClient])
                 ], GlobalService);
                 return GlobalService;
             }());
             exports_1("GlobalService", GlobalService);
+            exports_1("appInjector", appInjector = function (injector) {
+                if (injector) {
+                    appInjectorRef = injector;
+                }
+                return appInjectorRef;
+            });
+            exports_1("isLoggedIn", isLoggedIn = function (next, previous) {
+                var injector = appInjector();
+                var auth = injector.get(GlobalService);
+                var router = injector.get(router_1.Router);
+                console.log('is loggedIn?');
+                return new Promise(function (resolve) {
+                    auth.check()
+                        .subscribe(function (result) {
+                        if (result) {
+                            console.log('true');
+                            router.navigate(['Dashboard']);
+                            resolve(true);
+                        }
+                        else {
+                            console.log('false');
+                            router.navigate(['Login']);
+                            resolve(false);
+                        }
+                    });
+                });
+            });
         }
     }
 });
-// var UserProfile={
-//     'isLoggedIn':false;
-//     'loginId':'';
-//     'key':'';
-//     'token':'';
-// };
-// var UserProfileFunc={
-//     'loadParam':function(){
-//         var param = window.localStorage.getItem('id');
-//         if(!(param===undefined||param===null||param=="undefined"||param=="null") && param.length){
-//             return JSON.parse(param);
-//         }
-//     },
-//     'saveParam':function(){
-//         window.localStorage.setItem('id',JSON.stringify(UserProfile.loginId));
-//     },
-//     'getAccount':function(){
-//         return UserProfile.loginId;
-//     },
-//     'getKey':function(){
-//         return {
-//             'token':UserProfile.token,
-//             'key':UserProfile.key
-//         }
-//     }
-// };
-// UserProfile.loadParam = UserProfileFunc.loadParam;
-// UserProfile.saveParam = UserProfileFunc.saveParam;
-// UserProfile.getAccount = UserProfileFunc.getAccount;
-// UserProfile.getKey = UserProfileFunc.getkey;
-// export class AppState{
-//     loggedIn;message;
-//     login(initState,actions){
-//         return actions.scan((state)=>{
-//             state = true;
-//             return state;},initState);
-//     }
-//     updateMessage(actions){
-//         return actions.scan((action)=>{
-//              if(action instanceof SayHello){
-//                 var message = 'Hello';
-//                 console.log(message);
-//                 return message
-//             }else if(action instanceof SayBye){
-//                 var message = 'Bye';
-//                 console.log(message);
-//                 return message
-//             }
-//         }) 
-//     }
-//     logout(initState,actions){
-//         return actions.scan((state)=>{
-//             state = false;
-//             return state;
-//             },initState);
-//     }
-// }
-// class Login{constructor(loggedIn){}}
-// class Logout{constructor(loggedIn){}}
-// class SayHello{constructor(message){}}
-// class SayBye{constructor(message){}}
-// type AppAction = Login|Logout|SayHello|SayBye;
-// function stateFn(initState: AppState,actions: Observable<AppAction>):Observable<AppState> {
-//     return new Observable
-// } 
 //# sourceMappingURL=GlobalService.js.map

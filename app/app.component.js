@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './login/components/login/login', './login/login.component', './services/global/GlobalService'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', './login/components/login/login', './services/global/GlobalService', './ui/componentTest'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', './login/components/login/l
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, login_1, login_component_1, GlobalService_1;
+    var core_1, router_1, login_1, GlobalService_1, componentTest_1;
     var AppComponent;
     return {
         setters:[
@@ -23,41 +23,45 @@ System.register(['angular2/core', 'angular2/router', './login/components/login/l
             function (login_1_1) {
                 login_1 = login_1_1;
             },
-            function (login_component_1_1) {
-                login_component_1 = login_component_1_1;
-            },
             function (GlobalService_1_1) {
                 GlobalService_1 = GlobalService_1_1;
+            },
+            function (componentTest_1_1) {
+                componentTest_1 = componentTest_1_1;
             }],
         execute: function() {
-            // import {UserRestClient} from './clients/userRestClient/UserRestClient';
-            // import {LoggedInRouterOutlet} from './services/routeService/RouterOutlet';
             AppComponent = (function () {
                 function AppComponent(injector, globalService, router) {
-                    this.globalService = injector.parent.get(GlobalService_1.GlobalService);
-                    this.router = router;
+                    // console.log('construct app component')
+                    // this.globalService = injector.parent.get(GlobalService);
+                    // this.router = router;
                 }
                 AppComponent.prototype.ngOnInit = function () {
-                    console.log('app component ngOnInit :', this.globalService.isLoggedIn());
-                    this.globalService.init();
-                    console.log('app:', this.globalService);
-                    if (this.globalService.isLoggedIn()) {
-                        console.log('redirect to dashboard');
-                        this.router.navigateByUrl('/dashboard');
-                    }
+                    // console.log('app component ngOnInit');
+                    // console.log('app:',this.globalService.isLoggedIn())
+                    // if(this.globalService.validateLogin()){
+                    //     console.log('redirect to dashboard')
+                    //     this.router.navigateByUrl('/dashboard')
+                    // }else{
+                    //     this.router.navigateByUrl('/login')
+                    // }
                 };
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        template: "\n   <router-outlet></router-outlet>\n    ",
+                        template: "\n    <ui-component-test></ui-component-test>\n    ",
+                        // template: `
+                        // <router-outlet></router-outlet>
+                        // `,
                         styleUrls: ['app/app.component.css'],
-                        directives: [login_1.LoginComponent, login_component_1.Login, router_1.ROUTER_DIRECTIVES],
+                        directives: [login_1.LoginComponent, router_1.ROUTER_DIRECTIVES, componentTest_1.ComponentTest]
                     }),
                     router_1.RouteConfig([
                         // { path: '/**', redirectTo: ['Dashboard'] },
                         // { path: '/', redirectTo: ['Dashboard']},
-                        { path: '/', name: 'Login', component: login_1.LoginComponent },
-                        new router_1.AsyncRoute({ name: 'Dashboard', path: '/dashboard/...', loader: function () { return System.import('../../../app/dashboard/components/dashboard').then(function (p) { return p.DashboardComponent; }); } })
+                        // { path: '/',name:'Login',component:LoginComponent },
+                        new router_1.AsyncRoute({ name: 'Login', path: '/login', loader: function () { return System.import('../../../app/login/components/login/login').then(function (p) { return p.LoginComponent; }); } }),
+                        new router_1.AsyncRoute({ name: 'Dashboard', path: '/dashboard/...', data: { type: 'admin' }, loader: function () { return System.import('../../../app/dashboard/components/dashboard').then(function (p) { return p.DashboardComponent; }); } })
                     ]), 
                     __metadata('design:paramtypes', [core_1.Injector, GlobalService_1.GlobalService, router_1.Router])
                 ], AppComponent);

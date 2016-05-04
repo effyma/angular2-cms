@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../../../clients/Test/testRest', '../../../clients/accountRestClient/AccountRestClient', 'angular2/http', '../../../common/RestUtil/Interceptor', '../../../services/global/GlobalService'], function(exports_1, context_1) {
+System.register(['angular2/core', '../../../clients/accountRestClient/AccountRestClient', 'angular2/http', '../../../common/RestUtil/Interceptor', '../../../services/global/GlobalService'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,15 +10,12 @@ System.register(['angular2/core', '../../../clients/Test/testRest', '../../../cl
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, testRest_1, AccountRestClient_1, http_1, Interceptor_1, GlobalService_1;
+    var core_1, AccountRestClient_1, http_1, Interceptor_1, GlobalService_1;
     var TesterComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
-            },
-            function (testRest_1_1) {
-                testRest_1 = testRest_1_1;
             },
             function (AccountRestClient_1_1) {
                 AccountRestClient_1 = AccountRestClient_1_1;
@@ -34,28 +31,10 @@ System.register(['angular2/core', '../../../clients/Test/testRest', '../../../cl
             }],
         execute: function() {
             TesterComponent = (function () {
-                function TesterComponent(testRestClient, accountRestClient, globalService) {
-                    this.testRestClient = testRestClient;
+                function TesterComponent(accountRestClient, globalService) {
                     this.accountRestClient = accountRestClient;
                     this.globalService = globalService;
                 }
-                TesterComponent.prototype.onClickGetToken = function (e) {
-                    e.preventDefault();
-                    var email = 'test@kooppi.com';
-                    var password = '123456';
-                    var result = this.testRestClient.login({ email: email, password: password });
-                    console.log(result);
-                };
-                TesterComponent.prototype.onClickGetInfo = function (e) {
-                    var _this = this;
-                    e.preventDefault();
-                    this.testRestClient.getSession('test@kooppi.com').subscribe(function (data) {
-                        _this.globalService.login(data);
-                    }, function (err) {
-                        console.log('err:');
-                        console.log(err);
-                    }, function () { return console.log('Complete'); });
-                };
                 TesterComponent.prototype.onClickGetTokenByAC = function (e) {
                     var _this = this;
                     e.preventDefault();
@@ -86,10 +65,10 @@ System.register(['angular2/core', '../../../clients/Test/testRest', '../../../cl
                 TesterComponent = __decorate([
                     core_1.Component({
                         selector: 'test-container',
-                        template: "<h1>Testing page</h1>\n    <button (click)=\"onClickGetToken($event)\">getToken</button>\n    <button (click)=\"onClickGetInfo($event)\">getAccountInfo</button>\n    <button (click)=\"onClickGetTokenByAC($event)\">getToken</button>\n    <button (click)=\"onClickGetInfoByAC($event)\">getAccountInfo</button>\n    <button (click)=\"onClickGetByAC($event)\">getAccountInfo</button>\n    ",
-                        providers: [testRest_1.TestRestClient, http_1.HTTP_PROVIDERS, Interceptor_1.Interceptor, AccountRestClient_1.AccountRestClient]
+                        template: "<h1>Testing page</h1>\n    <button (click)=\"onClickGetTokenByAC($event)\">getToken</button>\n    <button (click)=\"onClickGetInfoByAC($event)\">getAccountInfo</button>\n    <button (click)=\"onClickGetByAC($event)\">getAccountInfo</button>\n    ",
+                        providers: [http_1.HTTP_PROVIDERS, Interceptor_1.Interceptor, AccountRestClient_1.AccountRestClient]
                     }), 
-                    __metadata('design:paramtypes', [testRest_1.TestRestClient, AccountRestClient_1.AccountRestClient, GlobalService_1.GlobalService])
+                    __metadata('design:paramtypes', [AccountRestClient_1.AccountRestClient, GlobalService_1.GlobalService])
                 ], TesterComponent);
                 return TesterComponent;
             }());

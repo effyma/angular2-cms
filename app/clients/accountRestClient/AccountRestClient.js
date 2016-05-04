@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', '../../common/RestUtil/Interceptor', '../../common/RestUtil/Config', '../../services/global/GlobalService'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/http', '../../common/RestUtil/Interceptor', '../../common/RestUtil/Config'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/http', '../../common/RestUtil/Interc
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, Interceptor_1, Config_1, GlobalService_1;
+    var core_1, http_1, Interceptor_1, Config_1;
     var AccountRestClient;
     return {
         setters:[
@@ -25,20 +25,17 @@ System.register(['angular2/core', 'angular2/http', '../../common/RestUtil/Interc
             },
             function (Config_1_1) {
                 Config_1 = Config_1_1;
-            },
-            function (GlobalService_1_1) {
-                GlobalService_1 = GlobalService_1_1;
             }],
         execute: function() {
             AccountRestClient = (function () {
                 // baseUrl = 'http://localhost:8080/mvno-ota-gw/api/';
-                function AccountRestClient(http, interceptor, globalService) {
+                function AccountRestClient(http, interceptor) {
                     // headers;
                     // requestoptions;
                     this.baseUrl = 'http://demo.kooppi.com/mvno-ota-gw/api/';
                     this.http = http;
                     this.interceptor = interceptor;
-                    this.globalService = globalService;
+                    // this.globalService = globalService;
                 }
                 AccountRestClient.prototype.login = function (params) {
                     var url = this.baseUrl + 'sessions';
@@ -64,7 +61,6 @@ System.register(['angular2/core', 'angular2/http', '../../common/RestUtil/Interc
                     headers.append('x-auth-request-timestamp', now);
                     request.headers['x-auth-request-timestamp'] = now;
                     config.signedHeaders.push('x-auth-request-timestamp');
-                    console.log('globalService get token', token);
                     if (token !== undefined && token !== null) {
                         headers.append('x-auth-user-token', token);
                         request.headers['x-auth-user-token'] = token;
@@ -109,7 +105,7 @@ System.register(['angular2/core', 'angular2/http', '../../common/RestUtil/Interc
                 };
                 AccountRestClient = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [http_1.Http, Interceptor_1.Interceptor, GlobalService_1.GlobalService])
+                    __metadata('design:paramtypes', [http_1.Http, Interceptor_1.Interceptor])
                 ], AccountRestClient);
                 return AccountRestClient;
             }());
